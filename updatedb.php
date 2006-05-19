@@ -26,7 +26,7 @@
  function insert_file($file)
  {
  	global $db,$tables,$mdb_conf;
-	$db->Execute("INSERT IGNORE INTO " . $tables['files'] . " (file) VALUES (" . $db->qstr(substr($file,strlen($mdb_conf['root'])+1)) . ")");
+	$db->CacheExecute($mdb_conf['secs2cache'],"INSERT IGNORE INTO " . $tables['files'] . " (file) VALUES (" . $db->qstr(substr($file,strlen($mdb_conf['root'])+1)) . ")");
  }
 
  function index_dir($dir)
@@ -50,12 +50,12 @@
  function prunedb()
  {
  	global $db,$tables,$mdb_conf;
-	$files = $db->GetArray("SELECT * FROM " . $tables['files']);
+	$files = $db->CacheGetArray($mdb_conf['secs2cache'],"SELECT * FROM " . $tables['files']);
 	foreach ($files as $i => $file) {
 		if ((!file_exists($mdb_conf['root'] . $file['file'])) || in_array(substr($file['file'],(strripos($file['file'],"/")===false?0:strripos($file['file'],"/")+1)),$mdb_conf['excludes']) || is_link($mdb_conf['root'] . $file['file'])) {
 			//echo $mdb_conf['root'] . $file['file'] . "\n";
-			$db->Execute("DELETE FROM " . $tables['files'] . " WHERE id=" . $file['id'] . " LIMIT 1");
-			$db->Execute("DELETE FROM " . $tables['file_title'] . " WHERE file_id=" . $file['id']);
+			$db->CacheExecute($mdb_conf['secs2cache'],"DELETE FROM " . $tables['files'] . " WHERE id=" . $file['id'] . " LIMIT 1");
+			$db->CacheExecute($mdb_conf['secs2cache'],"DELETE FROM " . $tables['file_title'] . " WHERE file_id=" . $file['id']);
 			//echo "DELETE FROM " . $tables['files'] . " WHERE id=" . $file['id'] . " LIMIT 1" . "\n";
 			//echo "DELETE FROM " . $tables['file_title'] . " WHERE file_id=" . $file['id'] . "\n";
 		}
@@ -70,7 +70,7 @@
 			if ($dh = opendir($mdb_conf['root'] . $title)) {
 				while (($file = readdir($dh)) !== false) {
 					if (!(in_array($file,$mdb_conf['excludes']) || is_link($mdb_conf['root'] . $title . "/" . $file) || (substr($file,0,1) == "."))) {
-						$db->Execute("INSERT IGNORE INTO " . $tables['titles'] . " (path,title) VALUES (" . $db->qstr($title . "/" . $file) . "," . $db->qstr(ucwords(strtolower($file))) . ")");
+						$db->CacheExecute($mdb_conf['secs2cache'],"INSERT IGNORE INTO " . $tables['titles'] . " (path,title) VALUES (" . $db->qstr($title . "/" . $file) . "," . $db->qstr(ucwords(strtolower($file))) . ")");
 						//echo "INSERT IGNORE INTO " . $tables['titles'] . " (path,title) VALUES (" . $db->qstr($title . "/" . $file) . "," . $db->qstr(ucwords(strtolower($file))) . ")" . "\n";
 						
 					}
@@ -84,11 +84,11 @@
  function prune_titles()
  {
  	global $db,$tables,$mdb_conf;
-	$titles = $db->GetArray("SELECT * FROM " . $tables['titles']);
+	$titles = $db->CacheGetArray($mdb_conf['secs2cache'],"SELECT * FROM " . $tables['titles']);
 	foreach ($titles as $i => $title) {
 		if ((!file_exists($mdb_conf['root'] . $title['path'])) || is_link($mdb_conf['root'] . $file['file'])) {
-			$db->Execute("DELETE FROM " . $tables['titles'] . " WHERE id=" . $title['id'] . " LIMIT 1");
-			$db->Execute("DELETE FROM " . $tables['file_title'] . " WHERE title_id=" . $title['id']);
+			$db->CacheExecute($mdb_conf['secs2cache'],"DELETE FROM " . $tables['titles'] . " WHERE id=" . $title['id'] . " LIMIT 1");
+			$db->CacheExecute($mdb_conf['secs2cache'],"DELETE FROM " . $tables['file_title'] . " WHERE title_id=" . $title['id']);
 			//echo "DELETE FROM " . $tables['titles'] . " WHERE id=" . $title['id'] . " LIMIT 1" . "\n";
 			//echo "DELETE FROM " . $tables['file_title'] . " WHERE title_id=" . $title['id'] . "\n";
 		}
@@ -98,12 +98,12 @@
  function maintain_associations()
  {
  	global $db,$tables,$mdb_conf;
-	$files = $db->GetArray("SELECT * FROM " . $tables['files']);
-	$titles = $db->GetArray("SELECT * FROM " . $tables['titles']);
+	$files = $db->CacheGetArray($mdb_conf['secs2cache'],"SELECT * FROM " . $tables['files']);
+	$titles = $db->CacheGetArray($mdb_conf['secs2cache'],"SELECT * FROM " . $tables['titles']);
 	foreach ($files as $i => $file) {
 		foreach ($titles as $j => $title) {
 			if (strpos($file['file'],$title['path']) !== false) {
-				$db->Execute("INSERT INTO " . $tables['file_title'] . " (file_id,title_id) VALUES (" . $file['id'] . "," . $title['id'] . ") ON DUPLICATE KEY UPDATE title_id=VALUES(title_id)");
+				$db->CacheExecute($mdb_conf['secs2cache'],"INSERT INTO " . $tables['file_title'] . " (file_id,title_id) VALUES (" . $file['id'] . "," . $title['id'] . ") ON DUPLICATE KEY UPDATE title_id=VALUES(title_id)");
 				//echo "INSERT INTO " . $tables['file_title'] . " (file_id,title_id) VALUES (" . $file['id'] . "," . $title['id'] . ") ON DUPLICATE KEY UPDATE title_id=VALUES(title_id)" . "\n";
 				//echo $file['file'] . " => " . $title['title'] . "\n";
 			}
