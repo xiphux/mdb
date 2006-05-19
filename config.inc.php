@@ -57,6 +57,18 @@ $mdb_conf['title'] = "centraldogma :: $mdb_appstring";
  */
 $mdb_conf['smarty_prefix'] = "smarty/";
 
+/*
+ * smarty_caching
+ * Set level of smarty template caching
+ */
+$mdb_conf['smarty_caching'] = 1;
+
+/*
+ * smarty_cache_lifetime
+ * Set lifetime for cached smarty templates
+ */
+$mdb_conf['smarty_cache_lifetime'] = 10;
+
  /*
   * Database connection settings
   */
