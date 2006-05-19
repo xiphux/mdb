@@ -21,6 +21,9 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+ if (shell_exec("ps ax | grep -v 'grep' | grep -c 'php updatedb.php'") > 1)
+ 	exit;
+
  include_once('db.inc.php');
 
  function insert_file($file)
