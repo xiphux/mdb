@@ -47,8 +47,6 @@
   */
  include_once($mdb_conf['smarty_prefix'] . "Smarty.class.php");
  $tpl =& new Smarty;
- $tpl->caching = $mdb_conf['smarty_caching'];
- $tpl->cache_lifetime = $mdb_conf['smarty_cache_lifetime'];
  $tpl->load_filter('output','trimwhitespace');
 
  /*
