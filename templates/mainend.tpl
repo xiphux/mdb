@@ -1,7 +1,7 @@
 {*
- *  footer.tpl
+ *  mainend.tpl
  *  MDB: A media database
- *  Component: Page footer template
+ *  Component: Main page end template
  *
  *  Copyright (C) 2006 Christopher Han <xiphux@gmail.com>
  *
@@ -20,5 +20,4 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *}
  </div>
- </body>
- </html>
+ </div>

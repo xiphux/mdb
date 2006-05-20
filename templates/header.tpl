@@ -66,3 +66,4 @@ window.onload = function() {highlightFormElements();init_effects();}
 {$smarty.capture.header}
 </head>
 <body>
+<div>

@@ -1,7 +1,7 @@
 {*
- *  footer.tpl
+ *  mainstart.tpl
  *  MDB: A media database
- *  Component: Page footer template
+ *  Component: Main page start template
  *
  *  Copyright (C) 2006 Christopher Han <xiphux@gmail.com>
  *
@@ -19,6 +19,4 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *}
- </div>
- </body>
- </html>
+ <div class="main"><div>

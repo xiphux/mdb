@@ -52,6 +52,7 @@
  include_once('mdb.lib.php');
 
  ob_start();
+ $tpl->display("mainstart.tpl");
  if (isset($_GET['u'])) {
  	switch ($_GET['u']) {
 		case "updatedb":
@@ -64,6 +65,7 @@
 	}
  } else {
  }
+ $tpl->display("mainend.tpl");
  $main = ob_get_contents();
  ob_end_clean();
 

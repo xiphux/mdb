@@ -8,7 +8,7 @@ a:visited {color:blue; text-decoration: none;}
 .underline {text-decoration:underline;}
 .highlight {color:yellow;}
 form input.focus, form textarea.focus {border-color:lime; color: #000;}
-div.sidebar {position:absolute;z-index:350}
+div.sidebar {position:relative;width:20%;overflow:visible;}
 div.blocktitle {background: transparent url("../images/level0.gif") no-repeat center right;}
 div.blocktitle div {background: transparent url("../images/level0_regular__Right.gif") no-repeat; padding-left:0.25em; margin-left: 0.25em;}
 div.blockcontent ul {list-style:none;font-size:12px;padding:0;margin:0}
@@ -17,3 +17,5 @@ div.miniblocktitle {background: transparent url("../images/level1_sub.gif") no-r
 div.miniblockcontent ul li {background: transparent url("../images/level2_regular.gif"); z-index: 9;}
 div.blockcontent ul li a:link {color: red;}
 div.miniblockcontent ul li a:link {color: red;}
+div.main {position:absolute;top:0px;left:21%;}
+div.main div {position:relative;width:80%;}
