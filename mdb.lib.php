@@ -136,4 +136,19 @@ function highlight(&$string, $substr, $type = "highlight")
 	return $title;
  }
 
+ function readfile_chunked($filename) {
+ 	$chunksize = 1 * (1024 * 1024);
+	$buffer = '';
+	$handle = fopen($filename,'rb');
+	if ($handle === false)
+		return false;
+	while (!feof($handle)) {
+		$buffer = fread($handle,$chunksize);
+		echo $buffer;
+		ob_flush();
+		flush();
+	}
+	return fclose($handle);
+}
+
 ?>

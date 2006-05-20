@@ -56,10 +56,45 @@
   */
  include_once('mdb.lib.php');
 
+ /*
+  * Early check for file download so we
+  * can skip headers
+  */
+ if ($_GET['u'] === "file") {
+ 	if (!(isset($_SESSION[$mdb_conf['session_key']]['user'])))
+		$errorstr = "You do not have permission to use this feature!";
+ 	else if (!isset($_GET['id']))
+		$errorstr = "No file specified";
+	else {
+		$file = $db->CacheGetRow($mdb_conf['secs2cache'],"SELECT * FROM " . $tables['files'] . " WHERE id=" . $_GET['id'] . " LIMIT 1");
+		if (!$file)
+			$errorstr = "No such file";
+		else {
+			if (ini_get('zlib.output_compression'))
+				ini_set('zlib.output_compression', 'Off');
+			header("Pragma: public");
+			header("Expires: 0");
+			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+			header("Cache-Control: private",false);
+			header("Content-Type: application/force-download");
+			header("Content-Disposition: attachment; filename=\"" . basename($file['file']) . "\";");
+			header("Content-Transfer-Encoding: binary");
+			header("Content-Length: " . @filesize($mdb_conf['root'] . $file['file']));
+			set_time_limit(0);
+			ob_end_flush();
+			readfile_chunked($mdb_conf['root'] . $file['file']);
+			exit;
+		}
+	}
+ }
+
  ob_start();
  $tpl->display("mainstart.tpl");
  if (isset($_GET['u'])) {
  	switch ($_GET['u']) {
+		case "file":
+			echo $errorstr;
+			break;
 		case "login":
 			login($_POST['user'],$_POST['pass']);
 			break;
@@ -87,7 +122,6 @@
 			echo "404";
 			break;
 	}
- } else {
  }
  $tpl->display("mainend.tpl");
  $main = ob_get_contents();
