@@ -114,6 +114,13 @@
 	}
  }
 
+ function optimizedb()
+ {
+ 	global $db,$tables;
+	foreach ($tables as $i => $table)
+		$db->Execute("OPTIMIZE TABLE " . $db->qstr($table));
+ }
+
  prune_titles();
 
  update_titles();
@@ -123,5 +130,7 @@
  index_dir($mdb_conf['root']);
 
  maintain_associations();
+
+ optimizedb();
 
 ?> 
