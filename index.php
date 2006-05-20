@@ -123,7 +123,8 @@
 			echo "404";
 			break;
 	}
- }
+ } else
+ 	echo $mdb_appstring;
  $tpl->display("mainend.tpl");
  $main = ob_get_contents();
  ob_end_clean();
