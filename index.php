@@ -46,6 +46,11 @@
  $tpl->cache_lifetime = $mdb_conf['smarty_cache_lifetime'];
  $tpl->load_filter('output','trimwhitespace');
 
+ /*
+  * Function library
+  */
+ include_once('mdb.lib.php');
+
  ob_start();
  if (isset($_GET['u'])) {
  	switch ($_GET['u']) {
@@ -66,6 +71,9 @@
  $title = $mdb_conf['title'];
  $tpl->assign("title",$title);
  $tpl->display("header.tpl");
+
+ $tpl->assign("titlelist",titlelist());
+ $tpl->display("sidebar.tpl");
 
  echo $main;
 
