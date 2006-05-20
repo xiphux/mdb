@@ -118,6 +118,9 @@
  			$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
 			$tpl->display("title.tpl");
 			break;
+		case "dbstats":
+			dbstats();
+			break;
 		default:
 			echo "404";
 			break;
@@ -134,6 +137,8 @@
 
  $tpl->assign("titlelist",titlelist());
  $tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
+ if ($mdb_conf['dbstats'])
+ 	$tpl->assign("dbstats",TRUE);
  $tpl->display("sidebar.tpl");
 
  echo $main;

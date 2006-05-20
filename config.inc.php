@@ -61,7 +61,7 @@ $mdb_conf['smarty_prefix'] = "smarty/";
  * smarty_caching
  * Set level of smarty template caching
  */
-$mdb_conf['smarty_caching'] = 1;
+$mdb_conf['smarty_caching'] = 0;
 
 /*
  * smarty_cache_lifetime
@@ -140,5 +140,17 @@ $mdb_conf['smarty_cache_lifetime'] = 10;
   * The key inside the session variable to use for session data
   */
  $mdb_conf['session_key'] = "mdb";
+
+ /*
+  * dbstats
+  * Whether you want a database stats link to appear
+  */
+ $mdb_conf['dbstats'] = TRUE;
+
+ /*
+  * optimize
+  * Whether you want the dbstats page to optimize tables
+  */
+ $mdb_conf['optimize'] = TRUE;
 
 ?>
