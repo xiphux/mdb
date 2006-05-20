@@ -23,20 +23,20 @@
 
  function titlelist()
  {
- 	global $db,$tables;
+ 	global $db,$tables,$mdb_conf;
 	$letters = array("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z");
 	$numbers = array("0","1","2","3","4","5","6","7","8","9");
 	foreach ($numbers as $i => $number) {
-		$temp = $db->GetArray("SELECT * FROM " . $tables['titles'] . " WHERE LEFT(TRIM(title),1)=" . $db->qstr($number) . " ORDER BY title");
+		$temp = $db->CacheGetArray($mdb_conf['secs2cache'],"SELECT * FROM " . $tables['titles'] . " WHERE LEFT(TRIM(title),1)=" . $db->qstr($number) . " ORDER BY title");
 		if (sizeof($temp) > 0)
 			$titles[$number] = $temp;
 	}
 	foreach ($letters as $i => $letter) {
-		$temp = $db->GetArray("SELECT * FROM " . $tables['titles'] . " WHERE LEFT(UPPER(TRIM(title)),1)=" . $db->qstr($letter) . " ORDER BY title");
+		$temp = $db->CacheGetArray($mdb_conf['secs2cache'],"SELECT * FROM " . $tables['titles'] . " WHERE LEFT(UPPER(TRIM(title)),1)=" . $db->qstr($letter) . " ORDER BY title");
 		if (sizeof($temp) > 0)
 			$titles[strtolower($letter)] = $temp;
 	}
-	$temp = $db->GetArray("SELECT * FROM " . $tables['titles'] . " WHERE LEFT(UPPER(TRIM(title)),1) NOT IN ('" . implode("','",$letters) . "','" . implode("','",$numbers) . "') ORDER BY title");
+	$temp = $db->CacheGetArray($mdb_conf['secs2cache'],"SELECT * FROM " . $tables['titles'] . " WHERE LEFT(UPPER(TRIM(title)),1) NOT IN ('" . implode("','",$letters) . "','" . implode("','",$numbers) . "') ORDER BY title");
 	if (sizeof($temp) > 0)
 		$titles['other'] = $temp;
 	return $titles;
@@ -53,7 +53,7 @@
 		echo "No password entered";
 		return;
 	}
-	$u = $db->GetRow("SELECT * FROM " . $tables['users'] . " WHERE username=" . $db->qstr($user) . " LIMIT 1");
+	$u = $db->CacheGetRow($mdb_conf['secs2cache'],"SELECT * FROM " . $tables['users'] . " WHERE username=" . $db->qstr($user) . " LIMIT 1");
 	if (!$u) {
 		echo "No such user";
 		return;
@@ -87,13 +87,13 @@ function highlight(&$string, $substr, $type = "highlight")
 
  function search($search,$criteria)
  {
- 	global $db,$tables;
+ 	global $db,$tables,$mdb_conf;
 	if (!(isset($search) && (strlen($search) > 0))) {
 		echo "Invalid search string";
 		return;
 	}
 	if ($criteria === "All" || $criteria === "Titles") {
-		$ret = $db->GetArray("SELECT * FROM " . $tables['titles'] . " WHERE title LIKE '%" . $search . "%' ORDER BY title");
+		$ret = $db->CacheGetArray($mdb_conf['secs2cache'],"SELECT * FROM " . $tables['titles'] . " WHERE title LIKE '%" . $search . "%' ORDER BY title");
 		$size = count($ret);
 		if ($size > 0) {
 			for ($i = 0; $i < $size; $i++)
@@ -102,7 +102,7 @@ function highlight(&$string, $substr, $type = "highlight")
 		}
 	}
 	if ($criteria === "All" || $criteria === "Files") {
-		$ret = $db->GetArray("SELECT * FROM " . $tables['files'] . " WHERE file LIKE '%/%/%" . $search . "%' ORDER BY file");
+		$ret = $db->CacheGetArray($mdb_conf['secs2cache'],"SELECT * FROM " . $tables['files'] . " WHERE file LIKE '%/%/%" . $search . "%' ORDER BY file");
 		$size = count($ret);
 		if ($size > 0) {
 			for ($i = 0; $i < $size; $i++)
@@ -115,17 +115,17 @@ function highlight(&$string, $substr, $type = "highlight")
 
  function titleinfo($tid)
  {
- 	global $db,$tables;
+ 	global $db,$tables,$mdb_conf;
 	if (!isset($tid)) {
 		echo "No title specified";
 		return;
 	}
-	$title = $db->GetRow("SELECT * FROM " . $tables['titles'] . " WHERE id=" . $tid . " LIMIT 1");
+	$title = $db->CacheGetRow($mdb_conf['secs2cache'],"SELECT * FROM " . $tables['titles'] . " WHERE id=" . $tid . " LIMIT 1");
 	if (!$title) {
 		echo "No such title";
 		return;
 	}
-	$temp = $db->GetArray("SELECT t1.id,t1.file FROM " . $tables['files'] . " AS t1, " . $tables['file_title'] . " AS t2 WHERE t2.title_id=" . $tid . " AND t2.file_id=t1.id ORDER BY t1.file");
+	$temp = $db->CacheGetArray($mdb_conf['secs2cache'],"SELECT t1.id,t1.file FROM " . $tables['files'] . " AS t1, " . $tables['file_title'] . " AS t2 WHERE t2.title_id=" . $tid . " AND t2.file_id=t1.id ORDER BY t1.file");
 	if (sizeof($temp) > 0) {
 		$len = strlen($title['path'])+1;
 		$size = count($temp);
