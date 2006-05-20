@@ -27,7 +27,7 @@
      <div class="blockcontent" id="loginblockcontent">
        <ul>
          {if $user}
-	   <li>{$user.username}</li>
+	   <li>logged in as: {$user.username}</li>
 	   <li><a href="{$SCRIPT_NAME}?u=logout">logout</a></li>
          {else}
            <form action="{$SCRIPT_NAME}?u=login" method="post">
@@ -53,9 +53,34 @@
      </div>
      <div class="blockcontent" id="functionblockcontent">
        <ul>
-         <li><a href="{$SCRIPT_NAME}?u=search">search</a></li>
-	 {if $user.admin}
-	 <li><a href="{$SCRIPT_NAME}?u=updatedb">updatedb</a></li>
+         <li>
+	   <div class="miniblock" id="searchminiblock">
+	     <div class="miniblocktitle" id="searchminiblocktitle">
+	       search
+	     </div>
+	     <div class="miniblockcontent" id="searchminiblockcontent">
+	       <ul>
+	         <form action="{$SCRIPT_NAME}?u=search" method="post">
+		   <li>
+                     <input type="text" class="textfield" id="search" name="search" />
+		   </li>
+		   <li>
+		     <select id="criteria" name="criteria">
+		       <option value="All">All</option>
+		       <option value="Titles">Titles</option>
+		       <option value="Files">Files</option>
+		     </select>
+		   </li>
+		   <li>
+		     <input class="submit" type="submit" name="submit" value="Search" />
+		   </li>
+	         </form>
+	       </ul>
+	     </div>
+	   </div>
+	 </li>
+	 {if $user.privilege > 0}
+	   <li><a href="{$SCRIPT_NAME}?u=updatedb">updatedb</a></li>
 	 {/if}
        </ul>
      </div>

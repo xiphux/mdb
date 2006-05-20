@@ -17,5 +17,5 @@ div.miniblocktitle {background: transparent url("../images/level1_sub.gif") no-r
 div.miniblockcontent ul li {background: transparent url("../images/level2_regular.gif"); z-index: 9;}
 div.blockcontent ul li a:link {color: red;}
 div.miniblockcontent ul li a:link {color: red;}
-div.main {position:absolute;top:0px;left:21%;}
-div.main div {position:relative;width:80%;}
+div.main {position:absolute;top:0px;left:21%;width:79%;}
+div.main div {position:relative;}

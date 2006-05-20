@@ -22,6 +22,11 @@
  */
 
  /*
+  * Start session
+  */
+ session_start();
+
+ /*
   * Start output buffering
   */
  ob_start();
@@ -55,9 +60,28 @@
  $tpl->display("mainstart.tpl");
  if (isset($_GET['u'])) {
  	switch ($_GET['u']) {
+		case "login":
+			login($_POST['user'],$_POST['pass']);
+			break;
+		case "logout":
+			unset($_SESSION[$mdb_conf['session_key']]['user']);
+			echo "Logged out";
+			break;
 		case "updatedb":
-			exec("php updatedb.php 2>/dev/null >&- <&- >/dev/null &");
-			echo "Database updating";
+			updatedb();
+			break;
+		case "search":
+			$tpl->clear_all_assign();
+			$tpl->assign("search",$_POST['search']);
+			$tpl->assign("results",search($_POST['search'],$_POST['criteria']));
+ 			$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
+			$tpl->display("search.tpl");
+			break;
+		case "title":
+			$tpl->clear_all_assign();
+			$tpl->assign("title",titleinfo($_GET['id']));
+ 			$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
+			$tpl->display("title.tpl");
 			break;
 		default:
 			echo "404";
@@ -75,6 +99,7 @@
  $tpl->display("header.tpl");
 
  $tpl->assign("titlelist",titlelist());
+ $tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
  $tpl->display("sidebar.tpl");
 
  echo $main;

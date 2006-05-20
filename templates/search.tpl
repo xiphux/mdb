@@ -1,8 +1,7 @@
-<?php
-/*
- *  db.inc.php
+{*
+ *  search.tpl
  *  MDB: A media database
- *  Component: Database library
+ *  Component: Search results template
  *
  *  Copyright (C) 2006 Christopher Han <xiphux@gmail.com>
  *
@@ -19,23 +18,27 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
- *  $Id: db.php 371 2006-03-08 21:28:52Z xiphux $
- */
- include_once('config.inc.php');
- include_once("adodb/adodb.inc.php");
-
-$tables = array();
-$tables['files'] = $mdb_conf['prefix'] . "files";
-$tables['titles'] = $mdb_conf['prefix'] . "titles";
-$tables['file_title'] = $mdb_conf['prefix'] . "file_title";
-$tables['users'] = $mdb_conf['prefix'] . "users";
-
-$db = NewADOConnection($mdb_conf['db_type']);
-if ($mdb_conf['persist'])
-	$db->PConnect($mdb_conf['db_host'],$mdb_conf['db_user'],$mdb_conf['db_pass'],$mdb_conf['database']);
-else
-	$db->Connect($mdb_conf['db_host'],$mdb_conf['db_user'],$mdb_conf['db_pass'],$mdb_conf['database']);
-$db->SetFetchMode(ADODB_FETCH_ASSOC);
-
-?>
+ *}
+ <p>Search string: <span class="italic">{$search}</span></p>
+ {if $results.titles}
+ <p>Matching titles:
+ {foreach from=$results.titles item=title}
+ <br /><a href="{$SCRIPT_NAME}?u=title&id={$title.id}">{$title.title}</a>
+ {/foreach}
+ </p>
+ {/if}
+ {if $results.files}
+ <p>Matching files:
+ {foreach from=$results.files item=file}
+ <br />
+{if $user}
+<a href="{$SCRIPT_NAME}?u=file&id={$file.id}">{$file.file}</a>
+{else}
+{$file.file}
+{/if}
+ {/foreach}
+ </p>
+ {/if}
+ {if !$results}
+ <span class="italic">No matches!</span>
+ {/if}

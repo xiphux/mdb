@@ -127,11 +127,18 @@ $mdb_conf['smarty_cache_lifetime'] = 10;
   * then any directories inside these directories (non-recursively) will
   * be marked as titles.  So, for example, "anime1/ranma" and "anime1/evangelion"
   * will be titles, as will be "anime2/cowboy bebop" and "anime2/rozen maiden".
+  * "anime2/cowboy bebop/manga" will not.
   */
  $mdb_conf['titlebase'] = array(
  	"anime1",
 	"anime2",
 	"anime3",
  );
+
+ /*
+  * session_key
+  * The key inside the session variable to use for session data
+  */
+ $mdb_conf['session_key'] = "mdb";
 
 ?>
