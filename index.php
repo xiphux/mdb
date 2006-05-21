@@ -74,6 +74,14 @@
 			header("Expires: 0");
 			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 			header("Cache-Control: private",false);
+			if (function_exists("finfo_open")) {
+				$mgc = finfo_open(FILEINFO_MIME);
+				if ($mgc) {
+					header("Content-Type: " . finfo_file($mgc,$mdb_conf['root'] . $file['file']));
+					finfo_close($mgc);
+				} else
+					header("Content-Type: application/force-download");
+			} else
 			header("Content-Type: application/force-download");
 			header("Content-Disposition: attachment; filename=\"" . basename($file['file']) . "\";");
 			header("Content-Transfer-Encoding: binary");
