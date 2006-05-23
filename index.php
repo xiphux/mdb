@@ -124,6 +124,11 @@
  			$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
 			$tpl->display("title.tpl");
 			break;
+		case "unmap":
+			$tpl->clear_all_assign();
+			$tpl->assign("unmap",unmapped());
+			$tpl->display("unmapped.tpl");
+			break;
 		case "dbstats":
 			dbstats();
 			break;

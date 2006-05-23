@@ -81,6 +81,7 @@
 	 </li>
 	 {if $user.privilege > 0}
 	   <li><a href="{$SCRIPT_NAME}?u=updatedb">updatedb</a></li>
+	   <li><a href="{$SCRIPT_NAME}?u=unmap">unmap</a></li>
 	 {/if}
 	 {if $dbstats}
 	   <li><a href="{$SCRIPT_NAME}?u=dbstats">dbstats</a></li>
