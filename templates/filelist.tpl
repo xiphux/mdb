@@ -1,7 +1,7 @@
 {*
- *  search.tpl
+ *  filelist.tpl
  *  MDB: A media database
- *  Component: Search results template
+ *  Component: File listing template
  *
  *  Copyright (C) 2006 Christopher Han <xiphux@gmail.com>
  *
@@ -19,18 +19,22 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *}
- <p>Search string: <span class="italic">{$search}</span></p>
- {if $results.titles}
- <p>Matching titles:
- {foreach from=$results.titles item=title}
- <br /><a href="{$SCRIPT_NAME}?u=title&id={$title.id}">{$title.title}</a>
- {/foreach}
- </p>
- {/if}
- {if $results.files}
- Matching files:<br />
- {include file='filelist.tpl' filelist=$results.files}
- {/if}
- {if !$results}
- <span class="italic">No matches!</span>
- {/if}
+<table>
+<tr><td><span class="bold">File</span></td><td><span class="bold">Size</span></td></tr>
+{foreach from=$filelist item=file}
+<tr class="{cycle values="odd,even"}">
+<td>
+{if $user}
+<a href="{$SCRIPT_NAME}?u=file&id={$file.id}">{$file.file}</a>
+{else}
+{$file.file}
+{/if}
+</td>
+<td>
+{$file.size|size}
+</td>
+</tr>
+{foreachelse}
+<tr><td colspan="2"><span class="italic">No files!</span></td></tr>
+{/foreach}
+</table>

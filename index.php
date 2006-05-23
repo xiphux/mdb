@@ -47,6 +47,7 @@
   */
  include_once($mdb_conf['smarty_prefix'] . "Smarty.class.php");
  $tpl =& new Smarty;
+ $tpl->register_modifier('size','size_readable');
  $tpl->load_filter('output','trimwhitespace');
 
  /*
@@ -82,7 +83,7 @@
 				} else
 					header("Content-Type: application/force-download");
 			} else
-			header("Content-Type: application/force-download");
+				header("Content-Type: application/force-download");
 			header("Content-Disposition: attachment; filename=\"" . basename($file['file']) . "\";");
 			header("Content-Transfer-Encoding: binary");
 			header("Content-Length: " . @filesize($mdb_conf['root'] . $file['file']));
@@ -135,7 +136,7 @@
 				$tpl->assign("title",titleinfo($_GET['id']));
 			else
 				$tpl->assign("global",TRUE);
-			$tpl->assign("size",size_readable(du($_GET['id']),null,'%01.2f %s',true));
+			$tpl->assign("size",size_readable(du($_GET['id'])));
 			$tpl->display("size.tpl");
 			break;
 		case "dbstats":

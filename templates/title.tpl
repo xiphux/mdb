@@ -19,16 +19,5 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *}
-<p><span class="bold"><span class="underline">{$title.title}</span></span> [<a href="{$SCRIPT_NAME}?u=size&id={$title.id}">size</a>]</p>
-<p>Filelist:<br />
-{foreach from=$title.files item=file}
-{if $user}
-<a href="{$SCRIPT_NAME}?u=file&id={$file.id}">{$file.file}</a>
-{else}
-{$file.file}
-{/if}
-<br />
-{foreachelse}
-<span class="italic">No files!</span>
-{/foreach}
-</p>
+<p><span class="bold"><span class="underline">{$title.title}</span></span> [<span class="highlight">{$title.size|size}</span>]</p>
+{include file='filelist.tpl' filelist=$title.files}

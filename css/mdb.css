@@ -20,3 +20,6 @@ div.blockcontent ul li a:link {color: red;}
 div.miniblockcontent ul li a:link {color: red;}
 div.main {position:absolute;top:0px;left:21%;width:79%;}
 div.main div {position:relative;}
+table {table-layout: fixed; border-style:none;}
+tr.odd {background-color: #111;}
+tr.even {background-color: #000;}
