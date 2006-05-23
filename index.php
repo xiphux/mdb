@@ -129,6 +129,15 @@
 			$tpl->assign("unmap",unmapped());
 			$tpl->display("unmapped.tpl");
 			break;
+		case "size":
+			$tpl->clear_all_assign();
+			if (isset($_GET['id']))
+				$tpl->assign("title",titleinfo($_GET['id']));
+			else
+				$tpl->assign("global",TRUE);
+			$tpl->assign("size",size_readable(du($_GET['id']),null,'%01.2f %s',true));
+			$tpl->display("size.tpl");
+			break;
 		case "dbstats":
 			dbstats();
 			break;

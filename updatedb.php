@@ -26,10 +26,18 @@
 
  include_once('db.inc.php');
 
+ function fsize($file)
+ {
+ 	$sz = @filesize($file);
+	if (!$sz)
+		return shell_exec("ls -l \"" . $file . "\" | cut -d ' ' -f 5");
+	return $sz;
+ }
+
  function insert_file($file)
  {
  	global $db,$tables,$mdb_conf;
-	$db->Execute("INSERT IGNORE INTO " . $tables['files'] . " (file) VALUES (" . $db->qstr(substr($file,strlen($mdb_conf['root'])+1)) . ")");
+	$db->Execute("INSERT INTO " . $tables['files'] . " (file,size) VALUES (" . $db->qstr(substr($file,strlen($mdb_conf['root'])+1)) . "," . $db->qstr(fsize($file)) . ") ON DUPLICATE KEY UPDATE size=VALUES(size)");
  }
 
  function index_dir($dir)

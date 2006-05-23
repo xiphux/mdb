@@ -1,7 +1,7 @@
 {*
- *  title.tpl
+ *  size.tpl
  *  MDB: A media database
- *  Component: Title info template
+ *  Component: Size page template
  *
  *  Copyright (C) 2006 Christopher Han <xiphux@gmail.com>
  *
@@ -19,16 +19,13 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *}
-<p><span class="bold"><span class="underline">{$title.title}</span></span> [<a href="{$SCRIPT_NAME}?u=size&id={$title.id}">size</a>]</p>
-<p>Filelist:<br />
-{foreach from=$title.files item=file}
-{if $user}
-<a href="{$SCRIPT_NAME}?u=file&id={$file.id}">{$file.file}</a>
-{else}
-{$file.file}
-{/if}
-<br />
-{foreachelse}
-<span class="italic">No files!</span>
-{/foreach}
-</p>
+ {if $global}
+   Total size: {$size}
+ {else}
+   {if $title}
+     <p>
+       Title: <a href="{$SCRIPT_NAME}?u=title&id={$title.id}">{$title.title}</a><br />
+       Size: {$size}
+     </p>
+   {/if}
+ {/if}
