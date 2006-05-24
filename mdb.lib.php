@@ -217,17 +217,6 @@ function unmapped()
 	return null;
 }
 
-function resize_bytes($size)
-{
-	$count = 0;
-	$format = array("B","KB","MB","GB","TB","PB","EB","ZB","YB");
-	while(($size/1024)>1 && $count<8) {
-		$size=$size/1024;
-		$count++;
-	}
-	return number_format($size,0,'','.') . " " . $format[$count];
-}
-
 /**
  * Return human readable sizes
  *
@@ -269,19 +258,13 @@ function size_readable($size, $unit = null, $retstring = null, $si = true)
     return sprintf($retstring, $size, $sizes[$i]);
 }
 
-function du($tid = null)
-{
-	global $db,$tables,$mdb_conf;
-	if ($tid)
-		return $db->CacheGetOne($mdb_conf['secs2cache'],"SELECT SUM(t1.size) FROM " . $tables['files'] . " AS t1, " . $tables['file_title'] . " AS t2 WHERE t1.id=t2.file_id AND t2.title_id=" . $tid);
-	return $db->CacheGetOne($mdb_conf['secs2cache'],"SELECT SUM(size) FROM " . $tables['files']);
-}
-
 function mainpage()
 {
 	global $tpl,$mdb_appstring,$db,$tables,$mdb_conf;
 	$tpl->clear_all_assign();
 	$tpl->assign("banner",$mdb_appstring);
+	$tpl->assign("titlecount",$db->CacheGetOne($mdb_conf['secs2cache'],"SELECT COUNT(id) FROM " . $tables['titles']));
+	$tpl->assign("filecount",$db->CacheGetOne($mdb_conf['secs2cache'],"SELECT COUNT(id) FROM " . $tables['files']));
 	$tpl->assign("size",$db->CacheGetOne($mdb_conf['secs2cache'],"SELECT SUM(size) FROM " . $tables['files']));
 	$tpl->display("main.tpl");
 }
