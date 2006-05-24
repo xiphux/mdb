@@ -130,24 +130,18 @@
 			$tpl->assign("unmap",unmapped());
 			$tpl->display("unmapped.tpl");
 			break;
-		case "size":
-			$tpl->clear_all_assign();
-			if (isset($_GET['id']))
-				$tpl->assign("title",titleinfo($_GET['id']));
-			else
-				$tpl->assign("global",TRUE);
-			$tpl->assign("size",size_readable(du($_GET['id'])));
-			$tpl->display("size.tpl");
-			break;
 		case "dbstats":
 			dbstats();
+			break;
+		case "main":
+			mainpage();
 			break;
 		default:
 			echo "404";
 			break;
 	}
  } else
- 	echo $mdb_appstring;
+ 	mainpage();
  $tpl->display("mainend.tpl");
  $main = ob_get_contents();
  ob_end_clean();

@@ -280,4 +280,13 @@ function du($tid = null)
 	return $db->CacheGetOne($mdb_conf['secs2cache'],"SELECT SUM(size) FROM " . $tables['files']);
 }
 
+function mainpage()
+{
+	global $tpl,$mdb_appstring,$db,$tables,$mdb_conf;
+	$tpl->clear_all_assign();
+	$tpl->assign("banner",$mdb_appstring);
+	$tpl->assign("size",$db->CacheGetOne($mdb_conf['secs2cache'],"SELECT SUM(size) FROM " . $tables['files']));
+	$tpl->display("main.tpl");
+}
+
 ?>
