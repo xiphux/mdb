@@ -30,7 +30,7 @@
 {$file.file}
 {/if}
 </td>
-<td>
+<td title="{$file.size}">
 {$file.size|size}
 </td>
 </tr>

@@ -19,5 +19,5 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *}
-<p><span class="bold"><span class="underline">{$title.title}</span></span> [<span class="highlight">{$title.size|size}</span>]</p>
+<p><span class="bold"><span class="underline">{$title.title}</span></span> [<span class="highlight" title="{$title.size}">{$title.size|size}</span>]</p>
 {include file='filelist.tpl' filelist=$title.files}

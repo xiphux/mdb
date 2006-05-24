@@ -20,4 +20,4 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *}
  <p>{$banner}</p>
- <p>Total size of all files in database: <span class="highlight">{$size|size}</span></p>
+ <p>Total size of all files in database: <span class="highlight" title="{$size}">{$size|size}</span></p>
