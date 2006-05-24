@@ -1,7 +1,7 @@
 {*
- *  size.tpl
+ *  main.tpl
  *  MDB: A media database
- *  Component: Size page template
+ *  Component: Main page template
  *
  *  Copyright (C) 2006 Christopher Han <xiphux@gmail.com>
  *
@@ -19,13 +19,5 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *}
- {if $global}
-   Total size of all files in database: <span class="highlight">{$size}</span>
- {else}
-   {if $title}
-     <p>
-       Title: <a href="{$SCRIPT_NAME}?u=title&id={$title.id}">{$title.title}</a><br />
-       Size: {$size}
-     </p>
-   {/if}
- {/if}
+ <p>{$banner}</p>
+ <p>Total size of all files in database: <span class="highlight">{$size|size}</span></p>
