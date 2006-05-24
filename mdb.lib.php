@@ -238,12 +238,14 @@ function resize_bytes($size)
  * @param       int    $unit        The maximum unit
  * @param       int    $retstring   The return string format
  * @param       int    $si          Whether to use SI prefixes
+ *
+ * (Slightly modified by Christopher Han)
  */
 function size_readable($size, $unit = null, $retstring = null, $si = true)
 {
     // Units
     if ($si === true) {
-        $sizes = array('B', 'kB', 'MB', 'GB', 'TB', 'PB');
+        $sizes = array('B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB', 'BB');
         $mod   = 1000;
     } else {
         $sizes = array('B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB');
@@ -253,21 +255,16 @@ function size_readable($size, $unit = null, $retstring = null, $si = true)
  
     // Max unit
     $unit = array_search((string) $unit, $sizes);
-    if ($unit === null || $unit === false) {
+    if ($unit === null || $unit === false)
         $unit = $ii;
-    }
  
     // Return string
-    if ($retstring === null) {
+    if ($retstring === null)
        $retstring = '%01.2f %s';
-    }
  
     // Loop
-    $i = 0;
-    while ($unit != $i && $size >= 1024 && $i < $ii) {
+    for ($i = 0; $unit != $i && $size >= 1024 && $i < $ii; $i++)
         $size /= $mod;
-        $i++;
-    }
  
     return sprintf($retstring, $size, $sizes[$i]);
 }
