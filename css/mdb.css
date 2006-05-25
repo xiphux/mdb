@@ -13,7 +13,7 @@ div.sidebar {position:relative;width:20%;overflow:visible;}
 div.blocktitle {background: transparent url("../images/level0.gif") no-repeat center right;}
 div.blocktitle div {background: transparent url("../images/level0_regular__Right.gif") no-repeat; padding-left:0.25em; margin-left: 0.25em;}
 div.blockcontent ul {list-style:none;font-size:12px;padding:0;margin:0}
-div.blockcontent ul li {color: black; background: transparent url("../images/level1_regular.gif"); list-style:none;font-size:12px;display:block;padding-  left:0.5em;margin-left:0.5em}
+div.blockcontent ul li {color: black; background: transparent url("../images/level1_regular.gif"); list-style:none;font-size:12px;display:block;padding-left:0.5em;margin-left:0.5em}
 div.miniblocktitle {background: transparent url("../images/level1_sub.gif") no-repeat center right; z-index: 10;}
 div.miniblockcontent ul li {background: transparent url("../images/level2_regular.gif"); z-index: 9;}
 div.blockcontent ul li a:link {color: red;}
@@ -23,3 +23,4 @@ div.main div {position:relative;}
 table {table-layout: fixed; border-style:none;}
 tr.odd {background-color: #111;}
 tr.even {background-color: #000;}
+div#updatedb {font-weight:bold;color:blue;}

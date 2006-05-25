@@ -68,13 +68,14 @@
 
  function updatedb()
  {
- 	global $mdb_conf;
+ 	global $mdb_conf,$tpl;
 	if (!(isset($_SESSION[$mdb_conf['session_key']]['user']) && ($_SESSION[$mdb_conf['session_key']]['user']['privilege'] > 0))) {
 		echo "You do not have access to this feature!";
 		return;
 	}
 	exec("php updatedb.php 2>/dev/null >&- <&- >/dev/null &");
-	echo "Database updating";
+	$tpl->clear_all_assign();
+	$tpl->display("updatedb.tpl");
  }
 
 function highlight(&$string, $substr, $type = "highlight")
