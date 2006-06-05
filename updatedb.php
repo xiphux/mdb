@@ -73,6 +73,39 @@
 	}
  }
 
+ function uppercase($str)
+ {
+ 	$lower = array(
+		"to" => 1,
+		"a" => 1,
+		"the" => 1,
+		"of" => 1,
+	);
+	$upper = array(
+		"i" => 1,
+		"ii" => 1,
+		"iii" => 1,
+		"iv" => 1,
+		"v" => 1,
+		"vi" => 1,
+		"vii" => 1,
+		"viii" => 1,
+		"ix" => 1,
+		"x" => 1,
+	);
+ 	$a = explode(" ",$str);
+	$size = count($a);
+	for ($i = 0; $i < $size; $i++) {
+		$t = strtolower($a[$i]);
+		if ($upper[$t] === 1)
+			$t = strtoupper($t);
+		else if (($lower[$t] !== 1) || ($i === 0))
+			$t = ucfirst($t);
+		$a[$i] = $t;
+	}
+	return implode(" ",$a);
+ }
+
  function update_titles()
  {
  	global $mdb_conf,$db,$tables;
@@ -81,8 +114,8 @@
 			if ($dh = opendir($mdb_conf['root'] . $title)) {
 				while (($file = readdir($dh)) !== false) {
 					if (!(in_array($file,$mdb_conf['excludes']) || is_link($mdb_conf['root'] . $title . "/" . $file) || (substr($file,0,1) == "."))) {
-						$db->Execute("INSERT IGNORE INTO " . $tables['titles'] . " (path,title) VALUES (" . $db->qstr($title . "/" . $file) . "," . $db->qstr(ucwords(strtolower($file))) . ")");
-						//echo "INSERT IGNORE INTO " . $tables['titles'] . " (path,title) VALUES (" . $db->qstr($title . "/" . $file) . "," . $db->qstr(ucwords(strtolower($file))) . ")" . "\n";
+						$db->Execute("INSERT IGNORE INTO " . $tables['titles'] . " (path,title) VALUES (" . $db->qstr($title . "/" . $file) . "," . $db->qstr(uppercase($file)) . ")");
+						//echo "INSERT IGNORE INTO " . $tables['titles'] . " (path,title) VALUES (" . $db->qstr($title . "/" . $file) . "," . $db->qstr(uppercase($file)) . ")" . "\n";
 						
 					}
 				}
