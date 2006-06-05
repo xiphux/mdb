@@ -56,11 +56,12 @@
        if (req.readyState == 4 && req.status=="200") {
          if (req.responseText == "Complete") {
            complete = true;
-           document.getElementById('updatedb').innerHTML="Database update complete!";
+           document.getElementById('updatedb').innerHTML='<span class="highlight">Database update complete!</span>';
          } else {
-           text = 'Database updating';
+           text = 'Database updating<span class="warning">';
            for (i = 0; i < dots; i++)
              text = text + '.';
+	   text = text + '</span>';
            document.getElementById('updatedb').innerHTML=text;
            if (dots >= 3)
              dots = 0;
