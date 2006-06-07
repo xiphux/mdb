@@ -64,11 +64,8 @@
 	$files = $db->GetArray("SELECT * FROM " . $tables['files']);
 	foreach ($files as $i => $file) {
 		if ((!file_exists($mdb_conf['root'] . $file['file'])) || in_array(substr($file['file'],(strripos($file['file'],"/")===false?0:strripos($file['file'],"/")+1)),$mdb_conf['excludes']) || is_link($mdb_conf['root'] . $file['file'])) {
-			//echo $mdb_conf['root'] . $file['file'] . "\n";
 			$db->Execute("DELETE FROM " . $tables['files'] . " WHERE id=" . $file['id'] . " LIMIT 1");
 			$db->Execute("DELETE FROM " . $tables['file_title'] . " WHERE file_id=" . $file['id']);
-			//echo "DELETE FROM " . $tables['files'] . " WHERE id=" . $file['id'] . " LIMIT 1" . "\n";
-			//echo "DELETE FROM " . $tables['file_title'] . " WHERE file_id=" . $file['id'] . "\n";
 		}
 	}
  }
@@ -115,7 +112,6 @@
 				while (($file = readdir($dh)) !== false) {
 					if (!(in_array($file,$mdb_conf['excludes']) || is_link($mdb_conf['root'] . $title . "/" . $file) || (substr($file,0,1) == "."))) {
 						$db->Execute("INSERT IGNORE INTO " . $tables['titles'] . " (path,title) VALUES (" . $db->qstr($title . "/" . $file) . "," . $db->qstr(uppercase($file)) . ")");
-						//echo "INSERT IGNORE INTO " . $tables['titles'] . " (path,title) VALUES (" . $db->qstr($title . "/" . $file) . "," . $db->qstr(uppercase($file)) . ")" . "\n";
 						
 					}
 				}
@@ -133,8 +129,6 @@
 		if ((!file_exists($mdb_conf['root'] . $title['path'])) || is_link($mdb_conf['root'] . $file['file'])) {
 			$db->Execute("DELETE FROM " . $tables['titles'] . " WHERE id=" . $title['id'] . " LIMIT 1");
 			$db->Execute("DELETE FROM " . $tables['file_title'] . " WHERE title_id=" . $title['id']);
-			//echo "DELETE FROM " . $tables['titles'] . " WHERE id=" . $title['id'] . " LIMIT 1" . "\n";
-			//echo "DELETE FROM " . $tables['file_title'] . " WHERE title_id=" . $title['id'] . "\n";
 		}
 	}
  }
@@ -148,8 +142,6 @@
 		foreach ($titles as $j => $title) {
 			if (strpos($file['file'],$title['path']) !== false) {
 				$db->Execute("INSERT INTO " . $tables['file_title'] . " (file_id,title_id) VALUES (" . $file['id'] . "," . $title['id'] . ") ON DUPLICATE KEY UPDATE title_id=VALUES(title_id)");
-				//echo "INSERT INTO " . $tables['file_title'] . " (file_id,title_id) VALUES (" . $file['id'] . "," . $title['id'] . ") ON DUPLICATE KEY UPDATE title_id=VALUES(title_id)" . "\n";
-				//echo $file['file'] . " => " . $title['title'] . "\n";
 			}
 		}
 	}
