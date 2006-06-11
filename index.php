@@ -65,7 +65,7 @@
  	else if (!isset($_GET['id']))
 		$errorstr = "No file specified";
 	else {
-		$file = $db->CacheGetRow($mdb_conf['secs2cache'],"SELECT * FROM " . $tables['files'] . " WHERE id=" . $_GET['id'] . " LIMIT 1");
+		$file = $db->GetRow($mdb_conf['secs2cache'],"SELECT * FROM " . $tables['files'] . " WHERE id=" . $_GET['id'] . " LIMIT 1");
 		if (!$file)
 			$errorstr = "No such file";
 		else {
@@ -99,6 +99,31 @@
  $tpl->display("mainstart.tpl");
  if (isset($_GET['u'])) {
  	switch ($_GET['u']) {
+		case "taglist":
+			$tpl->assign("taglist",taglist());
+			$tpl->assign("tagcloudmax",$mdb_conf['tagcloudmax']);
+			$tpl->assign("tagcloudmin",$mdb_conf['tagcloudmin']);
+			$tpl->assign("tagcloudrange",$mdb_conf['tagcloudmax']-$mdb_conf['tagcloudmin']);
+			$tpl->display("taglist.tpl");
+			break;
+		case "deltag":
+			deltag($_GET['id']);
+			echo "Tag removed";
+			break;
+		case "addtag":
+			addtag($_GET['tid'],$_POST['tag']);
+			$tpl->clear_all_assign();
+			$tpl->assign("title",titleinfo($_GET['tid']));
+ 			$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
+			$tpl->assign("taglist",taglist());
+			$tpl->display("title.tpl");
+			break;
+		case "tag":
+			$tpl->clear_all_assign();
+			$tpl->assign("tag",taginfo($_GET['id']));
+ 			$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
+			$tpl->display("tag.tpl");
+			break;
 		case "file":
 			echo $errorstr;
 			break;
@@ -123,6 +148,7 @@
 			$tpl->clear_all_assign();
 			$tpl->assign("title",titleinfo($_GET['id']));
  			$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
+			$tpl->assign("taglist",taglist());
 			$tpl->display("title.tpl");
 			break;
 		case "unmap":

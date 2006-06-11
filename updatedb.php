@@ -126,9 +126,10 @@
  	global $db,$tables,$mdb_conf;
 	$titles = $db->GetArray("SELECT * FROM " . $tables['titles']);
 	foreach ($titles as $i => $title) {
-		if ((!file_exists($mdb_conf['root'] . $title['path'])) || is_link($mdb_conf['root'] . $file['file'])) {
+		if ((!file_exists($mdb_conf['root'] . $title['path'])) || is_link($mdb_conf['root'] . $title['path'])) {
 			$db->Execute("DELETE FROM " . $tables['titles'] . " WHERE id=" . $title['id'] . " LIMIT 1");
 			$db->Execute("DELETE FROM " . $tables['file_title'] . " WHERE title_id=" . $title['id']);
+			$db->Execute("DELETE FROM " . $tables['title_tag'] . " WHERE title_id=" . $title['id']);
 		}
 	}
  }

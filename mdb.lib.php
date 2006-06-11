@@ -27,16 +27,16 @@
 	$letters = array("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z");
 	$numbers = array("0","1","2","3","4","5","6","7","8","9");
 	foreach ($numbers as $i => $number) {
-		$temp = $db->CacheGetArray($mdb_conf['secs2cache'],"SELECT * FROM " . $tables['titles'] . " WHERE LEFT(TRIM(title),1)=" . $db->qstr($number) . " ORDER BY title");
+		$temp = $db->GetArray("SELECT * FROM " . $tables['titles'] . " WHERE LEFT(TRIM(title),1)=" . $db->qstr($number) . " ORDER BY title");
 		if (sizeof($temp) > 0)
 			$titles[$number] = $temp;
 	}
 	foreach ($letters as $i => $letter) {
-		$temp = $db->CacheGetArray($mdb_conf['secs2cache'],"SELECT * FROM " . $tables['titles'] . " WHERE LEFT(UPPER(TRIM(title)),1)=" . $db->qstr($letter) . " ORDER BY title");
+		$temp = $db->GetArray("SELECT * FROM " . $tables['titles'] . " WHERE LEFT(UPPER(TRIM(title)),1)=" . $db->qstr($letter) . " ORDER BY title");
 		if (sizeof($temp) > 0)
 			$titles[strtolower($letter)] = $temp;
 	}
-	$temp = $db->CacheGetArray($mdb_conf['secs2cache'],"SELECT * FROM " . $tables['titles'] . " WHERE LEFT(UPPER(TRIM(title)),1) NOT IN ('" . implode("','",$letters) . "','" . implode("','",$numbers) . "') ORDER BY title");
+	$temp = $db->GetArray("SELECT * FROM " . $tables['titles'] . " WHERE LEFT(UPPER(TRIM(title)),1) NOT IN ('" . implode("','",$letters) . "','" . implode("','",$numbers) . "') ORDER BY title");
 	if (sizeof($temp) > 0)
 		$titles['other'] = $temp;
 	return $titles;
@@ -53,7 +53,7 @@
 		echo "No password entered";
 		return;
 	}
-	$u = $db->CacheGetRow($mdb_conf['secs2cache'],"SELECT * FROM " . $tables['users'] . " WHERE username=" . $db->qstr($user) . " LIMIT 1");
+	$u = $db->GetRow("SELECT * FROM " . $tables['users'] . " WHERE username=" . $db->qstr($user) . " LIMIT 1");
 	if (!$u) {
 		echo "No such user";
 		return;
@@ -94,7 +94,7 @@ function highlight(&$string, $substr, $type = "highlight")
 		return;
 	}
 	if ($criteria === "All" || $criteria === "Titles") {
-		$ret = $db->CacheGetArray($mdb_conf['secs2cache'],"SELECT * FROM " . $tables['titles'] . " WHERE title LIKE '%" . $search . "%' ORDER BY title");
+		$ret = $db->GetArray("SELECT * FROM " . $tables['titles'] . " WHERE title LIKE '%" . $search . "%' ORDER BY title");
 		$size = count($ret);
 		if ($size > 0) {
 			for ($i = 0; $i < $size; $i++)
@@ -103,7 +103,7 @@ function highlight(&$string, $substr, $type = "highlight")
 		}
 	}
 	if ($criteria === "All" || $criteria === "Files") {
-		$ret = $db->CacheGetArray($mdb_conf['secs2cache'],"SELECT * FROM " . $tables['files'] . " WHERE file LIKE '%/%/%" . $search . "%' ORDER BY file");
+		$ret = $db->GetArray("SELECT * FROM " . $tables['files'] . " WHERE file LIKE '%/%/%" . $search . "%' ORDER BY file");
 		$size = count($ret);
 		if ($size > 0) {
 			for ($i = 0; $i < $size; $i++)
@@ -121,12 +121,12 @@ function highlight(&$string, $substr, $type = "highlight")
 		echo "No title specified";
 		return;
 	}
-	$title = $db->CacheGetRow($mdb_conf['secs2cache'],"SELECT * FROM " . $tables['titles'] . " WHERE id=" . $tid . " LIMIT 1");
+	$title = $db->GetRow("SELECT * FROM " . $tables['titles'] . " WHERE id=" . $tid . " LIMIT 1");
 	if (!$title) {
 		echo "No such title";
 		return;
 	}
-	$temp = $db->CacheGetArray($mdb_conf['secs2cache'],"SELECT t1.* FROM " . $tables['files'] . " AS t1, " . $tables['file_title'] . " AS t2 WHERE t2.title_id=" . $tid . " AND t2.file_id=t1.id ORDER BY t1.file");
+	$temp = $db->GetArray("SELECT t1.* FROM " . $tables['files'] . " AS t1, " . $tables['file_title'] . " AS t2 WHERE t2.title_id=" . $tid . " AND t2.file_id=t1.id ORDER BY t1.file");
 	if (sizeof($temp) > 0) {
 		$len = strlen($title['path'])+1;
 		$size = count($temp);
@@ -134,7 +134,10 @@ function highlight(&$string, $substr, $type = "highlight")
 			$temp[$i]['file'] = substr($temp[$i]['file'],$len);
 		$title['files'] = $temp;
 	}
-	$title['size'] = $db->CacheGetOne($mdb_conf['secs2cache'],"SELECT SUM(t1.size) FROM " . $tables['files'] . " AS t1, " . $tables['file_title'] . " AS t2 WHERE t1.id=t2.file_id AND t2.title_id=" . $title['id']);
+	$temp = $db->GetArray("SELECT t1.* FROM " . $tables['tags'] . " AS t1, " . $tables['title_tag'] . " AS t2 WHERE t2.title_id=" . $tid . " AND t2.tag_id=t1.id ORDER BY t1.tag");
+	if (sizeof($temp) > 0)
+		$title['tags'] = $temp;
+	$title['size'] = $db->GetOne("SELECT SUM(t1.size) FROM " . $tables['files'] . " AS t1, " . $tables['file_title'] . " AS t2 WHERE t1.id=t2.file_id AND t2.title_id=" . $title['id']);
 	return $title;
  }
 
@@ -177,16 +180,16 @@ function dbstats()
 	$tpl->assign("uptime_days",$uptime);
 	$tpl->assign("uptime_percent",$percentage);
 	$tpl->assign("loadavg",$load);
-	$tpl->assign("files",$db->CacheGetOne($mdb_conf['secs2cache'],"SELECT COUNT(id) FROM " . $tables['files']));
-	$tpl->assign("titles",$db->CacheGetOne($mdb_conf['secs2cache'],"SELECT COUNT(id) FROM " . $tables['titles']));
-	$tpl->assign("users",$db->CacheGetOne($mdb_conf['secs2cache'],"SELECT COUNT(id) FROM " . $tables['users']));
+	$tpl->assign("files",$db->GetOne("SELECT COUNT(id) FROM " . $tables['files']));
+	$tpl->assign("titles",$db->GetOne("SELECT COUNT(id) FROM " . $tables['titles']));
+	$tpl->assign("users",$db->GetOne("SELECT COUNT(id) FROM " . $tables['users']));
 	$tpl->display("stats.tpl");
-	$dbstats = $db->CacheGetArray($mdb_conf['secs2cache'],"SHOW TABLE STATUS");
+	$dbstats = $db->GetArray("SHOW TABLE STATUS");
 	$total = 0;
 	foreach ($dbstats as $row) {
 		if (in_array($row['Name'],$tables)) {
 			if ($mdb_conf['optimize'])
-				$db->CacheExecute($mdb_conf['secs2cache'],"OPTIMIZE TABLE " . $db->qstr($row['Name']));
+				$db->Execute("OPTIMIZE TABLE " . $db->qstr($row['Name']));
 			$tpl->clear_all_assign();
 			$tpl->assign("table",$row);
 			if (isset($row['Data_length']) && isset($row['Index_length'])) {
@@ -264,10 +267,75 @@ function mainpage()
 	global $tpl,$mdb_appstring,$db,$tables,$mdb_conf;
 	$tpl->clear_all_assign();
 	$tpl->assign("banner",$mdb_appstring);
-	$tpl->assign("titlecount",$db->CacheGetOne($mdb_conf['secs2cache'],"SELECT COUNT(id) FROM " . $tables['titles']));
-	$tpl->assign("filecount",$db->CacheGetOne($mdb_conf['secs2cache'],"SELECT COUNT(id) FROM " . $tables['files']));
-	$tpl->assign("size",$db->CacheGetOne($mdb_conf['secs2cache'],"SELECT SUM(size) FROM " . $tables['files']));
+	$tpl->assign("titlecount",$db->GetOne("SELECT COUNT(id) FROM " . $tables['titles']));
+	$tpl->assign("filecount",$db->GetOne("SELECT COUNT(id) FROM " . $tables['files']));
+	$tpl->assign("size",$db->GetOne("SELECT SUM(size) FROM " . $tables['files']));
 	$tpl->display("main.tpl");
+}
+
+function taginfo($id)
+{
+	global $db,$tables,$mdb_conf;
+	if (!isset($id))
+		return null;
+	$tag = $db->GetRow("SELECT * FROM " . $tables['tags'] . " WHERE id=" . $id . " LIMIT 1");
+	if (!$tag)
+		return null;
+	$temp = $db->GetArray("SELECT t1.* FROM " . $tables['titles'] . " AS t1, " . $tables['title_tag'] . " AS t2 WHERE t2.tag_id=" . $id . " AND t2.title_id=t1.id ORDER BY t1.title");
+	if (sizeof($temp) > 0)
+		$tag['titles'] = $temp;
+	$tag['count'] = sizeof($temp);
+	return $tag;
+}
+
+function addtag($tid,$tag)
+{
+	global $db,$tables,$mdb_conf;
+	if (!isset($_SESSION[$mdb_conf['session_key']]['user'])) {
+		echo "You do not have access to this feature!";
+		return;
+	}
+	if (!$tid) {
+		echo "No series specified";
+		return;
+	}
+	$tag = trim($tag);
+	if (!(isset($tag) && (strlen($tag) > 0))) {
+		echo "No tag specified";
+		return;
+	}
+	$id = $db->GetOne("SELECT id FROM " . $tables['tags'] . " WHERE UPPER(tag) LIKE '%" . strtoupper($tag) . "%' LIMIT 1");
+	if (!$id) {
+		$db->Execute("INSERT INTO " . $tables['tags'] . " (tag) VALUES (" . $db->qstr(strtolower($tag)) . ")");
+		$id = $db->_insertid();
+	}
+	$db->Execute("INSERT IGNORE INTO " . $tables['title_tag'] . " (title_id,tag_id) VALUES (" . $tid . "," . $id . ")");
+	return;
+}
+
+function taglist()
+{
+	global $db,$tables,$mdb_conf;
+	$tags = $db->GetArray("SELECT * FROM " . $tables['tags'] . " ORDER BY tag");
+	$size = count($tags);
+	for ($i = 0; $i < $size; $i++)
+		$tags[$i]['count'] = $db->GetOne("SELECT COUNT(title_id) FROM " . $tables['title_tag'] . " WHERE tag_id=" . $tags[$i]['id']);
+	return $tags;
+}
+
+function deltag($tid)
+{
+	global $db,$tables,$mdb_conf;
+	if (!(isset($_SESSION[$mdb_conf['session_key']]['user']) && ($_SESSION[$mdb_conf['session_key']]['user']['privilege'] > 0))) {
+		echo "You do not have access to this feature!";
+		return;
+	}
+	if (!$tid) {
+		echo "No series specified";
+		return;
+	}
+	$db->Execute("DELETE FROM " . $tables['tags'] . " WHERE id=" . $tid . " LIMIT 1");
+	$db->Execute("DELETE FROM " . $tables['title_tag'] . " WHERE tag_id=" . $tid);
 }
 
 ?>

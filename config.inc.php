@@ -141,4 +141,16 @@ $mdb_conf['smarty_prefix'] = "smarty/";
   */
  $mdb_conf['optimize'] = TRUE;
 
+ /*
+  * tagcloudmax
+  * Maximum font size (in pixels) for tag cloud items
+  */
+ $mdb_conf['tagcloudmax'] = 50;
+
+ /*
+  * tagcloudmin
+  * Minimum font size (in pixels) for tag cloud items
+  */
+ $mdb_conf['tagcloudmin'] = 10;
+
 ?>
