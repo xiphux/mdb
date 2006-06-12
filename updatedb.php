@@ -103,7 +103,7 @@
 	return implode(" ",$a);
  }
 
- function update_titles()
+ function update_titles(&$deleted)
  {
  	global $mdb_conf,$db,$tables;
 	foreach ($mdb_conf['titlebase'] as $i => $title) {
@@ -111,8 +111,16 @@
 			if ($dh = opendir($mdb_conf['root'] . $title)) {
 				while (($file = readdir($dh)) !== false) {
 					if (!(in_array($file,$mdb_conf['excludes']) || is_link($mdb_conf['root'] . $title . "/" . $file) || (substr($file,0,1) == "."))) {
-						$db->Execute("INSERT IGNORE INTO " . $tables['titles'] . " (path,title) VALUES (" . $db->qstr($title . "/" . $file) . "," . $db->qstr(uppercase($file)) . ")");
-						
+						$q = "INSERT IGNORE INTO " . $tables['titles'] . "(";
+						$q2 = "path,title) VALUES(";
+						$q3 = $db->qstr($title . "/" . $file) . "," . $db->qstr(uppercase($file)) . ")";
+						$path = $title . "/" . $file;
+						if (isset($deleted[$path])) {
+							$q .= "id,";
+							$q2 .= $deleted[$path] . ",";
+						}
+						$db->Execute($q . $q2 . $q3);
+						unset($deleted[$path]);
 					}
 				}
 				closedir($dh);
@@ -124,14 +132,23 @@
  function prune_titles()
  {
  	global $db,$tables,$mdb_conf;
+	$deleted = array();
 	$titles = $db->GetArray("SELECT * FROM " . $tables['titles']);
 	foreach ($titles as $i => $title) {
 		if ((!file_exists($mdb_conf['root'] . $title['path'])) || is_link($mdb_conf['root'] . $title['path'])) {
 			$db->Execute("DELETE FROM " . $tables['titles'] . " WHERE id=" . $title['id'] . " LIMIT 1");
 			$db->Execute("DELETE FROM " . $tables['file_title'] . " WHERE title_id=" . $title['id']);
-			$db->Execute("DELETE FROM " . $tables['title_tag'] . " WHERE title_id=" . $title['id']);
+			$deleted[$title['path']] = $title['id'];
 		}
 	}
+	return $deleted;
+ }
+
+ function prune_titles_2($deleted)
+ {
+ 	global $db,$tables;
+	foreach ($deleted as $i => $k)
+		$db->Execute("DELETE FROM " . $tables['title_tag'] . " WHERE title_id=" . $k);
  }
 
  function maintain_associations()
@@ -155,9 +172,9 @@
 		$db->Execute("OPTIMIZE TABLE " . $db->qstr($table));
  }
 
- prune_titles();
+ $del = prune_titles();
 
- update_titles();
+ update_titles($del);
 
  prunedb();
 
