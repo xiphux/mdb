@@ -149,9 +149,14 @@ function highlight(&$string, $substr, $type = "highlight")
 	if (sizeof($temp) > 0)
 		$title['tags'] = $temp;
 	$title['size'] = $db->GetOne("SELECT SUM(t1.size) FROM " . $tables['files'] . " AS t1, " . $tables['file_title'] . " AS t2 WHERE t1.id=t2.file_id AND t2.title_id=" . $title['id']);
-	$temp = $db->GetRow("SELECT * FROM " . $tables['animenfo'] . " WHERE title_id=" . $tid . " LIMIT 1");
-	if ($temp)
-		$title['info']['animenfo'] = animenfo_link($temp);;
+	$temp = $db->GetArray("SELECT * FROM " . $tables['animenfo'] . " WHERE title_id=" . $tid);
+	if ($temp && (sizeof($temp) > 0)) {
+		$size = sizeof($temp);
+		for ($i = 0; $i < $size; $i++) {
+			$temp[$i]['link'] = animenfo_link($temp[$i]);
+		}
+		$title['info']['animenfo'] = $temp;
+	}
 	return $title;
  }
 
