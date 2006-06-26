@@ -37,7 +37,8 @@
  function insert_file($file)
  {
  	global $db,$tables,$mdb_conf;
-	$db->Execute("INSERT INTO " . $tables['files'] . " (file,size) VALUES (" . $db->qstr(substr($file,strlen($mdb_conf['root'])+1)) . "," . $db->qstr(fsize($file)) . ") ON DUPLICATE KEY UPDATE size=VALUES(size)");
+	if (!in_array(substr($file,-3),$mdb_conf['ext_excludes']))
+		$db->Execute("INSERT INTO " . $tables['files'] . " (file,size) VALUES (" . $db->qstr(substr($file,strlen($mdb_conf['root'])+1)) . "," . $db->qstr(fsize($file)) . ") ON DUPLICATE KEY UPDATE size=VALUES(size)");
  }
 
  function index_dir($dir)
@@ -63,7 +64,7 @@
  	global $db,$tables,$mdb_conf;
 	$files = $db->GetArray("SELECT * FROM " . $tables['files']);
 	foreach ($files as $i => $file) {
-		if ((!file_exists($mdb_conf['root'] . $file['file'])) || in_array(substr($file['file'],(strripos($file['file'],"/")===false?0:strripos($file['file'],"/")+1)),$mdb_conf['excludes']) || is_link($mdb_conf['root'] . $file['file'])) {
+		if ((!file_exists($mdb_conf['root'] . $file['file'])) || in_array(substr($file['file'],(strripos($file['file'],"/")===false?0:strripos($file['file'],"/")+1)),$mdb_conf['excludes']) || is_link($mdb_conf['root'] . $file['file']) || in_array(substr($file['file'],-3),$mdb_conf['ext_excludes'])) {
 			$db->Execute("DELETE FROM " . $tables['files'] . " WHERE id=" . $file['id'] . " LIMIT 1");
 			$db->Execute("DELETE FROM " . $tables['file_title'] . " WHERE file_id=" . $file['id']);
 		}
@@ -115,13 +116,13 @@
 						$q2 = "path,title) VALUES(";
 						$q3 = $db->qstr($title . "/" . $file) . "," . $db->qstr(uppercase($file)) . ")";
 						$path = $title . "/" . $file;
-						//echo "INSERTED: " . $path . "\n";
-						if (isset($deleted[$path])) {
+						$bn = basename($path);
+						if (isset($deleted[$bn])) {
 							$q .= "id,";
-							$q2 .= $deleted[$path] . ",";
+							$q2 .= $deleted[$bn] . ",";
 						}
 						$db->Execute($q . $q2 . $q3);
-						unset($deleted[$path]);
+						unset($deleted[$bn]);
 					}
 				}
 				closedir($dh);
@@ -139,8 +140,7 @@
 		if ((!file_exists($mdb_conf['root'] . $title['path'])) || is_link($mdb_conf['root'] . $title['path'])) {
 			$db->Execute("DELETE FROM " . $tables['titles'] . " WHERE id=" . $title['id'] . " LIMIT 1");
 			$db->Execute("DELETE FROM " . $tables['file_title'] . " WHERE title_id=" . $title['id']);
-			$deleted[$title['path']] = $title['id'];
-			echo "DELETED: " . $title['path'] . " -> " . $title['id'] . "\n";
+			$deleted[basename($title['path'])] = $title['id'];
 		}
 	}
 	return $deleted;
