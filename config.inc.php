@@ -109,6 +109,15 @@ $mdb_conf['smarty_prefix'] = "smarty/";
  );
 
  /*
+  * File extensions to exclude
+  */
+ $mdb_conf['ext_excludes'] = array(
+ 	"sfv",
+	"txt",
+	"nfo",
+ );
+
+ /*
   * Title base
   * This is an array of base directories inside which are titles
   * So, for example, if you specify the array as "anime1" and "anime2",
