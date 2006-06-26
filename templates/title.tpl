@@ -21,10 +21,14 @@
  *}
 <p><span class="bold"><span class="underline">{$title.title}</span></span> [<span class="highlight" title="{$title.size}">{$title.size|size}</span>]</p>
 {if $title.info}
-<p>
-Info:
-{foreach from=$title.info.animenfo name=nfo item=nfolnk}{if !$smarty.foreach.nfo.first},{/if} <a href="{$nfolnk.link}">AnimeNFO{if $nfolnk.name} ({$nfolnk.name}){/if}</a>{/foreach}
-</p>
+<table>
+{foreach from=$title.info.animenfo name=nfo item=nfolnk}
+<tr>
+<td>{if $smarty.foreach.nfo.first}Info:{/if}</td>
+<td><a href="{$nfolnk.link}">AnimeNFO{if $nfolnk.name} ({$nfolnk.name}){/if}</a></td>
+</tr>
+{/foreach}
+</table>
 {/if}
 <p>
 Tags:
