@@ -20,6 +20,9 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *}
 <p><span class="bold"><span class="underline">{$title.title}</span></span> [<span class="highlight" title="{$title.size}">{$title.size|size}</span>]</p>
+{if $title.info}
+<p>Info: {if $title.info.animenfo}<a href="{$title.info.animenfo}">AnimeNFO</a>{/if}</p>
+{/if}
 <p>
 Tags:
 {foreach from=$title.tags name=tags item=tag}

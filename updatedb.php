@@ -115,6 +115,7 @@
 						$q2 = "path,title) VALUES(";
 						$q3 = $db->qstr($title . "/" . $file) . "," . $db->qstr(uppercase($file)) . ")";
 						$path = $title . "/" . $file;
+						//echo "INSERTED: " . $path . "\n";
 						if (isset($deleted[$path])) {
 							$q .= "id,";
 							$q2 .= $deleted[$path] . ",";
@@ -139,6 +140,7 @@
 			$db->Execute("DELETE FROM " . $tables['titles'] . " WHERE id=" . $title['id'] . " LIMIT 1");
 			$db->Execute("DELETE FROM " . $tables['file_title'] . " WHERE title_id=" . $title['id']);
 			$deleted[$title['path']] = $title['id'];
+			echo "DELETED: " . $title['path'] . " -> " . $title['id'] . "\n";
 		}
 	}
 	return $deleted;
@@ -147,8 +149,10 @@
  function prune_titles_2($deleted)
  {
  	global $db,$tables;
-	foreach ($deleted as $i => $k)
+	foreach ($deleted as $i => $k) {
 		$db->Execute("DELETE FROM " . $tables['title_tag'] . " WHERE title_id=" . $k);
+		$db->Execute("DELETE FROM " . $tables['animenfo'] . " WHERE title_id=" . $k);
+	}
  }
 
  function maintain_associations()

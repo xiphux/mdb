@@ -21,6 +21,17 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+ define('ANIMENFO_BASE','http://www.animenfo.com');
+
+ function animenfo_link($data)
+ {
+ 	$url = ANIMENFO_BASE;
+	if (!(isset($data['nfo_id']) && isset($data['nfo_type']) && isset($data['nfo_n']) && isset($data['nfo_t'])))
+		return $url;
+	$url .= "/" . $data['nfo_type'] . "title" . "," . $data['nfo_id'] . "," . $data['nfo_n'] . "," . $data['nfo_t'] . ".html";
+	return $url;
+ }
+
  function titlelist()
  {
  	global $db,$tables,$mdb_conf;
@@ -138,6 +149,9 @@ function highlight(&$string, $substr, $type = "highlight")
 	if (sizeof($temp) > 0)
 		$title['tags'] = $temp;
 	$title['size'] = $db->GetOne("SELECT SUM(t1.size) FROM " . $tables['files'] . " AS t1, " . $tables['file_title'] . " AS t2 WHERE t1.id=t2.file_id AND t2.title_id=" . $title['id']);
+	$temp = $db->GetRow("SELECT * FROM " . $tables['animenfo'] . " WHERE title_id=" . $tid . " LIMIT 1");
+	if ($temp)
+		$title['info']['animenfo'] = animenfo_link($temp);;
 	return $title;
  }
 
