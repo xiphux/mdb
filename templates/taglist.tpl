@@ -19,7 +19,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *}
- <p>
+ <div id="tagbox">
  {if $taglist}
  {assign var="max" value=0}
  {foreach from=$taglist item=tag}
@@ -33,4 +33,4 @@
  {else}
  <span class="italic">No tags</span>
  {/if}
- </p>
+ </div>
