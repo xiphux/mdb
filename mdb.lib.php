@@ -21,8 +21,15 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+ /*
+  * Base animenfo url
+  */
  define('ANIMENFO_BASE','http://www.animenfo.com');
 
+ /*
+  * animenfo_link
+  * Returns full animenfo link from array of link data
+  */
  function animenfo_link($data)
  {
  	$url = ANIMENFO_BASE;
@@ -32,6 +39,10 @@
 	return $url;
  }
 
+ /*
+  * titlelist
+  * Returns a list of titles sorted by first letter/number
+  */
  function titlelist()
  {
  	global $db,$tables,$mdb_conf;
@@ -53,6 +64,11 @@
 	return $titles;
  }
 
+ /*
+  * login
+  * Tests a given user/pass for validity and sets the session key
+  * if legitimate
+  */
  function login($user,$pass)
  {
  	global $mdb_conf,$db,$tables;
@@ -77,6 +93,11 @@
 	echo "Logged in successfully";
  }
 
+ /*
+  * updatedb
+  * Executes the updatedb script in the background
+  * and displays the update screen
+  */
  function updatedb()
  {
  	global $mdb_conf,$tpl;
@@ -90,14 +111,23 @@
 	$tpl->display("updatedb.tpl");
  }
 
-function highlight(&$string, $substr, $type = "highlight")
-{
+ /*
+  * highlight
+  * Highlights a substring in a given string
+  */
+ function highlight(&$string, $substr, $type = "highlight")
+ {
 	$string = "<span>" . $string . "</span>";
 	$string = eregi_replace("(>[^<]*)(" . quotemeta($substr) . ")","\\1<span class=\"" . $type . "\">\\2</span>",$string);
 	$string = eregi_replace("<span>","",$string);
 	$string = substr($string,0,-7);
-}
+ }
 
+ /*
+  * search
+  * Searches the database for a string according to certain
+  * criteria
+  */
  function search($search,$criteria)
  {
  	global $db,$tables,$mdb_conf;
@@ -126,6 +156,10 @@ function highlight(&$string, $substr, $type = "highlight")
 	return $results;
  }
 
+ /*
+  * titleinfo
+  * Fetches and returns all data on a given title
+  */
  function titleinfo($tid)
  {
  	global $db,$tables,$mdb_conf;
@@ -161,6 +195,10 @@ function highlight(&$string, $substr, $type = "highlight")
 	return $title;
  }
 
+ /*
+  * readfile_chunked
+  * Reads a file and sends it to the browser in chunks
+  */
  function readfile_chunked($filename) {
  	$chunksize = 1 * (1024 * 1024);
 	$buffer = '';
@@ -176,6 +214,10 @@ function highlight(&$string, $substr, $type = "highlight")
 	return fclose($handle);
 }
 
+/*
+ * dbstats
+ * Displays database statistics
+ */
 function dbstats()
 {
 	global $mdb_conf,$db,$tpl,$tables,$mdb_appstring;
@@ -225,6 +267,10 @@ function dbstats()
 	$tpl->display("stats_sum.tpl");
 }
 
+/*
+ * unmapped
+ * Tests for any files that are not mapped to a title
+ */
 function unmapped()
 {
 	global $db,$tables;
@@ -282,6 +328,10 @@ function size_readable($size, $unit = null, $retstring = null, $si = true)
     return sprintf($retstring, $size, $sizes[$i]);
 }
 
+/*
+ * mainpage
+ * Displays main menu page
+ */
 function mainpage()
 {
 	global $tpl,$mdb_appstring,$db,$tables,$mdb_conf;
@@ -293,6 +343,10 @@ function mainpage()
 	$tpl->display("main.tpl");
 }
 
+/*
+ * taginfo
+ * Fetches all info on a given tag
+ */
 function taginfo($id)
 {
 	global $db,$tables,$mdb_conf;
@@ -308,6 +362,10 @@ function taginfo($id)
 	return $tag;
 }
 
+/*
+ * addtag
+ * Adds a tag to a title (creating new tag if necessary)
+ */
 function addtag($tid,$tag)
 {
 	global $db,$tables,$mdb_conf;
@@ -333,6 +391,10 @@ function addtag($tid,$tag)
 	return;
 }
 
+/*
+ * taglist
+ * Returns list of tags with counts
+ */
 function taglist()
 {
 	global $db,$tables,$mdb_conf;
@@ -343,6 +405,10 @@ function taglist()
 	return $tags;
 }
 
+/*
+ * deltag
+ * Deletes a given tag
+ */
 function deltag($tid)
 {
 	global $db,$tables,$mdb_conf;

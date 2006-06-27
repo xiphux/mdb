@@ -21,11 +21,18 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+ /*
+  * Basic mutex
+  */
  if (shell_exec("ps ax | grep -v 'grep' | grep -c 'php updatedb.php'") > 1)
  	exit;
 
  include_once('db.inc.php');
 
+ /*
+  * fsize
+  * Gets filesize, falling back on shell execution of 'ls' if necessary
+  */
  function fsize($file)
  {
  	$sz = @filesize($file);
@@ -34,6 +41,10 @@
 	return $sz;
  }
 
+ /*
+  * insert_file
+  * Inserts a file
+  */
  function insert_file($file)
  {
  	global $db,$tables,$mdb_conf;
@@ -41,6 +52,10 @@
 		$db->Execute("INSERT INTO " . $tables['files'] . " (file,size) VALUES (" . $db->qstr(substr($file,strlen($mdb_conf['root'])+1)) . "," . $db->qstr(fsize($file)) . ") ON DUPLICATE KEY UPDATE size=VALUES(size)");
  }
 
+ /*
+  * index_dir
+  * Recursively indexes and inserts files in a dir
+  */
  function index_dir($dir)
  {
  	global $mdb_conf;
@@ -58,7 +73,11 @@
 		}
 	}
  }
-
+ 
+ /*
+  * prunedb
+  * Prunes out file entries that no longer exist
+  */
  function prunedb()
  {
  	global $db,$tables,$mdb_conf;
@@ -70,7 +89,10 @@
 		}
 	}
  }
-
+ 
+ /*
+  * Uppercases first letters of words, with certain exceptions
+  */
  function uppercase($str)
  {
  	$lower = array(
@@ -104,6 +126,11 @@
 	return implode(" ",$a);
  }
 
+ /*
+  * update_titles
+  * Inserts new titles, using stored ids from the
+  * 'deleted' array if necessary
+  */
  function update_titles(&$deleted)
  {
  	global $mdb_conf,$db,$tables;
@@ -131,6 +158,11 @@
 	}
  }
 
+ /*
+  * prune_titles
+  * Prune titles, step 1 - delete titles that no longer exist, and stores
+  * deleted ids in the 'deleted' array
+  */
  function prune_titles()
  {
  	global $db,$tables,$mdb_conf;
@@ -146,6 +178,12 @@
 	return $deleted;
  }
 
+ /*
+  * prune_titles_2
+  * Prune titles, step 2 - deletes tag/nfo metadata for
+  * titles that are in the deleted array (and therefore
+  * were not just migrated but fully deleted)
+  */
  function prune_titles_2($deleted)
  {
  	global $db,$tables;
@@ -155,6 +193,10 @@
 	}
  }
 
+ /*
+  * maintain_associations
+  * Updates file/title associations
+  */
  function maintain_associations()
  {
  	global $db,$tables,$mdb_conf;
@@ -169,16 +211,22 @@
 	}
  }
 
+ /*
+  * optimizedb
+  * Calls mysql optimize on all tables
+  */
  function optimizedb()
  {
  	global $db,$tables;
 	foreach ($tables as $i => $table)
 		$db->Execute("OPTIMIZE TABLE " . $db->qstr($table));
  }
-
+ 
  $del = prune_titles();
 
  update_titles($del);
+
+ prune_titles_2($del);
 
  prunedb();
 
