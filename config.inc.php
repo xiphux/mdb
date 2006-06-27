@@ -162,4 +162,10 @@ $mdb_conf['smarty_prefix'] = "smarty/";
   */
  $mdb_conf['tagcloudmin'] = 10;
 
+ /*
+  * updatedbstatus_interval
+  * How often (in milliseconds) to query updatedb status via AJAX
+  */
+ $mdb_conf['updatedbstatus_interval'] = 2000;
+
 ?>

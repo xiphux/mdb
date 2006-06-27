@@ -76,11 +76,11 @@
    loadXHR();
    req.send(null);
    if (complete == false)
-     timeout = window.setTimeout("updatestatus()",1000);
+     timeout = window.setTimeout("updatestatus()",{/literal}{$interval}{literal});
    else
      clearTimeout(timeout);
  }
- timeout = window.setTimeout("updatestatus()",1000);
+ timeout = window.setTimeout("updatestatus()",{/literal}{$interval}{literal});
  //]]>
  </script>
  {/literal}
