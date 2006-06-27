@@ -23,7 +23,7 @@
  {if $tag}
  <span class="bold">{$tag.tag} ({$tag.count})</span>
  {if $user.privilege > 0}
- <br /><a href="{$SCRIPT_NAME}?u=deltag&id={$tag.id}">Delete tag</a>
+ <br /><a href="{$SCRIPT_NAME}?u=deltag&id={$tag.id}"><span class="warning">Delete tag</span></a>
  {/if}
  </p>
  <p>Matching titles:
