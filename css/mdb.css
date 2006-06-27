@@ -22,5 +22,7 @@ div.main {position:absolute;top:0px;left:21%;width:79%;}
 div.main div {position:relative;}
 table {table-layout: fixed; border-style:none;}
 tr.odd {background-color: #111;}
+tr.odd:hover {background-color: #222;}
 tr.even {background-color: #000;}
+tr.even:hover {background-color: #222;}
 div#updatedb {font-weight:bold;color:blue;}
