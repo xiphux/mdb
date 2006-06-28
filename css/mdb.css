@@ -19,7 +19,7 @@ div.miniblocktitle {background: transparent url("../images/level1_sub.gif") no-r
 div.miniblockcontent ul li {background: transparent url("../images/level2_regular.gif"); z-index: 9;}
 div.blockcontent ul li a:link {color: red;}
 div.miniblockcontent ul li a:link {color: red;}
-div.main {border: 1px solid #ccc; margin-left: 21%; background: #000 url('../images/mdb-pixel.png') 0 0 no-repeat fixed; padding: 5px 5px 5px 5px;}
+div.main {margin-left: 21%; background: #000 url('../images/mdb-pixel.png') 0 0 no-repeat fixed; padding: 5px 5px 5px 5px;}
 div.main div {position:relative;}
 table {table-layout: fixed; border-style:none;}
 tr.odd {background: #111 url('../images/mdb-pixel.png') 0 0 no-repeat fixed;}
@@ -27,4 +27,5 @@ tr.odd:hover {background-color: #222;}
 tr.even {background: #000 url('../images/mdb-pixel.png') 0 0 no-repeat fixed;}
 tr.even:hover {background-color: #222;}
 div#updatedb {font-weight:bold;color:blue;}
-div#tagbox {padding: 5px 5px 5px 5px;}
+div#tagbox {padding: 5px 5px 5px 5px; border: 1px solid #ccc;}
+div#clearer {clear: both;margin: 0;}
