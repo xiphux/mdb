@@ -19,18 +19,18 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *}
-<table>
-<tr><td><span class="bold">File</span></td><td><span class="bold">Size</span></td></tr>
+<table class="filelist">
+<tr><td class="filename"><span class="bold">File</span></td><td class="filesize"><span class="bold">Size</span></td></tr>
 {foreach from=$filelist item=file}
 <tr class="{cycle values="odd,even"}">
-<td>
+<td class="filename">
 {if $user}
 <a href="{$SCRIPT_NAME}?u=file&id={$file.id}">{$file.file}</a>
 {else}
 {$file.file}
 {/if}
 </td>
-<td title="{$file.size}">
+<td class="filesize" title="{$file.size}">
 {$file.size|size}
 </td>
 </tr>

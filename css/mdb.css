@@ -10,7 +10,7 @@ a:visited {color:red; text-decoration: none;}
 .warning {color:red;}
 form input.focus, form textarea.focus {border-color:lime; color: #000;}
 div#bodydiv {width: 90%; margin: 10px auto; padding-top: 100px;}
-div#sidebar {float: left; width: 20%;}
+div#sidebar {float: left; width: 20%; margin-top: 25px; height: 300px;}
 div.blocktitle {background: transparent url("../images/level0.gif") no-repeat center right;}
 div.blocktitle div {background: transparent url("../images/level0_regular__Right.gif") no-repeat; padding-left:0.25em; margin-left: 0.25em;}
 div.blockcontent ul {list-style:none;font-size:12px;padding:0;margin:0}
@@ -21,11 +21,13 @@ div.blockcontent ul li a:link {color: red;}
 div.miniblockcontent ul li a:link {color: red;}
 div.main {margin-left: 21%; background: #000 url('../images/mdb-pixel.png') 0 0 no-repeat fixed; padding: 5px 5px 5px 5px;}
 div.main div {position:relative;}
-table {table-layout: fixed; border-style:none;}
+table {border-style:none;}
+table.filelist {table-layout: fixed; width: 100%;}
 tr.odd {background: #111 url('../images/mdb-pixel.png') 0 0 no-repeat fixed;}
 tr.odd:hover {background-color: #222;}
 tr.even {background: #000 url('../images/mdb-pixel.png') 0 0 no-repeat fixed;}
 tr.even:hover {background-color: #222;}
+td.filename {width: 90%;overflow: hidden;}
 div#updatedb {font-weight:bold;color:blue;}
 div#tagbox {padding: 5px 5px 5px 5px; border: 1px solid #ccc;}
 div#clearer {clear: both;margin: 0;}
