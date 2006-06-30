@@ -48,11 +48,6 @@ function addFocusHandlers(elements) {
     }
 }
 function init_effects() {
-	var contentblocks = document.getElementsByClassName('blockcontent');
-	var titleblocks = document.getElementsByClassName('blocktitle');
-	var myAccordion = new fx.Accordion(
-		titleblocks,contentblocks,{opacity:true}
-	);
 	var minicontentblocks = document.getElementsByClassName('miniblockcontent');
 	var minititleblocks = document.getElementsByClassName('miniblocktitle');
 	var subAccordion = new fx.Accordion(

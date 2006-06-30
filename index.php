@@ -177,13 +177,15 @@
  $tpl->assign("title",$title);
  $tpl->display("header.tpl");
 
- $tpl->assign("titlelist",titlelist());
  $tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
  if ($mdb_conf['dbstats'])
  	$tpl->assign("dbstats",TRUE);
- $tpl->display("sidebar.tpl");
+ $tpl->display("leftbox.tpl");
 
  echo $main;
+
+ $tpl->assign("titlelist",titlelist());
+ $tpl->display("rightbox.tpl");
 
  $tpl->display("footer.tpl");
 
