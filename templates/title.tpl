@@ -33,7 +33,7 @@
 <p>
 Tags:
 {foreach from=$title.tags name=tags item=tag}
-{if !$smarty.foreach.tags.first},{/if} <a href="{$SCRIPT_NAME}?u=tag&id={$tag.id}">{$tag.tag}</a>
+{if !$smarty.foreach.tags.first},{/if} <a href="{$SCRIPT_NAME}?u=tag&id={$tag.id}">{$tag.tag}</a> {if $user}<a href="{$SCRIPT_NAME}?u=untag&tid={$title.id}&tag={$tag.id}">[-]</a>{/if}
 {foreachelse}
 <span class="italic">None</span>
 {/foreach}

@@ -424,4 +424,42 @@ function deltag($tid)
 	$db->Execute("DELETE FROM " . $tables['title_tag'] . " WHERE tag_id=" . $tid);
 }
 
+/*
+ * prunetags
+ * Remove tags not assigned to any title
+ */
+function prunetags()
+{
+	global $db,$tables;
+	$taglist = taglist();
+	foreach ($taglist as $tag) {
+		if ($tag['count'] == 0) {
+			$db->Execute("DELETE FROM " . $tables['tags'] . " WHERE id=" . $tag['id'] . " LIMIT 1");
+		}
+	}
+}
+
+/*
+ * untag
+ * Removes a tag from a title
+ */
+function untag($tid, $tag)
+{
+	global $db,$tables,$mdb_conf;
+	if (!isset($_SESSION[$mdb_conf['session_key']]['user'])) {
+		echo "You do not have access to this feature!";
+		return;
+	}
+	if (!$tid) {
+		echo "No series specified";
+		return;
+	}
+	if (!$tag) {
+		echo "No tag specified";
+		return;
+	}
+	$db->Execute("DELETE FROM " . $tables['title_tag'] . " WHERE title_id=" . $tid . " AND tag_id=" . $tag);
+	prunetags();
+}
+
 ?>

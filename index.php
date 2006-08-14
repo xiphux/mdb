@@ -118,6 +118,14 @@
 			$tpl->assign("taglist",taglist());
 			$tpl->display("title.tpl");
 			break;
+		case "untag":
+			untag($_GET['tid'],$_GET['tag']);
+			$tpl->clear_all_assign();
+			$tpl->assign("title",titleinfo($_GET['tid']));
+ 			$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
+			$tpl->assign("taglist",taglist());
+			$tpl->display("title.tpl");
+			break;
 		case "tag":
 			$tpl->clear_all_assign();
 			$tpl->assign("tag",taginfo($_GET['id']));
