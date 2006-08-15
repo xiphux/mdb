@@ -67,7 +67,7 @@
  	else if (!isset($_GET['id']))
 		$errorstr = "No file specified";
 	else {
-		$file = $db->GetRow($mdb_conf['secs2cache'],"SELECT * FROM " . $tables['files'] . " WHERE id=" . $_GET['id'] . " LIMIT 1");
+		$file = $db->GetRow("SELECT * FROM " . $tables['files'] . " WHERE id=" . $_GET['id'] . " LIMIT 1");
 		if (!$file)
 			$errorstr = "No such file";
 		else {
