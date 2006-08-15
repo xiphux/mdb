@@ -24,7 +24,7 @@
 {foreach from=$filelist item=file}
 <tr class="{cycle values="odd,even"}">
 <td class="filename">
-{if $user}
+{if $download && $user}
 <a href="{$SCRIPT_NAME}?u=file&id={$file.id}">{$file.file}</a>
 {else}
 {$file.file}

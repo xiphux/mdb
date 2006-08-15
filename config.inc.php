@@ -168,4 +168,10 @@ $mdb_conf['smarty_prefix'] = "smarty/";
   */
  $mdb_conf['updatedbstatus_interval'] = 2000;
 
+ /*
+  * download
+  * Whether to enable file downloading
+  */
+ $mdb_conf['download'] = TRUE;
+
 ?>

@@ -62,6 +62,8 @@
  if ($_GET['u'] === "file") {
  	if (!(isset($_SESSION[$mdb_conf['session_key']]['user'])))
 		$errorstr = "You do not have permission to use this feature!";
+	else if (!$mdb_conf['download'])
+		$errorstr = "File downloads have been disallowed";
  	else if (!isset($_GET['id']))
 		$errorstr = "No file specified";
 	else {
@@ -116,6 +118,8 @@
 			$tpl->assign("title",titleinfo($_GET['tid']));
  			$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
 			$tpl->assign("taglist",taglist());
+			if ($mdb_conf['download'])
+				$tpl->assign("download",TRUE);
 			$tpl->display("title.tpl");
 			break;
 		case "untag":
@@ -124,6 +128,8 @@
 			$tpl->assign("title",titleinfo($_GET['tid']));
  			$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
 			$tpl->assign("taglist",taglist());
+			if ($mdb_conf['download'])
+				$tpl->assign("download",TRUE);
 			$tpl->display("title.tpl");
 			break;
 		case "tag":
@@ -150,6 +156,8 @@
 			$tpl->assign("search",$_POST['search']);
 			$tpl->assign("results",search($_POST['search'],$_POST['criteria']));
  			$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
+			if ($mdb_conf['download'])
+				$tpl->assign("download",TRUE);
 			$tpl->display("search.tpl");
 			break;
 		case "title":
@@ -157,6 +165,8 @@
 			$tpl->assign("title",titleinfo($_GET['id']));
  			$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
 			$tpl->assign("taglist",taglist());
+			if ($mdb_conf['download'])
+				$tpl->assign("download",TRUE);
 			$tpl->display("title.tpl");
 			break;
 		case "unmap":
