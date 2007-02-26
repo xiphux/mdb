@@ -31,6 +31,7 @@ $tables['tags'] = $mdb_conf['prefix'] . "tags";
 $tables['title_tag'] = $mdb_conf['prefix'] . "title_tag";
 $tables['users'] = $mdb_conf['prefix'] . "users";
 $tables['animenfo'] = $mdb_conf['prefix'] . "animenfo";
+$tables['downloads'] = $mdb_conf['prefix'] . "downloads";
 
 $db = NewADOConnection($mdb_conf['db_type']);
 if ($mdb_conf['persist'])

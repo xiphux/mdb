@@ -71,6 +71,8 @@
 		if (!$file)
 			$errorstr = "No such file";
 		else {
+			if ($mdb_conf['download_log'])
+				$db->Execute("INSERT INTO " . $tables['downloads'] . " (uid,user,fid,file,fsize) VALUES (" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . "," . $db->qstr($_SESSION[$mdb_conf['session_key']]['user']['username']) . "," . $file['id'] . "," . $db->qstr($file['file']) . "," . $file['size'] . ")");
 			if (ini_get('zlib.output_compression'))
 				ini_set('zlib.output_compression', 'Off');
 			header("Pragma: public");

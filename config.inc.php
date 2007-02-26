@@ -172,4 +172,10 @@ $mdb_conf['smarty_prefix'] = "smarty/";
   */
  $mdb_conf['download'] = TRUE;
 
+ /*
+  * download_log
+  * Whether to log downloads
+  */
+ $mdb_conf['download_log'] = TRUE;
+
 ?>
