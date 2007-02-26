@@ -127,9 +127,7 @@ $mdb_conf['smarty_prefix'] = "smarty/";
   * "anime2/cowboy bebop/manga" will not.
   */
  $mdb_conf['titlebase'] = array(
- 	"anime1",
-	"anime2",
-	"anime3",
+ 	"anime",
  );
 
  /*
