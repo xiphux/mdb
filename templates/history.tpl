@@ -28,12 +28,14 @@
 <table>
   <tr>
     <td class="date"><span class="bold">Date</span></td>
+    <td class="ip"><span class="bold">IP</span></td>
     <td class="filename"><span class="bold">File</span></td>
     <td class="filesize"><span class="bold">Size</span></td>
   </tr>
 {foreach from=$userhistory item=dl}
   <tr class="{cycle values="odd,even"}">
     <td class="date">{$dl.time}</td>
+    <td class="ip">{$dl.ip}</td>
     <td class="filename">
     {if $dl.fileinfo}
       <a href="{$SCRIPT_NAME}?u=file&id={$dl.fid}">{$dl.file}</a>
@@ -46,7 +48,7 @@
     </td>
   </tr>
 {foreachelse}
-  <tr><td></td><td><span class="italic">No files!</span></td><td></td></tr>
+  <tr><td></td><td></td><td><span class="italic">No files!</span></td><td></td></tr>
 {/foreach}
 </table>
 </p>
@@ -57,12 +59,14 @@ Downloads for {$uhistory.username}:
 <table>
   <tr>
     <td class="date"><span class="bold">Date</span></td>
+    <td class="ip"><span class="bold">IP</span></td>
     <td class="filename"><span class="bold">File</span></td>
     <td class="filesize"><span class="bold">Size</span></td>
   </tr>
   {foreach from=$uhistory.downloads item=dl}
   <tr class="{cycle values="odd,even"}">
     <td class="date">{$dl.time}</td>
+    <td class="ip">{$dl.ip}</td>
     <td class="filename">
     {if $dl.fileinfo}
       <a href="{$SCRIPT_NAME}?u=file&id={$dl.fid}">{$dl.file}</a>
@@ -75,7 +79,7 @@ Downloads for {$uhistory.username}:
     </td>
   </tr>
   {foreachelse}
-  <tr><td></td><td><span class="italic">No files!</span></td><td></td></tr>
+  <tr><td></td><td></td><td><span class="italic">No files!</span></td><td></td></tr>
   {/foreach}
 </table>
 </p>

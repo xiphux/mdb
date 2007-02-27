@@ -91,8 +91,9 @@
 			header("Content-Length: " . @filesize($mdb_conf['root'] . $file['file']));
 			set_time_limit(0);
 			ob_end_flush();
-			if ($mdb_conf['download_log'])
-				$db->Execute("INSERT INTO " . $tables['downloads'] . " (uid,user,fid,file,fsize) VALUES (" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . "," . $db->qstr($_SESSION[$mdb_conf['session_key']]['user']['username']) . "," . $file['id'] . "," . $db->qstr($file['file']) . "," . $file['size'] . ")");
+			if ($mdb_conf['download_log']) {
+				$db->Execute("INSERT INTO " . $tables['downloads'] . " (ip,uid,user,fid,file,fsize) VALUES (" . $db->qstr($_SERVER['REMOTE_ADDR']) . "," . $_SESSION[$mdb_conf['session_key']]['user']['id'] . "," . $db->qstr($_SESSION[$mdb_conf['session_key']]['user']['username']) . "," . $file['id'] . "," . $db->qstr($file['file']) . "," . $file['size'] . ")");
+			}
 			readfile_chunked($mdb_conf['root'] . $file['file']);
 			exit;
 		}
