@@ -104,13 +104,17 @@
  if (isset($_GET['u'])) {
  	switch ($_GET['u']) {
 		case "history":
-			$tpl->clear_all_assign();
-			$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
-			$tpl->assign("download_log",$mdb_conf['download_log']);
-			$tpl->assign("userhistory",userhistory($_SESSION[$mdb_conf['session_key']]['user']['id']));
-			if ($_SESSION[$mdb_conf['session_key']]['user']['privilege'] > 0)
-				$tpl->assign("otherhistory",otherhistory());
-			$tpl->display("history.tpl");
+			if (!isset($_SESSION[$mdb_conf['session_key']]['user']))
+				echo "Not valid for anonymous users!";
+			else {
+				$tpl->clear_all_assign();
+				$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
+				$tpl->assign("download_log",$mdb_conf['download_log']);
+				$tpl->assign("userhistory",userhistory($_SESSION[$mdb_conf['session_key']]['user']['id']));
+				if ($_SESSION[$mdb_conf['session_key']]['user']['privilege'] > 0)
+					$tpl->assign("otherhistory",otherhistory());
+				$tpl->display("history.tpl");
+			}
 			break;
 		case "taglist":
 			$tpl->assign("taglist",taglist());
