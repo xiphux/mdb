@@ -35,7 +35,7 @@
 {foreach from=$userhistory item=dl}
   <tr class="{cycle values="odd,even"}">
     <td class="date">{$dl.time}</td>
-    <td class="ip">{$dl.ip}</td>
+    <td class="ip"><a href="http://ws.arin.net/cgi-bin/whois.pl?queryinput={$dl.ip}">{$dl.ip}</a></td>
     <td class="filename">
     {if $dl.fileinfo}
       <a href="{$SCRIPT_NAME}?u=file&id={$dl.fid}">{$dl.file}</a>
@@ -66,7 +66,7 @@ Downloads for {$uhistory.username}:
   {foreach from=$uhistory.downloads item=dl}
   <tr class="{cycle values="odd,even"}">
     <td class="date">{$dl.time}</td>
-    <td class="ip">{$dl.ip}</td>
+    <td class="ip"><a href="http://ws.arin.net/cgi-bin/whois.pl?queryinput={$dl.ip}">{$dl.ip}</a></td>
     <td class="filename">
     {if $dl.fileinfo}
       <a href="{$SCRIPT_NAME}?u=file&id={$dl.fid}">{$dl.file}</a>
