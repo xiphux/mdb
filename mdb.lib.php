@@ -245,6 +245,8 @@ function dbstats()
 	$tpl->assign("files",$db->GetOne("SELECT COUNT(id) FROM " . $tables['files']));
 	$tpl->assign("titles",$db->GetOne("SELECT COUNT(id) FROM " . $tables['titles']));
 	$tpl->assign("users",$db->GetOne("SELECT COUNT(id) FROM " . $tables['users']));
+	$tpl->assign("tags",$db->GetOne("SELECT COUNT(id) FROM " . $tables['tags']));
+	$tpl->assign("downloads",$db->GetOne("SELECT COUNT(id) FROM " . $tables['downloads']));
 	$tpl->display("stats.tpl");
 	$dbstats = $db->GetArray("SHOW TABLE STATUS");
 	$total = 0;

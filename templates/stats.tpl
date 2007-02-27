@@ -34,5 +34,7 @@
 <br /><strong>Files: </strong>{$files}
 <br /><strong>Titles: </strong>{$titles}
 <br /><strong>Users: </strong>{$users}
+<br /><strong>Tags: </strong>{$tags}
+<br /><strong>Downloads: </strong>{$downloads}
 </p>
 <p><strong><span class="underline">Database statistics:</span></strong></p>
