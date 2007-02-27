@@ -462,4 +462,52 @@ function untag($tid, $tag)
 	prunetags();
 }
 
+/*
+ * userhistory
+ * Retrieves download history for local user
+ */
+function userhistory($uid)
+{
+	global $db,$tables,$mdb_conf;
+	if (!isset($_SESSION[$mdb_conf['session_key']]['user'])) {
+		echo "You do not have access to this feature!";
+		return;
+	}
+	if (!isset($uid)) {
+		echo "No user specified!";
+		return;
+	}
+	$ret = $db->GetArray("SELECT * FROM " . $tables['downloads'] . " WHERE uid=" . $uid . " ORDER BY time DESC");
+	$size = count($ret);
+	if ($size > 0) {
+		for ($i = 0; $i < $size; $i++) {
+			$ret2 = $db->GetRow("SELECT * FROM " . $tables['files'] . " WHERE id=" . $ret[$i]['fid'] . " LIMIT 1");
+			if ($ret2)
+				$ret[$i]['fileinfo'] = $ret2;
+		}
+	}
+	return $ret;
+}
+
+/*
+ * otherhistory
+ * Retrieves download history for users other than local
+ */
+function otherhistory()
+{
+	global $db,$tables,$mdb_conf;
+	if (!(isset($_SESSION[$mdb_conf['session_key']]['user']) && ($_SESSION[$mdb_conf['session_key']]['user']['privilege'] > 0))) {
+		echo "You do not have access to this feature!";
+		return;
+	}
+	$u = $db->GetArray("SELECT * FROM " . $tables['users'] . " WHERE id!=" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . " ORDER BY username");
+	$size = count($u);
+	for ($i = 0; $i < $size; $i++) {
+		$ret2 = userhistory($u[$i]['id']);
+		if ($ret2)
+			$u[$i]['downloads'] = $ret2;
+	}
+	return $u;
+}
+
 ?>

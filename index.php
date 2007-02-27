@@ -71,8 +71,6 @@
 		if (!$file)
 			$errorstr = "No such file";
 		else {
-			if ($mdb_conf['download_log'])
-				$db->Execute("INSERT INTO " . $tables['downloads'] . " (uid,user,fid,file,fsize) VALUES (" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . "," . $db->qstr($_SESSION[$mdb_conf['session_key']]['user']['username']) . "," . $file['id'] . "," . $db->qstr($file['file']) . "," . $file['size'] . ")");
 			if (ini_get('zlib.output_compression'))
 				ini_set('zlib.output_compression', 'Off');
 			header("Pragma: public");
@@ -93,6 +91,8 @@
 			header("Content-Length: " . @filesize($mdb_conf['root'] . $file['file']));
 			set_time_limit(0);
 			ob_end_flush();
+			if ($mdb_conf['download_log'])
+				$db->Execute("INSERT INTO " . $tables['downloads'] . " (uid,user,fid,file,fsize) VALUES (" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . "," . $db->qstr($_SESSION[$mdb_conf['session_key']]['user']['username']) . "," . $file['id'] . "," . $db->qstr($file['file']) . "," . $file['size'] . ")");
 			readfile_chunked($mdb_conf['root'] . $file['file']);
 			exit;
 		}
@@ -103,6 +103,15 @@
  $tpl->display("mainstart.tpl");
  if (isset($_GET['u'])) {
  	switch ($_GET['u']) {
+		case "history":
+			$tpl->clear_all_assign();
+			$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
+			$tpl->assign("download_log",$mdb_conf['download_log']);
+			$tpl->assign("userhistory",userhistory($_SESSION[$mdb_conf['session_key']]['user']['id']));
+			if ($_SESSION[$mdb_conf['session_key']]['user']['privilege'] > 0)
+				$tpl->assign("otherhistory",otherhistory());
+			$tpl->display("history.tpl");
+			break;
 		case "taglist":
 			$tpl->assign("taglist",taglist());
 			$tpl->assign("tagcloudmax",$mdb_conf['tagcloudmax']);

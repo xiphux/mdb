@@ -48,6 +48,9 @@
      <ul>
        <li><a href="{$SCRIPT_NAME}?u=main">main</a></li>
        <li><a href="{$SCRIPT_NAME}?u=taglist">taglist</a></li>
+       {if $user}
+         <li><a href="{$SCRIPT_NAME}?u=history">history</a></li>
+       {/if}
        {if $user.privilege > 0}
          <li><a href="{$SCRIPT_NAME}?u=updatedb">updatedb</a></li>
          <li><a href="{$SCRIPT_NAME}?u=unmap">mappings</a></li>
