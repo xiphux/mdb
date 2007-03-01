@@ -112,6 +112,7 @@
 				$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
 				$tpl->assign("download_log",$mdb_conf['download_log']);
 				$tpl->assign("userhistory",userhistory($_SESSION[$mdb_conf['session_key']]['user']['id']));
+				$tpl->assign("userhistorysize",userhistorysize($_SESSION[$mdb_conf['session_key']]['user']['id']));
 				if ($_SESSION[$mdb_conf['session_key']]['user']['privilege'] > 0)
 					$tpl->assign("otherhistory",otherhistory());
 				$tpl->display("history.tpl");

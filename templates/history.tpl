@@ -24,7 +24,7 @@
 <span class="warning">Note: Download logging is currently disabled!</span>
 </p>
 {/if}
-<p>
+<p>Total: [<span class="highlight" title="{$userhistorysize}">{$userhistorysize|size}</span>]
 <table>
   <tr>
     <td class="date"><span class="bold">Date</span></td>
@@ -55,7 +55,7 @@
 {if $user.privilege > 0 && $otherhistory}
 {foreach from=$otherhistory item=uhistory}
 <p>
-Downloads for {$uhistory.username}:
+Downloads for {$uhistory.username} [<span class="highlight" title="{$uhistory.total}">{$uhistory.total|size}</span>]:
 <table>
   <tr>
     <td class="date"><span class="bold">Date</span></td>

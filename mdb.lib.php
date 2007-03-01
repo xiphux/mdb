@@ -492,6 +492,24 @@ function userhistory($uid)
 }
 
 /*
+ * userhistorysize
+ * Retrieves user's total amount downloaded
+ */
+function userhistorysize($uid)
+{
+	global $db,$tables,$mdb_conf;
+	if (!isset($_SESSION[$mdb_conf['session_key']]['user'])) {
+		echo "You do not have access to this feature!";
+		return;
+	}
+	if (!isset($uid)) {
+		echo "No user specified!";
+		return;
+	}
+	return $db->GetOne("SELECT SUM(fsize) FROM " . $tables['downloads'] . " WHERE uid=" . $uid);
+}
+
+/*
  * otherhistory
  * Retrieves download history for users other than local
  */
@@ -506,8 +524,10 @@ function otherhistory()
 	$size = count($u);
 	for ($i = 0; $i < $size; $i++) {
 		$ret2 = userhistory($u[$i]['id']);
-		if ($ret2)
+		if ($ret2) {
 			$u[$i]['downloads'] = $ret2;
+			$u[$i]['total'] = userhistorysize($u[$i]['id']);
+		}
 	}
 	return $u;
 }
