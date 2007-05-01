@@ -204,7 +204,7 @@
 	$titles = $db->GetArray("SELECT * FROM " . $tables['titles']);
 	foreach ($files as $i => $file) {
 		foreach ($titles as $j => $title) {
-			if (strpos($file['file'],$title['path']) !== false) {
+			if (strpos($file['file'],$title['path'] . "/") !== false) {
 				$db->Execute("INSERT INTO " . $tables['file_title'] . " (file_id,title_id) VALUES (" . $file['id'] . "," . $title['id'] . ") ON DUPLICATE KEY UPDATE title_id=VALUES(title_id)");
 			}
 		}
