@@ -34,7 +34,7 @@
  /*
   * Version definitions
   */
- $version = "v01d";
+ $version = "0.0.4";
  $mdb_appstring = "MDB $version";
 
  /*
