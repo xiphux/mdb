@@ -136,7 +136,7 @@
 		return;
 	}
 	if ($criteria === "All" || $criteria === "Titles") {
-		$ret = $db->GetArray("SELECT * FROM " . $tables['titles'] . " WHERE title LIKE '%" . $search . "%' ORDER BY title");
+		$ret = $db->GetArray("SELECT * FROM " . $tables['titles'] . " WHERE title LIKE '%" . addslashes($search) . "%' ORDER BY title");
 		$size = count($ret);
 		if ($size > 0) {
 			for ($i = 0; $i < $size; $i++)
@@ -145,7 +145,7 @@
 		}
 	}
 	if ($criteria === "All" || $criteria === "Files") {
-		$ret = $db->GetArray("SELECT * FROM " . $tables['files'] . " WHERE file LIKE '%/%/%" . $search . "%' ORDER BY file");
+		$ret = $db->GetArray("SELECT * FROM " . $tables['files'] . " WHERE file LIKE '%/%/%" . addslashes($search) . "%' ORDER BY file");
 		$size = count($ret);
 		if ($size > 0) {
 			for ($i = 0; $i < $size; $i++)
