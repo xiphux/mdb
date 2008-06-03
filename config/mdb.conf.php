@@ -43,6 +43,14 @@ $mdb_conf['title'] = "centraldogma :: $mdb_appstring";
  */
 $mdb_conf['smarty_prefix'] = "smarty/";
 
+/*
+ * adodb_prefix
+ * This is the prefix where adodb is installed.
+ * Behaves the same way as smarty_prefix, but specifies
+ * location of adodb_inc.php.
+ */
+$mdb_conf['adodb_prefix'] = "adodb/";
+
  /*
   * Database connection settings
   */

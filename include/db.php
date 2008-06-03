@@ -6,7 +6,7 @@
  *
  *  Copyright (C) 2006 Christopher Han <xiphux@gmail.com>
  */
- include_once("adodb/adodb.inc.php");
+ include_once($mdb_conf['adodb_prefix'] . "adodb.inc.php");
 
 $tables = array();
 $tables['files'] = $mdb_conf['prefix'] . "files";
