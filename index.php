@@ -40,6 +40,7 @@
  /*
   * Database connection
   */
+ include_once('config/mdb.conf.php');
  include_once('db.inc.php');
 
  /*
