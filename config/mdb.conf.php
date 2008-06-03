@@ -1,6 +1,6 @@
 <?php
 /*
- *  config.inc.php
+ *  mdb.conf.php
  *  MDB: A media database
  *  Component: Configuration
  *
