@@ -34,8 +34,7 @@
  /*
   * Version definitions
   */
- $version = "0.0.4";
- $mdb_appstring = "MDB $version";
+ include_once('include/version.php');
 
  /*
   * Database connection
