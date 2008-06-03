@@ -40,7 +40,7 @@
   * Database connection
   */
  include_once('config/mdb.conf.php');
- include_once('db.inc.php');
+ include_once('include/db.php');
 
  /*
   * Instantiate Smarty
@@ -53,7 +53,7 @@
  /*
   * Function library
   */
- include_once('mdb.lib.php');
+ include_once('include/mdb.lib.php');
 
  /*
   * Early check for file download so we

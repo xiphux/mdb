@@ -51,7 +51,7 @@
    else if (req)
      req.abort();
    if (req) {
-     req.open('GET','updatedbstatus.php',true);
+     req.open('GET','include/updatedbstatus.php',true);
      req.onreadystatechange = function() {
        if (req.readyState == 4 && req.status=="200") {
          if (req.responseText == "Complete") {

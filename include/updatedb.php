@@ -24,10 +24,11 @@
  /*
   * Basic mutex
   */
- if (shell_exec("ps ax | grep -v 'grep' | grep -c 'php updatedb.php'") > 1)
+ if (shell_exec("ps ax | grep -v 'grep' | grep -c 'php include/updatedb.php'") > 1)
  	exit;
 
- include_once('db.inc.php');
+ include_once('config/mdb.conf.php');
+ include_once('db.php');
 
  /*
   * fsize

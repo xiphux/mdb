@@ -105,7 +105,7 @@
 		echo "You do not have access to this feature!";
 		return;
 	}
-	exec("php updatedb.php 2>/dev/null >&- <&- >/dev/null &");
+	exec("php include/updatedb.php 2>/dev/null >&- <&- >/dev/null &");
 	$tpl->clear_all_assign();
 	$tpl->assign("interval",$mdb_conf['updatedbstatus_interval']);
 	$tpl->display("updatedb.tpl");
