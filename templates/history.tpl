@@ -23,7 +23,7 @@
     <td class="date">{$dl.time}</td>
     <td class="ip"><a href="http://ws.arin.net/cgi-bin/whois.pl?queryinput={$dl.ip}">{$dl.ip}</a></td>
     <td class="filename">
-    {if $dl.fileinfo}
+    {if $dl.file_exists}
       <a href="{$SCRIPT_NAME}?u=file&id={$dl.fid}">{$dl.file}</a>
     {else}
       {$dl.file}
@@ -54,7 +54,7 @@ Downloads for {$uhistory.username} [<span class="highlight" title="{$uhistory.to
     <td class="date">{$dl.time}</td>
     <td class="ip"><a href="http://ws.arin.net/cgi-bin/whois.pl?queryinput={$dl.ip}">{$dl.ip}</a></td>
     <td class="filename">
-    {if $dl.fileinfo}
+    {if $dl.file_exists}
       <a href="{$SCRIPT_NAME}?u=file&id={$dl.fid}">{$dl.file}</a>
     {else}
       {$dl.file}

@@ -19,15 +19,8 @@ function userhistory($uid)
 		echo "No user specified!";
 		return;
 	}
-	$ret = $db->GetArray("SELECT * FROM " . $tables['downloads'] . " WHERE uid=" . $uid . " ORDER BY time DESC");
-	$size = count($ret);
-	if ($size > 0) {
-		for ($i = 0; $i < $size; $i++) {
-			$ret2 = $db->GetRow("SELECT * FROM " . $tables['files'] . " WHERE id=" . $ret[$i]['fid'] . " LIMIT 1");
-			if ($ret2)
-				$ret[$i]['fileinfo'] = $ret2;
-		}
-	}
+	$q = "SELECT " . $tables['downloads'] . ".*, " . $tables['files'] . ".id AS file_exists FROM " . $tables['downloads'] . " LEFT JOIN " . $tables['files'] . " ON (" . $tables['downloads'] . ".fid = " . $tables['files'] . ".id AND " . $tables['downloads'] . ".file = " . $tables['files'] . ".file) WHERE uid=" . $uid . " ORDER BY " . $tables['downloads'] . ".time DESC";
+	$ret = $db->GetArray($q);
 	return $ret;
 }
 
