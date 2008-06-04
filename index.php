@@ -33,6 +33,7 @@
   */
  include_once($mdb_conf['smarty_prefix'] . "Smarty.class.php");
  $tpl =& new Smarty;
+ include_once('include/util.size_readable.php');
  $tpl->register_modifier('size','size_readable');
  $tpl->load_filter('output','trimwhitespace');
 
@@ -57,6 +58,7 @@
 		if (!$file)
 			$errorstr = "No such file";
 		else {
+			include_once('util.readfile_chunked.php');
 			if (ini_get('zlib.output_compression'))
 				ini_set('zlib.output_compression', 'Off');
 			header("Pragma: public");
@@ -91,6 +93,9 @@
  if (isset($_GET['u'])) {
  	switch ($_GET['u']) {
 		case "history":
+			include_once('include/user.userhistory.php');
+			include_once('include/user.userhistorysize.php');
+			include_once('include/user.otherhistory.php');
 			if (!isset($_SESSION[$mdb_conf['session_key']]['user']))
 				echo "Not valid for anonymous users!";
 			else {
@@ -105,6 +110,7 @@
 			}
 			break;
 		case "taglist":
+			include_once('include/tag.taglist.php');
 			$tpl->assign("taglist",taglist());
 			$tpl->assign("tagcloudmax",$mdb_conf['tagcloudmax']);
 			$tpl->assign("tagcloudmin",$mdb_conf['tagcloudmin']);
@@ -112,10 +118,14 @@
 			$tpl->display("taglist.tpl");
 			break;
 		case "deltag":
+			include_once('include/tag.deltag.php');
 			deltag($_GET['id']);
 			echo "Tag removed";
 			break;
 		case "addtag":
+			include_once('include/title.titleinfo.php');
+			include_once('include/tag.taglist.php');
+			include_once('include/tag.addtag.php');
 			addtag($_GET['tid'],$_POST['tag']);
 			$tpl->clear_all_assign();
 			$tpl->assign("title",titleinfo($_GET['tid']));
@@ -126,6 +136,9 @@
 			$tpl->display("title.tpl");
 			break;
 		case "untag":
+			include_once('include/title.titleinfo.php');
+			include_once('include/tag.untag.php');
+			include_once('include/tag.taglist.php');
 			untag($_GET['tid'],$_GET['tag']);
 			$tpl->clear_all_assign();
 			$tpl->assign("title",titleinfo($_GET['tid']));
@@ -136,6 +149,7 @@
 			$tpl->display("title.tpl");
 			break;
 		case "tag":
+			include_once('include/tag.taginfo.php');
 			$tpl->clear_all_assign();
 			$tpl->assign("tag",taginfo($_GET['id']));
  			$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
@@ -145,6 +159,7 @@
 			echo $errorstr;
 			break;
 		case "login":
+			include_once('include/user.login.php');
 			login($_POST['user'],$_POST['pass']);
 			break;
 		case "logout":
@@ -152,9 +167,11 @@
 			echo "Logged out";
 			break;
 		case "updatedb":
+			include_once('include/display.updatedb.php');
 			updatedb();
 			break;
 		case "search":
+			include_once('include/util.search.php');
 			$tpl->clear_all_assign();
 			$tpl->assign("search",$_POST['search']);
 			$tpl->assign("results",search($_POST['search'],$_POST['criteria']));
@@ -164,6 +181,8 @@
 			$tpl->display("search.tpl");
 			break;
 		case "title":
+			include_once('include/tag.taglist.php');
+			include_once('include/title.titleinfo.php');
 			$tpl->clear_all_assign();
 			$tpl->assign("title",titleinfo($_GET['id']));
  			$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
@@ -173,22 +192,27 @@
 			$tpl->display("title.tpl");
 			break;
 		case "unmap":
+			include_once('include/database.unmapped.php');
 			$tpl->clear_all_assign();
 			$tpl->assign("unmap",unmapped());
 			$tpl->display("unmapped.tpl");
 			break;
 		case "dbstats":
+			include_once('include/display.dbstats.php');
 			dbstats();
 			break;
 		case "main":
+			include_once('include/display.mainpage.php');
 			mainpage();
 			break;
 		default:
 			echo "404";
 			break;
 	}
- } else
+ } else {
+	include_once('include/display.mainpage.php');
  	mainpage();
+ }
  $tpl->display("mainend.tpl");
  $main = ob_get_contents();
  ob_end_clean();
@@ -205,6 +229,7 @@
 
  echo $main;
 
+ include_once('include/title.titlelist.php');
  $tpl->assign("titlelist",titlelist());
  $tpl->display("rightbox.tpl");
 
