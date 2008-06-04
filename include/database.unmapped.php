@@ -11,16 +11,10 @@
 function unmapped()
 {
 	global $db,$tables;
-	$temp = null;
-	$unmap = array();
-	$files = $db->GetArray("SELECT * FROM " . $tables['files']);
-	foreach ($files as $i => $file) {
-		$temp = $db->GetArray("SELECT * FROM " . $tables['file_title'] . " WHERE id=" . $file['id'] . " LIMIT 1");
-		if (sizeof($temp) < 1)
-			$unmap[] = $file;
-	}
-	if (sizeof($unmap) > 0)
-		return $unmap;
+	$q = "SELECT file FROM " . $tables['files'] . " LEFT JOIN " . $tables['file_title'] . " ON " . $tables['files'] . ".id = " . $tables['file_title'] . ".file_id WHERE " . $tables['file_title'] . ".title_id IS NULL";
+	$files = $db->GetArray($q);
+	if (sizeof($files) > 0)
+		return $files;
 	return null;
 }
 
