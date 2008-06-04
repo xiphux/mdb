@@ -208,6 +208,8 @@
 	foreach ($tables as $i => $table)
 		$db->Execute("OPTIMIZE TABLE " . $db->qstr($table));
  }
+
+ $db->StartTrans();
  
  $del = prune_titles();
 
@@ -222,5 +224,7 @@
  maintain_associations();
 
  optimizedb();
+
+ $db->CompleteTrans();
 
 ?> 
