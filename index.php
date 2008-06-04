@@ -55,7 +55,7 @@
 		else {
 			if (ini_get('zlib.output_compression'))
 				ini_set('zlib.output_compression', 'Off');
-			header("Content-Description: File Transfer");
+			header("Content-Description: " . basename($file['file']));
 			if (function_exists("finfo_open")) {
 				$mgc = finfo_open(FILEINFO_MIME);
 				if ($mgc) {
