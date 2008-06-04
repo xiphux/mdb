@@ -11,10 +11,8 @@
 function taglist()
 {
 	global $db,$tables;
-	$tags = $db->GetArray("SELECT * FROM " . $tables['tags'] . " ORDER BY tag");
-	$size = count($tags);
-	for ($i = 0; $i < $size; $i++)
-		$tags[$i]['count'] = $db->GetOne("SELECT COUNT(title_id) FROM " . $tables['title_tag'] . " WHERE tag_id=" . $tags[$i]['id']);
+	$q = "SELECT " . $tables['tags'] . ".*, COUNT(" . $tables['title_tag'] . ".title_id) AS count FROM " . $tables['tags'] . " LEFT JOIN " . $tables['title_tag'] . " ON " . $tables['tags'] . ".id = " . $tables['title_tag'] . ".tag_id GROUP BY tag ORDER BY tag";
+	$tags = $db->GetArray($q);
 	return $tags;
 }
 
