@@ -38,11 +38,6 @@
  $tpl->load_filter('output','trimwhitespace');
 
  /*
-  * Function library
-  */
- include_once('include/mdb.lib.php');
-
- /*
   * Early check for file download so we
   * can skip headers
   */
