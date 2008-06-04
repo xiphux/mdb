@@ -53,13 +53,9 @@
 		if (!$file)
 			$errorstr = "No such file";
 		else {
-			include_once('util.readfile_chunked.php');
 			if (ini_get('zlib.output_compression'))
 				ini_set('zlib.output_compression', 'Off');
-			header("Pragma: public");
-			header("Expires: 0");
-			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-			header("Cache-Control: private",false);
+			header("Content-Description: File Transfer");
 			if (function_exists("finfo_open")) {
 				$mgc = finfo_open(FILEINFO_MIME);
 				if ($mgc) {
@@ -71,13 +67,17 @@
 				header("Content-Type: application/force-download");
 			header("Content-Disposition: attachment; filename=\"" . basename($file['file']) . "\";");
 			header("Content-Transfer-Encoding: binary");
+			header("Expires: 0");
+			header("Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
+			header("Pragma: public");
 			header("Content-Length: " . @filesize($mdb_conf['root'] . $file['file']));
 			set_time_limit(0);
-			ob_end_flush();
+			ob_clean();
+			flush();
 			if ($mdb_conf['download_log']) {
 				$db->Execute("INSERT INTO " . $tables['downloads'] . " (ip,uid,user,fid,file,fsize) VALUES (" . $db->qstr($_SERVER['REMOTE_ADDR']) . "," . $_SESSION[$mdb_conf['session_key']]['user']['id'] . "," . $db->qstr($_SESSION[$mdb_conf['session_key']]['user']['username']) . "," . $file['id'] . "," . $db->qstr($file['file']) . "," . $file['size'] . ")");
 			}
-			readfile_chunked($mdb_conf['root'] . $file['file']);
+			readfile($mdb_conf['root'] . $file['file']);
 			exit;
 		}
 	}
