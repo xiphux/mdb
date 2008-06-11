@@ -40,10 +40,7 @@
      req.open('GET','include/updatedbstatus.php',true);
      req.onreadystatechange = function() {
        if (req.readyState == 4 && req.status=="200") {
-         if (req.responseText == "Complete") {
-           complete = true;
-           document.getElementById('updatedb').innerHTML='<span class="highlight">Database update complete!</span>';
-         } else {
+         if (req.responseText == "Database updating") {
            text = 'Database updating<span class="warning">';
            for (i = 0; i < dots; i++)
              text = text + '.';
@@ -53,6 +50,9 @@
              dots = 0;
            else
              dots++;
+         } else {
+           complete = true;
+           document.getElementById('updatedb').innerHTML='<span class="highlight">' + req.responseText + '</span>';
          }
        }
      }
