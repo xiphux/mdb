@@ -22,5 +22,6 @@
 <br /><strong>Users: </strong>{$users}
 <br /><strong>Tags: </strong>{$tags}
 <br /><strong>Downloads: </strong>{$downloads}
+<br /><strong>Updates: </strong>{$dbupdate}
 </p>
 <p><strong><span class="underline">Database statistics:</span></strong></p>

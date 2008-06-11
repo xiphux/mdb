@@ -225,6 +225,8 @@
 
  optimizedb();
 
+ $db->Execute("INSERT INTO " . $tables['dbupdate'] . " (progress) VALUES(0)");
+
  $db->CompleteTrans();
 
 ?> 
