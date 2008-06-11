@@ -46,8 +46,11 @@
  function insert_file($file)
  {
  	global $db,$tables,$mdb_conf;
-	if (!in_array(substr($file,-3),$mdb_conf['ext_excludes']))
-		$db->Execute("INSERT INTO " . $tables['files'] . " (file,size) VALUES (" . $db->qstr(substr($file,strlen($mdb_conf['root'])+1)) . "," . $db->qstr(fsize($file)) . ") ON DUPLICATE KEY UPDATE size=VALUES(size)");
+	if (!in_array(substr($file,-3),$mdb_conf['ext_excludes'])) {
+		$ok = $db->Execute("INSERT INTO " . $tables['files'] . " (file,size) VALUES (" . $db->qstr(substr($file,strlen($mdb_conf['root'])+1)) . "," . $db->qstr(fsize($file)) . ") ON DUPLICATE KEY UPDATE size=VALUES(size)");
+		if ($mdb_conf['debug'] && !$ok)
+			echo "insert_file: " . $db->ErrorMsg() . "\n";
+	}
  }
 
  /*
@@ -82,8 +85,12 @@
 	$files = $db->GetArray("SELECT * FROM " . $tables['files']);
 	foreach ($files as $i => $file) {
 		if ((!file_exists($mdb_conf['root'] . $file['file'])) || in_array(substr($file['file'],(strripos($file['file'],"/")===false?0:strripos($file['file'],"/")+1)),$mdb_conf['excludes']) || is_link($mdb_conf['root'] . $file['file']) || in_array(substr($file['file'],-3),$mdb_conf['ext_excludes'])) {
-			$db->Execute("DELETE FROM " . $tables['files'] . " WHERE id=" . $file['id'] . " LIMIT 1");
-			$db->Execute("DELETE FROM " . $tables['file_title'] . " WHERE file_id=" . $file['id']);
+			$ok = $db->Execute("DELETE FROM " . $tables['files'] . " WHERE id=" . $file['id'] . " LIMIT 1");
+			if ($mdb_conf['debug'] && !$ok)
+				echo "prunedb:1: " . $db->ErrorMsg() . "\n";
+			$ok = $db->Execute("DELETE FROM " . $tables['file_title'] . " WHERE file_id=" . $file['id']);
+			if ($mdb_conf['debug'] && !$ok)
+				echo "prunedb:2: " . $db->ErrorMsg() . "\n";
 		}
 	}
  }
@@ -146,7 +153,9 @@
 							$q .= "id,";
 							$q2 .= $deleted[$bn] . ",";
 						}
-						$db->Execute($q . $q2 . $q3);
+						$ok = $db->Execute($q . $q2 . $q3);
+						if ($mdb_conf['debug'] && !$ok)
+							echo "update_titles: " . $db->ErrorMsg() . "\n";
 						unset($deleted[$bn]);
 					}
 				}
@@ -168,8 +177,12 @@
 	$titles = $db->GetArray("SELECT * FROM " . $tables['titles']);
 	foreach ($titles as $i => $title) {
 		if ((!file_exists($mdb_conf['root'] . $title['path'])) || is_link($mdb_conf['root'] . $title['path'])) {
-			$db->Execute("DELETE FROM " . $tables['titles'] . " WHERE id=" . $title['id'] . " LIMIT 1");
-			$db->Execute("DELETE FROM " . $tables['file_title'] . " WHERE title_id=" . $title['id']);
+			$ok = $db->Execute("DELETE FROM " . $tables['titles'] . " WHERE id=" . $title['id'] . " LIMIT 1");
+			if ($mdb_conf['debug'] && !$ok)
+				echo "prune_titles:1: " . $db->ErrorMsg() . "\n";
+			$ok = $db->Execute("DELETE FROM " . $tables['file_title'] . " WHERE title_id=" . $title['id']);
+			if ($mdb_conf['debug'] && !$ok)
+				echo "prune_titles:2: " . $db->ErrorMsg() . "\n";
 			$deleted[basename($title['path'])] = $title['id'];
 		}
 	}
@@ -184,10 +197,14 @@
   */
  function prune_titles_2($deleted)
  {
- 	global $db,$tables;
+ 	global $db,$tables,$mdb_conf;
 	foreach ($deleted as $i => $k) {
-		$db->Execute("DELETE FROM " . $tables['title_tag'] . " WHERE title_id=" . $k);
-		$db->Execute("DELETE FROM " . $tables['animenfo'] . " WHERE title_id=" . $k);
+		$ok = $db->Execute("DELETE FROM " . $tables['title_tag'] . " WHERE title_id=" . $k);
+		if ($mdb_conf['debug'] && !$ok)
+			echo "prune_titles_2:1: " . $db->ErrorMsg() . "\n";
+		$ok = $db->Execute("DELETE FROM " . $tables['animenfo'] . " WHERE title_id=" . $k);
+		if ($mdb_conf['debug'] && !$ok)
+			echo "prune_titles_2:2: " . $db->ErrorMsg() . "\n";
 	}
  }
 
@@ -203,7 +220,9 @@
 	foreach ($files as $i => $file) {
 		foreach ($titles as $j => $title) {
 			if (strpos($file['file'],$title['path'] . "/") !== false) {
-				$db->Execute("INSERT INTO " . $tables['file_title'] . " (file_id,title_id) VALUES (" . $file['id'] . "," . $title['id'] . ") ON DUPLICATE KEY UPDATE title_id=VALUES(title_id)");
+				$ok = $db->Execute("INSERT INTO " . $tables['file_title'] . " (file_id,title_id) VALUES (" . $file['id'] . "," . $title['id'] . ") ON DUPLICATE KEY UPDATE title_id=VALUES(title_id)");
+				if ($mdb_conf['debug'] && !$ok)
+					echo "maintain_associations: " . $db->ErrorMsg() . "\n";
 			}
 		}
 	}
@@ -215,13 +234,19 @@
   */
  function optimizedb()
  {
- 	global $db,$tables;
-	foreach ($tables as $i => $table)
-		$db->Execute("OPTIMIZE TABLE " . $db->qstr($table));
+ 	global $db,$tables,$mdb_conf;
+	foreach ($tables as $i => $table) {
+		$ok = $db->Execute("OPTIMIZE TABLE " . $db->qstr($table));
+		if ($mdb_conf['debug'] && !$ok)
+			echo "optimizedb: " . $db->ErrorMsg() . "\n";
+	}
  }
 
- if ($mdb_conf['dbmutex'])
- 	$db->Execute("INSERT INTO " . $tables['dbupdate'] . " (progress) VALUES(1)");
+ if ($mdb_conf['dbmutex']) {
+ 	$ok = $db->Execute("INSERT INTO " . $tables['dbupdate'] . " (progress) VALUES(1)");
+	if ($mdb_conf['debug'] && !$ok)
+		echo "dbmutex init: " . $db->ErrorMsg() . "\n";
+ }
 
  $db->StartTrans();
  
@@ -239,16 +264,24 @@
 
  optimizedb();
 
- if (!($mdb_conf['dbmutex']))
- 	$db->Execute("INSERT INTO " . $tables['dbupdate'] . " (progress) VALUES(0)");
+ if (!($mdb_conf['dbmutex'])) {
+ 	$ok = $db->Execute("INSERT INTO " . $tables['dbupdate'] . " (progress) VALUES(0)");
+	if ($mdb_conf['debug'] && !$ok)
+		echo "non-dbmutex: " . $db->ErrorMsg() . "\n";
+ }
 
  $success = $db->CompleteTrans();
 
  if ($mdb_conf['dbmutex']) {
- 	if ($success)
- 		$db->Execute("UPDATE " . $tables['dbupdate'] . " SET progress=0 WHERE progress!=0");
-	else
-		$db->Execute("DELETE FROM " . $tables['dbupdate'] . " WHERE progress!=0");
+ 	if ($success) {
+ 		$ok = $db->Execute("UPDATE " . $tables['dbupdate'] . " SET progress=0 WHERE progress!=0");
+		if ($mdb_conf['debug'] && !$ok)
+			echo "dbmutex success: " . $db->ErrorMsg() . "\n";
+	} else {
+		$ok = $db->Execute("DELETE FROM " . $tables['dbupdate'] . " WHERE progress!=0");
+		if ($mdb_conf['debug'] && !$ok)
+			echo "dbmutex failure: " . $db->ErrorMsg() . "\n";
+	}
  }
 
 ?> 

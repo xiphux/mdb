@@ -199,4 +199,10 @@ $mdb_conf['adodb_prefix'] = "adodb/";
   */
 $mdb_conf['dbmutex'] = TRUE;
 
+/*
+ * debug
+ * Show debug messages
+ */
+$mdb_conf['debug'] = TRUE;
+
 ?>
