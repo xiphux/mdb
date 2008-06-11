@@ -236,7 +236,7 @@
  {
  	global $db,$tables,$mdb_conf;
 	foreach ($tables as $i => $table) {
-		$ok = $db->Execute("OPTIMIZE TABLE " . $db->qstr($table));
+		$ok = $db->Execute("OPTIMIZE TABLE " . $table);
 		if ($mdb_conf['debug'] && !$ok)
 			echo "optimizedb: " . $db->ErrorMsg() . "\n";
 	}
