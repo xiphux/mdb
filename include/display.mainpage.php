@@ -16,7 +16,7 @@ function mainpage()
 	$tpl->assign("titlecount",$db->GetOne("SELECT COUNT(id) FROM " . $tables['titles']));
 	$tpl->assign("filecount",$db->GetOne("SELECT COUNT(id) FROM " . $tables['files']));
 	$tpl->assign("size",$db->GetOne("SELECT SUM(size) FROM " . $tables['files']));
-	$update = $db->GetOne("SELECT MAX(time) FROM " . $tables['dbupdate']);
+	$update = $db->GetOne("SELECT MAX(time) FROM " . $tables['dbupdate'] . " WHERE progress=0");
 	if ($update)
 		$tpl->assign("update",$update);
 	$tpl->display("main.tpl");
