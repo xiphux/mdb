@@ -185,4 +185,18 @@ $mdb_conf['adodb_prefix'] = "adodb/";
   */
  $mdb_conf['dbupdate_wait'] = 60;
 
+ /*
+  * dbmutex
+  * Use the database to keep track of a running database update
+  * This is much cleaner and more reliable than the alternative
+  * shell pipe ps/grep hackery, but adds strain on the database.
+  * The potential to leave the database permanently flagged as
+  * "updating" exists if you terminate the update process prematurely,
+  * leaving you unable to update unless the database status is manually
+  * changed.
+  * Also, every AJAX call to updatedbstatus (according to the interval
+  * set in updatedbstatus_interval) will query the database.
+  */
+$mdb_conf['dbmutex'] = TRUE;
+
 ?>

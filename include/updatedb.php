@@ -9,13 +9,16 @@
  
  include_once('config/mdb.conf.php');
 
- /*
-  * Basic mutex
-  */
- if (shell_exec("ps ax | grep -v 'grep' | grep -c '" . $mdb_conf['phpexec'] . " include/updatedb.php'") >= 1)
+ if ((!($mdb_conf['dbmutex'])) && (shell_exec("ps ax | grep -v 'grep' | grep -c '" . $mdb_conf['phpexec'] . " include/updatedb.php'") >= 1))
  	exit;
 
  include_once('db.php');
+
+ if ($mdb_conf['dbmutex']) {
+ 	$status = $db->GetOne("SELECT MAX(progress) FROM " . $tables['dbupdate']);
+	if ($status && $status > 0)
+		exit;
+ }
 
  $lastupdate = $db->GetOne("SELECT UNIX_TIMESTAMP(MAX(time)) FROM " . $tables['dbupdate']);
  if ($lastupdate) {
@@ -217,6 +220,9 @@
 		$db->Execute("OPTIMIZE TABLE " . $db->qstr($table));
  }
 
+ if ($mdb_conf['dbmutex'])
+ 	$db->Execute("INSERT INTO " . $tables['dbupdate'] . " (progress) VALUES(1)");
+
  $db->StartTrans();
  
  $del = prune_titles();
@@ -233,8 +239,16 @@
 
  optimizedb();
 
- $db->Execute("INSERT INTO " . $tables['dbupdate'] . " (progress) VALUES(0)");
+ if (!($mdb_conf['dbmutex']))
+ 	$db->Execute("INSERT INTO " . $tables['dbupdate'] . " (progress) VALUES(0)");
 
- $db->CompleteTrans();
+ $success = $db->CompleteTrans();
+
+ if ($mdb_conf['dbmutex']) {
+ 	if ($success)
+ 		$db->Execute("UPDATE " . $tables['dbupdate'] . " SET progress=0 WHERE progress!=0");
+	else
+		$db->Execute("DELETE FROM " . $tables['dbupdate'] . " WHERE progress!=0");
+ }
 
 ?> 
