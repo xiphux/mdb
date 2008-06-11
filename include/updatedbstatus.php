@@ -7,9 +7,11 @@
  *  Copyright (C) 2006 Christopher Han <xiphux@gmail.com>
  */
 
- if (shell_exec("ps ax | grep -v 'grep' | grep -c 'php include/updatedb.php'") >= 1)
- 	echo "Updating";
+ include_once('../config/mdb.conf.php');
+
+ if (shell_exec("ps ax | grep -v 'grep' | grep -c '" . $mdb_conf['phpexec'] . " include/updatedb.php'") >= 1)
+ 	echo "Database updating";
  else
- 	echo "Complete";
+ 	echo "Database update complete";
 
 ?>

@@ -8,6 +8,12 @@
  */
 
 /*
+ * phpexec
+ * Path to command-line php executable
+ */
+$mdb_conf['phpexec'] = "/usr/bin/php";
+
+/*
  * root
  * Root directory
  * Don't forget trailing slash!
@@ -171,5 +177,12 @@ $mdb_conf['adodb_prefix'] = "adodb/";
   * Whether to log downloads
   */
  $mdb_conf['download_log'] = TRUE;
+
+ /*
+  * dbupdate_wait
+  * Do not allow db updates more often than this amount
+  * of time (in seconds)
+  */
+ $mdb_conf['dbupdate_wait'] = 60;
 
 ?>

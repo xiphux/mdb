@@ -6,15 +6,23 @@
  *
  *  Copyright (C) 2006 Christopher Han <xiphux@gmail.com>
  */
+ 
+ include_once('config/mdb.conf.php');
 
  /*
   * Basic mutex
   */
- if (shell_exec("ps ax | grep -v 'grep' | grep -c 'php include/updatedb.php'") > 1)
+ if (shell_exec("ps ax | grep -v 'grep' | grep -c '" . $mdb_conf['phpexec'] . " include/updatedb.php'") > 1)
  	exit;
 
- include_once('config/mdb.conf.php');
  include_once('db.php');
+
+ $lastupdate = $db->GetOne("SELECT UNIX_TIMESTAMP(MAX(time)) FROM " . $tables['dbupdate']);
+ if ($lastupdate) {
+ 	$diff = time() - $lastupdate;
+	if ($diff < $mdb_conf['dbupdate_wait'])
+		exit;
+ }
 
  /*
   * fsize
