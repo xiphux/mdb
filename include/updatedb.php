@@ -262,7 +262,8 @@
 
  maintain_associations();
 
- optimizedb();
+ if ($mdb_conf['optimize'])
+ 	optimizedb();
 
  if (!($mdb_conf['dbmutex'])) {
  	$ok = $db->Execute("INSERT INTO " . $tables['dbupdate'] . " (progress) VALUES(0)");
