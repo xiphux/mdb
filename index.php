@@ -214,6 +214,12 @@
 			userdel($_GET['uid']);
 			usermanage();
 			break;
+		case "changeprivilege":
+			include_once('include/display.usermanage.php');
+			include_once('include/user.changeprivilege.php');
+			changeprivilege($_GET['uid'],$_GET['privilege']);
+			usermanage();
+			break;
 		default:
 			echo "404";
 			break;

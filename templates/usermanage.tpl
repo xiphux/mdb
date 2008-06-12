@@ -16,7 +16,13 @@
  {foreach from=$users item=user}
  <tr class="{cycle values="odd,even"}">
    <td>{$user.username}</td>
-   <td>{if $user.privilege > 0}Admin{else}User{/if}</td>
+   <td>
+   {if $user.privilege > 0}
+   Admin {if $user.id != $currentid}<a href="{$SCRIPT_NAME}?u=changeprivilege&uid={$user.id}&privilege=0"><span class="smalltext">[v]</span></a>{/if}
+   {else}
+   User {if $user.id != $currentid}<a href="{$SCRIPT_NAME}?u=changeprivilege&uid={$user.id}&privilege=1"><span class="smalltext">[^]</span></a>{/if}
+   {/if}
+   </td>
    <td title="{$user.size}">{$user.size|size}</td>
    <td class="textcenter">{if $user.id != $currentid}<a href="{$SCRIPT_NAME}?u=userdel&uid={$user.id}">X</a>{/if}</td>
  </tr>
