@@ -3,7 +3,7 @@
  *  MDB: A media database
  *  Component: User Manage template
  *
- *  Copyright (C) 2006 Christopher Han <xiphux@gmail.com>
+ *  Copyright (C) 2008 Christopher Han <xiphux@gmail.com>
  *}
  <div>
  <table>

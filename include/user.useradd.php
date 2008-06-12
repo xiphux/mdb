@@ -2,7 +2,7 @@
 /*
  *  user.useradd.php
  *  MDB: A media database
- *  Component: User - userdel
+ *  Component: User - useradd
  *  Add a user
  *
  *  Copyright (C) 2008 Christopher Han <xiphux@gmail.com>

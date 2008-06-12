@@ -1,6 +1,6 @@
 <?php
 /*
- *  display.dbstats.php
+ *  display.dbcheck.php
  *  MDB: A media database
  *  Component: Display - dbcheck
  *  Database check
