@@ -91,9 +91,10 @@
 			include_once('include/user.userhistory.php');
 			include_once('include/user.userhistorysize.php');
 			include_once('include/user.otherhistory.php');
-			if (!isset($_SESSION[$mdb_conf['session_key']]['user']))
-				echo "Not valid for anonymous users!";
-			else {
+			if (!isset($_SESSION[$mdb_conf['session_key']]['user'])) {
+				include_once('include/display.message.php');
+				message("Not valid for anonymous users!","warning");
+			} else {
 				$tpl->clear_all_assign();
 				$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
 				$tpl->assign("download_log",$mdb_conf['download_log']);
@@ -114,8 +115,9 @@
 			break;
 		case "deltag":
 			include_once('include/tag.deltag.php');
+			include_once('include/display.message.php');
 			deltag($_GET['id']);
-			echo "Tag removed";
+			message("Tag removed");
 			break;
 		case "addtag":
 			include_once('include/title.titleinfo.php');
@@ -151,15 +153,17 @@
 			$tpl->display("tag.tpl");
 			break;
 		case "file":
-			echo $errorstr;
+			include_once('include/display.message.php');
+			message($errorstr,"warning");
 			break;
 		case "login":
 			include_once('include/user.login.php');
 			login($_POST['user'],$_POST['pass']);
 			break;
 		case "logout":
+			include_once('include/display.message.php');
 			unset($_SESSION[$mdb_conf['session_key']]['user']);
-			echo "Logged out";
+			message("Logged out");
 			break;
 		case "updatedb":
 			include_once('include/display.updatedb.php');
@@ -231,7 +235,8 @@
 			changepass();
 			break;
 		default:
-			echo "404";
+			include_once('include/display.message.php');
+			message("404","warning");
 			break;
 	}
  } else {

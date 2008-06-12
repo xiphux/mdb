@@ -9,11 +9,13 @@
  *  Copyright (C) 2006 Christopher Han <xiphux@gmail.com>
  */
 
+ include_once('display.message.php');
+
  function updatedb()
  {
  	global $mdb_conf,$tpl;
 	if (!(isset($_SESSION[$mdb_conf['session_key']]['user']) && ($_SESSION[$mdb_conf['session_key']]['user']['privilege'] > 0))) {
-		echo "You do not have access to this feature!";
+		message("You do not have access to this feature!","warning");
 		return;
 	}
 	exec($mdb_conf['phpexec'] . " include/updatedb.php 2>/dev/null >&- <&- >/dev/null &");

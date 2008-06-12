@@ -9,17 +9,18 @@
  */
 
   include_once('metadata.animenfo_link.php');
+  include_once('display.message.php');
 
  function titleinfo($tid)
  {
  	global $db,$tables;
 	if (!isset($tid)) {
-		echo "No title specified";
+		message("No title specified","warning");
 		return;
 	}
 	$title = $db->GetRow("SELECT * FROM " . $tables['titles'] . " WHERE id=" . $tid . " LIMIT 1");
 	if (!$title) {
-		echo "No such title";
+		message("No such title","warning");
 		return;
 	}
 	$temp = $db->GetArray("SELECT t1.* FROM " . $tables['files'] . " AS t1, " . $tables['file_title'] . " AS t2 WHERE t2.title_id=" . $tid . " AND t2.file_id=t1.id ORDER BY t1.file");

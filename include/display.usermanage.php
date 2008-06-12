@@ -8,13 +8,14 @@
  *  Copyright (C) 2008 Christopher Han <xiphux@gmail.com>
  */
 
+ include_once('display.message.php');
  include_once('user.userhistorysize.php');
 
 function usermanage()
 {
 	global $mdb_conf, $db, $tpl, $tables;
 	if (!(isset($_SESSION[$mdb_conf['session_key']]['user']) && ($_SESSION[$mdb_conf['session_key']]['user']['privilege'] > 0))) {
-		echo "You do not have access to this feature!";
+		message("You do not have access to this feature!","warning");
 		return;
 	}
 	$users = $db->GetArray("SELECT id,username,privilege FROM " . $tables['users']);

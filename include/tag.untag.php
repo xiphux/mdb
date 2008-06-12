@@ -9,20 +9,21 @@
  */
 
  include_once('tag.prunetags.php');
+ include_once('display.message.php');
 
 function untag($tid, $tag)
 {
 	global $db,$tables,$mdb_conf;
 	if (!isset($_SESSION[$mdb_conf['session_key']]['user'])) {
-		echo "You do not have access to this feature!";
+		message("You do not have access to this feature!","warning");
 		return;
 	}
 	if (!$tid) {
-		echo "No series specified";
+		message("No series specified","warning");
 		return;
 	}
 	if (!$tag) {
-		echo "No tag specified";
+		message("No tag specified","warning");
 		return;
 	}
 	$db->Execute("DELETE FROM " . $tables['title_tag'] . " WHERE title_id=" . $tid . " AND tag_id=" . $tag);

@@ -9,29 +9,31 @@
  *  Copyright (C) 2006 Christopher Han <xiphux@gmail.com>
  */
 
+ include_once('display.message.php');
+
  function login($user,$pass)
  {
  	global $mdb_conf,$db,$tables;
 	if (!(isset($user) && strlen($user) > 0)) {
-		echo "No username entered";
+		message("No username entered","warning");
 		return;
 	}
 	if (!(isset($pass) && strlen($pass) > 0)) {
-		echo "No password entered";
+		message("No password entered","warning");
 		return;
 	}
 	$u = $db->GetRow("SELECT * FROM " . $tables['users'] . " WHERE username=" . $db->qstr($user) . " LIMIT 1");
 	if (!$u) {
-		echo "No such user";
+		message("No such user","warning");
 		return;
 	}
 	if (md5($pass) !== $u['password']) {
-		echo "Incorrect password";
+		message("Incorrect password","warning");
 		return;
 	}
 	unset($u['password']);
 	$_SESSION[$mdb_conf['session_key']]['user'] = $u;
-	echo "Logged in successfully";
+	message("Logged in successfully");
  }
 
 ?>

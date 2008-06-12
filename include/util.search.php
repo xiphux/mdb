@@ -10,11 +10,13 @@
  */
 
   include_once('util.highlight.php');
+  include_once('display.message.php');
+
  function search($search,$criteria)
  {
  	global $db,$tables;
 	if (!(isset($search) && (strlen($search) > 0))) {
-		echo "Invalid search string";
+		message("Invalid search string","warning");
 		return;
 	}
 	if ($criteria === "All" || $criteria === "Titles") {

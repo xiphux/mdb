@@ -8,32 +8,34 @@
  *  Copyright (C) 2008 Christopher Han <xiphux@gmail.com>
  */
 
+ include_once('display.message.php');
+
 function changeprivilege($uid, $priv)
 {
 	global $mdb_conf,$db,$tables;
 	if (!(isset($_SESSION[$mdb_conf['session_key']]['user']) && ($_SESSION[$mdb_conf['session_key']]['user']['privilege'] > 0))) {
-		echo "You do not have access to this feature!";
+		message("You do not have access to this feature!","warning");
 		return;
 	}
 	if (!$uid) {
-		echo "No user specified";
+		message("No user specified","warning");
 		return;
 	}
 	if (!isset($priv)) {
-		echo "No privilege specified";
+		message("No privilege specified","warning");
 		return;
 	}
 	if (($priv !== "1") && ($priv !== "0")) {
-		echo "Invalid privilege specified";
+		message("Invalid privilege specified","warning");
 		return;
 	}
 	if ($_SESSION[$mdb_conf['session_key']]['user']['id'] == $uid) {
-		echo "You are this user";
+		message("You are this user","warning");
 		return;
 	}
 	$testid = $db->GetOne("SELECT id FROM " . $tables['users'] . " WHERE id=" . $uid . " LIMIT 1");
 	if (!$testid) {
-		echo "No such user";
+		message("No such user","warning");
 		return;
 	}
 	$q = "UPDATE " . $tables['users'] . " SET privilege=" . $db->qstr($priv) . " WHERE id=" . $uid . " LIMIT 1";

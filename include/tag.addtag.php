@@ -8,20 +8,22 @@
  *  Copyright (C) 2006 Christopher Han <xiphux@gmail.com>
  */
 
+ include_once('display.message.php');
+
 function addtag($tid,$tag)
 {
 	global $db,$tables,$mdb_conf;
 	if (!isset($_SESSION[$mdb_conf['session_key']]['user'])) {
-		echo "You do not have access to this feature!";
+		message("You do not have access to this feature!","warning");
 		return;
 	}
 	if (!$tid) {
-		echo "No series specified";
+		message("No series specified","warning");
 		return;
 	}
 	$tag = trim($tag);
 	if (!(isset($tag) && (strlen($tag) > 0))) {
-		echo "No tag specified";
+		message("No tag specified","warning");
 		return;
 	}
 	$id = $db->GetOne("SELECT id FROM " . $tables['tags'] . " WHERE UPPER(tag) LIKE '%" . strtoupper($tag) . "%' LIMIT 1");

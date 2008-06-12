@@ -8,6 +8,7 @@
  *  Copyright (C) 2006 Christopher Han <xiphux@gmail.com>
  */
 
+ include_once('display.message.php');
  include_once('user.userhistory.php');
  include_once('user.userhistorysize.php');
 
@@ -15,7 +16,7 @@ function otherhistory()
 {
 	global $db,$tables,$mdb_conf;
 	if (!(isset($_SESSION[$mdb_conf['session_key']]['user']) && ($_SESSION[$mdb_conf['session_key']]['user']['privilege'] > 0))) {
-		echo "You do not have access to this feature!";
+		message("You do not have access to this feature!","warning");
 		return;
 	}
 	$u = $db->GetArray("SELECT * FROM " . $tables['users'] . " WHERE id!=" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . " ORDER BY username");
