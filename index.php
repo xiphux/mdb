@@ -158,12 +158,16 @@
 			break;
 		case "login":
 			include_once('include/user.login.php');
+			include_once('include/display.mainpage.php');
 			login($_POST['user'],$_POST['pass']);
+			mainpage();
 			break;
 		case "logout":
 			include_once('include/display.message.php');
+			include_once('include/display.mainpage.php');
 			unset($_SESSION[$mdb_conf['session_key']]['user']);
 			message("Logged out");
+			mainpage();
 			break;
 		case "updatedb":
 			include_once('include/display.updatedb.php');
