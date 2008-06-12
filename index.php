@@ -186,11 +186,9 @@
 				$tpl->assign("download",TRUE);
 			$tpl->display("title.tpl");
 			break;
-		case "unmap":
-			include_once('include/database.unmapped.php');
-			$tpl->clear_all_assign();
-			$tpl->assign("unmap",unmapped());
-			$tpl->display("unmapped.tpl");
+		case "dbcheck":
+			include_once('include/display.dbcheck.php');
+			dbcheck();
 			break;
 		case "dbstats":
 			include_once('include/display.dbstats.php');

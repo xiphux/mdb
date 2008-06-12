@@ -1,7 +1,7 @@
 {*
- *  unmapped.tpl
+ *  dbcheck.tpl
  *  MDB: A media database
- *  Component: Unmapped files template
+ *  Component: Database check template
  *
  *  Copyright (C) 2006 Christopher Han <xiphux@gmail.com>
  *}
