@@ -198,6 +198,22 @@
 			include_once('include/display.mainpage.php');
 			mainpage();
 			break;
+		case "usermanage":
+			include_once('include/display.usermanage.php');
+			usermanage();
+			break;
+		case "useradd":
+			include_once('include/display.usermanage.php');
+			include_once('include/user.useradd.php');
+			useradd($_POST['user'],$_POST['pass'],$_POST['admin']);
+			usermanage();
+			break;
+		case "userdel":
+			include_once('include/display.usermanage.php');
+			include_once('include/user.userdel.php');
+			userdel($_GET['uid']);
+			usermanage();
+			break;
 		default:
 			echo "404";
 			break;

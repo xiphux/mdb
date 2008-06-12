@@ -9,6 +9,7 @@ a:visited {color:red; text-decoration: none;}
 .highlight {color:yellow;}
 .warning {color:red;}
 .smalltext {font-size: smaller;}
+.textcenter {text-align: center;}
 form input.focus, form textarea.focus {border-color:lime; color: #000;}
 div#bodydiv {}
 div#leftbox {float: left; width: 180px;}
