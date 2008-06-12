@@ -12,9 +12,9 @@
 <p><strong><span class="underline">System statistics:</span></strong>
 <br /><strong>Server: </strong>{$server}
 <br /><strong>Uname: </strong>{$uname}
-<br /><strong>Uptime (days): </strong>{$uptime_days}
-<br /><strong>Uptime (%): </strong>{$uptime_percent}
-<br /><strong>Load average: </strong>{$loadavg}
+{if $uptime_days}<br /><strong>Uptime (days): </strong>{$uptime_days}{/if}
+{if $uptime_percent}<br /><strong>Uptime (%): </strong>{$uptime_percent}{/if}
+{if $loadavg}<br /><strong>Load average: </strong>{$loadavg}{/if}
 </p>
 <p><strong><span class="underline">Data statistics:</span></strong>
 <br /><strong>Files: </strong>{$files}
