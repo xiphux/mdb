@@ -29,6 +29,7 @@
 		echo "Incorrect password";
 		return;
 	}
+	unset($u['password']);
 	$_SESSION[$mdb_conf['session_key']]['user'] = $u;
 	echo "Logged in successfully";
  }
