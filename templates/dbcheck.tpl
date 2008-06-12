@@ -5,13 +5,14 @@
  *
  *  Copyright (C) 2006 Christopher Han <xiphux@gmail.com>
  *}
+ <p>Checking file -&gt; title mappings:
  {if $unmap}
- <p><span class="warning">Warning: the following files do not have legitimate file -&gt; title mappings!  Running updatedb is recommended.</span></p>
+ <span class="warning">Warning: the following files do not have legitimate mappings!  Running updatedb is recommended.</span></p>
  <p>
  {foreach from=$unmap item=i}
  {$i.file}<br />
  {/foreach}
- </p>
  {else}
  <span class="italic">No unmapped files</span>
  {/if}
+ </p>
