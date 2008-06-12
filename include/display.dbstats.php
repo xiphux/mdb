@@ -28,7 +28,7 @@ function dbstats()
 	$percentage=($uptime/$days) * 100;
 	$load=$avgs[1].",".$avgs[2].",".$avgs[3]."";
 	$tpl->assign("server",getenv('SERVER_NAME'));
-	$tpl->assign("uname",htmlentities(@exec('uname -a'),ENT_COMPAT,'UTF-8'));
+	$tpl->assign("uname", php_uname());
 	$tpl->assign("uptime_days",$uptime);
 	$tpl->assign("uptime_percent",$percentage);
 	$tpl->assign("loadavg",$load);
