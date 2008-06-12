@@ -1,8 +1,8 @@
 html {background-color:#000;}
 body {color:white; background: #000 url('../images/mdb.png') 0 0 no-repeat fixed; font-family:"Verdana",sans-serif;}
 a:link {color:lime; text-decoration: none;}
-a:active {color:red; text-decoration: none;}
-a:visited {color:red; text-decoration: none;}
+a:active {color:lime; text-decoration: none;}
+a:visited {color:lime; text-decoration: none;}
 .italic {font-style:italic;}
 .bold {font-weight:bold;}
 .underline {text-decoration:underline;}
