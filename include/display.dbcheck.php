@@ -15,6 +15,13 @@ function dbcheck()
 	global $mdb_conf, $db, $tpl, $tables;
 	$tpl->clear_all_assign();
 	$tpl->assign("unmap",unmapped());
+	if ($mdb_conf['optimize']) {
+		$optables = array();
+		foreach ($tables as $i => $table) {
+			$optables[$i] = $db->Execute("OPTIMIZE TABLE " . $table);
+		}
+		$tpl->assign("optables",$optables);
+	}
 	$tpl->display("dbcheck.tpl");
 }
 

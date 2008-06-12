@@ -5,14 +5,24 @@
  *
  *  Copyright (C) 2006 Christopher Han <xiphux@gmail.com>
  *}
- <p>Checking file -&gt; title mappings:
+ <div class="dbcheck">Checking file -&gt; title mappings:<br />
+ <ul>
  {if $unmap}
- <span class="warning">Warning: the following files do not have legitimate mappings!  Running updatedb is recommended.</span></p>
- <p>
+ <li><span class="warning">Warning: the following files do not have legitimate mappings!  Running updatedb is recommended.</span></li>
  {foreach from=$unmap item=i}
- {$i.file}<br />
+ <li>{$i.file}</li>
  {/foreach}
  {else}
- <span class="italic">No unmapped files</span>
+ <li><span class="italic">No unmapped files</span></li>
  {/if}
- </p>
+ </ul>
+ </div>
+ {if $optables}
+ <div class="dbcheck">Optimizing tables:<br />
+ <ul>
+ {foreach from=$optables key=table item=status}
+ <li>Optimizing table {$table}... {if $status}ok{else}failed{/if}</li>
+ {/foreach}
+ </ul>
+ </div>
+ {/if}

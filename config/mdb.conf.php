@@ -144,7 +144,7 @@ $mdb_conf['adodb_prefix'] = "adodb/";
 
  /*
   * optimize
-  * Whether you want to optimize tables on dbstats page
+  * Whether you want to optimize tables on dbcheck page
   * and after db update
   */
  $mdb_conf['optimize'] = TRUE;

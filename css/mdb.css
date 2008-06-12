@@ -39,3 +39,4 @@ td.filename {width: 90%;overflow: hidden;}
 div#updatedb {font-weight:bold;color:blue;}
 div#tagbox {padding: 5px 5px 5px 5px;}
 div#clearer {clear: both;margin: 0;}
+div.dbcheck ul {list-style-type: none;}
