@@ -13,6 +13,10 @@
 function dbcheck()
 {
 	global $mdb_conf, $db, $tpl, $tables;
+	if (!(isset($_SESSION[$mdb_conf['session_key']]['user']) && ($_SESSION[$mdb_conf['session_key']]['user']['privilege'] > 0))) {
+		echo "You do not have access to this feature!";
+		return;
+	}
 	$tpl->clear_all_assign();
 	$tpl->assign("unmap",unmapped());
 	if ($mdb_conf['optimize']) {
