@@ -16,7 +16,7 @@ div#leftbox {float: left; width: 180px;}
 div#leftbox * {padding: 0; margin: 0;}
 div#leftbox ul {list-style-position: inside; list-style-type: none;}
 div#leftbox div {border: 1px solid #ccc; margin: 5px 5px 5px 5px; padding: 2px 2px 2px 2px; background: #000 url('../images/mdb-pixel.png') 0 0 no-repeat fixed;}
-div#leftbox h4 {text-align: center;background: #3371a3 url('../images/mdb-pixel.png') 0 0 no-repeat fixed;}
+div#leftbox h4 {text-align: center;background: #3371a3;}
 div#rightbox {width: 180px; float: right; padding: 5px 5px 5px 5px; position: absolute; top: 5px; right: 0px; margin: 3px 3px 3px 3px;}
 div#rightbox h4 {text-align: center; padding: 0; margin: 2px 2px 2px 2px;background: #3371a3 url('../images/mdb-pixel.png') 0 0 no-repeat fixed;}
 div#rightbox div#categoryblock {border: 1px solid #ccc; background: #000 url('../images/mdb-pixel.png') 0 0 no-repeat fixed;}
