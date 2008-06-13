@@ -28,6 +28,10 @@ div.miniblocktitle {background: transparent url("../images/level1_sub.gif") no-r
 div.miniblockcontent ul li {background: transparent url("../images/level2_regular.gif"); z-index: 9;}
 div.blockcontent ul li a:link {color: red;}
 div.miniblockcontent ul li a:link {color: red;}
+div.blockcontent ul li a:active {color: red;}
+div.miniblockcontent ul li a:active {color: red;}
+div.blockcontent ul li a:visited {color: red;}
+div.miniblockcontent ul li a:visited {color: red;}
 div.main {background: #000 url('../images/mdb-pixel.png') 0 0 no-repeat fixed; padding: 5px 5px 5px 5px; margin-left: 180px; margin-right: 187px; position: relative; top: 5px; border: 1px solid #ccc;}
 div.main div {position:relative;}
 table {border-style:none;}
