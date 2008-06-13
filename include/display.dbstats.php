@@ -39,8 +39,6 @@ function dbstats()
 	$total = 0;
 	foreach ($dbstats as $row) {
 		if (in_array($row['Name'],$tables)) {
-			if ($mdb_conf['optimize'])
-				$db->Execute("OPTIMIZE TABLE " . $row['Name']);
 			$tpl->clear_all_assign();
 			$tpl->assign("table",$row);
 			if (isset($row['Data_length']) && isset($row['Index_length'])) {
