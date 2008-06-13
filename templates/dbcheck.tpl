@@ -22,9 +22,9 @@
  <ul>
  <li>
  {if $dbmutexfixed}
- <span class="warning">inconsistency detected, fixed</span>
+ <span class="warning">Inconsistency detected, fixed</span>
  {else}
- <span class="highlight">consistent</span>
+ <span class="highlight">Consistent</span>
  {/if}
  </li>
  </ul>
