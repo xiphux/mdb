@@ -18,6 +18,7 @@ $tables['users'] = $mdb_conf['prefix'] . "users";
 $tables['links'] = $mdb_conf['prefix'] . "links";
 $tables['downloads'] = $mdb_conf['prefix'] . "downloads";
 $tables['dbupdate'] = $mdb_conf['prefix'] . "dbupdate";
+$tables['preferences'] = $mdb_conf['prefix'] . "preferences";
 
 $db = NewADOConnection($mdb_conf['db_type']);
 if ($mdb_conf['persist'])

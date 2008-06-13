@@ -23,6 +23,7 @@
 <br /><strong>Links: </strong>{$links}
 <br /><strong>Downloads: </strong>{$downloads}
 <br /><strong>Updates: </strong>{$dbupdate}
+<br /><strong>Preferences: </strong>{$preferences}
 </p>
 <p><strong><span class="underline">Database statistics:</span></strong></p>
 {foreach from=$tablelist item=table}

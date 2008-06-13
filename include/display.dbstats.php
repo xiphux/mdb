@@ -34,6 +34,7 @@ function dbstats()
 	$tpl->assign("links",$db->GetOne("SELECT COUNT(id) FROM " . $tables['links']));
 	$tpl->assign("downloads",$db->GetOne("SELECT COUNT(id) FROM " . $tables['downloads']));
 	$tpl->assign("dbupdate",$db->GetOne("SELECT COUNT(id) FROM " . $tables['dbupdate']));
+	$tpl->assign("preferences",$db->GetOne("SELECT COUNT(id) FROM " . $tables['preferences']));
 	$dbstats = $db->GetArray("SHOW TABLE STATUS");
 	$total = 0;
 	$tablelist = array();
