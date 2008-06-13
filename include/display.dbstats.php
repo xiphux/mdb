@@ -34,24 +34,22 @@ function dbstats()
 	$tpl->assign("links",$db->GetOne("SELECT COUNT(id) FROM " . $tables['links']));
 	$tpl->assign("downloads",$db->GetOne("SELECT COUNT(id) FROM " . $tables['downloads']));
 	$tpl->assign("dbupdate",$db->GetOne("SELECT COUNT(id) FROM " . $tables['dbupdate']));
-	$tpl->display("stats.tpl");
 	$dbstats = $db->GetArray("SHOW TABLE STATUS");
 	$total = 0;
+	$tablelist = array();
 	foreach ($dbstats as $row) {
 		if (in_array($row['Name'],$tables)) {
-			$tpl->clear_all_assign();
-			$tpl->assign("table",$row);
 			if (isset($row['Data_length']) && isset($row['Index_length'])) {
 				$t = $row['Data_length'] + $row['Index_length'];
-				$tpl->assign("total_size",$t);
+				$row['total_size'] = $t;
 				$total += $t;
-				$tpl->display("stats_table.tpl");
 			}
+			$tablelist[] = $row;
 		}
 	}
-	$tpl->clear_all_assign();
+	$tpl->assign("tablelist",$tablelist);
 	$tpl->assign("dbsize",$total);
-	$tpl->display("stats_sum.tpl");
+	$tpl->display("dbstats.tpl");
 }
 
 ?>
