@@ -8,7 +8,6 @@
  *  Copyright (C) 2006 Christopher Han <xiphux@gmail.com>
  */
 
-  include_once('metadata.animenfo_link.php');
   include_once('display.message.php');
 
  function titleinfo($tid)
@@ -35,14 +34,9 @@
 	if (sizeof($temp) > 0)
 		$title['tags'] = $temp;
 	$title['size'] = $db->GetOne("SELECT SUM(t1.size) FROM " . $tables['files'] . " AS t1, " . $tables['file_title'] . " AS t2 WHERE t1.id=t2.file_id AND t2.title_id=" . $title['id']);
-	$temp = $db->GetArray("SELECT * FROM " . $tables['animenfo'] . " WHERE title_id=" . $tid);
-	if ($temp && (sizeof($temp) > 0)) {
-		$size = sizeof($temp);
-		for ($i = 0; $i < $size; $i++) {
-			$temp[$i]['link'] = animenfo_link($temp[$i]);
-		}
-		$title['info']['animenfo'] = $temp;
-	}
+	$temp = $db->GetArray("SELECT * FROM " . $tables['links'] . " WHERE title_id=" . $tid);
+	if ($temp && (sizeof($temp) > 0))
+		$title['links'] = $temp;
 	return $title;
  }
 

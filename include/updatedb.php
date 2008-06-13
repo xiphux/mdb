@@ -202,7 +202,7 @@
 		$ok = $db->Execute("DELETE FROM " . $tables['title_tag'] . " WHERE title_id=" . $k);
 		if ($mdb_conf['debug'] && !$ok)
 			echo "prune_titles_2:1: " . $db->ErrorMsg() . "\n";
-		$ok = $db->Execute("DELETE FROM " . $tables['animenfo'] . " WHERE title_id=" . $k);
+		$ok = $db->Execute("DELETE FROM " . $tables['links'] . " WHERE title_id=" . $k);
 		if ($mdb_conf['debug'] && !$ok)
 			echo "prune_titles_2:2: " . $db->ErrorMsg() . "\n";
 	}

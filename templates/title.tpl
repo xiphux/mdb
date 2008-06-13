@@ -6,12 +6,12 @@
  *  Copyright (C) 2006 Christopher Han <xiphux@gmail.com>
  *}
 <p><span class="bold"><span class="underline">{$title.title}</span></span> [<span class="highlight" title="{$title.size}">{$title.size|size}</span>]</p>
-{if $title.info}
+{if $title.links}
 <table>
-{foreach from=$title.info.animenfo name=nfo item=nfolnk}
+{foreach from=$title.links name=links item=link}
 <tr>
-<td>{if $smarty.foreach.nfo.first}Info:{/if}</td>
-<td><a href="{$nfolnk.link}">AnimeNFO{if $nfolnk.name} ({$nfolnk.name}){/if}</a></td>
+<td>{if $smarty.foreach.links.first}Info:{/if}</td>
+<td><a href="{$link.url}">{$link.site}{if $link.name} ({$link.name}){/if}</a></td>
 </tr>
 {/foreach}
 </table>
