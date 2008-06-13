@@ -212,9 +212,8 @@ $mdb_conf['debug'] = TRUE;
 /*
  * theme
  * This is the default theme to use
- * Specified as the name of a css file in css/themes/*.css,
- * without the .css extension
+ * Specified as the name of a css file in css/themes,
  */
-$mdb_conf['theme'] = "dark";
+$mdb_conf['theme'] = "dark.css";
 
 ?>
