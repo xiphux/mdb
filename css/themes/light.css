@@ -1,0 +1,32 @@
+html {background-color:#fff;}
+body {color:black; background: #fff; font-family:"Verdana",sans-serif;}
+a:link {color:blue; text-decoration: none;}
+a:active {color:blue; text-decoration: none;}
+a:visited {color:blue; text-decoration: none;}
+.highlight {color:fuchsia;}
+.warning {color:red;}
+form input.focus, form textarea.focus {border-color:blue; color: #fff;}
+div#leftbox div {border: 1px solid #000; background: #fff; text-align: right;}
+div#leftbox h4 {text-align: right;background: #9ff; padding-right: 0.5em;}
+div#rightbox h4 {background: #9ff; padding-left: 0.5em;}
+div#rightbox div#categoryblock {border: 1px solid #000; background: #fff;}
+div.blocktitle {background: #336699;}
+div.blocktitle div {background: #336699;}
+div.blockcontent {background: #eee;}
+div.blockcontent ul {font-size:12px;}
+div.blockcontent ul li {color: black; background: #ddd; font-size:12px;}
+div.miniblocktitle {background: #ddd;}
+div.miniblockcontent ul li {background: #eee;}
+div.blockcontent ul li a:link {color: blue;}
+div.miniblockcontent ul li a:link {color: blue;}
+div.blockcontent ul li a:active {color: blue;}
+div.miniblockcontent ul li a:active {color: blue;}
+div.blockcontent ul li a:visited {color: blue;}
+div.miniblockcontent ul li a:visited {color: blue;}
+div.main {background: #fff; border: 1px solid #000;}
+table {border-style:none;}
+tr.odd {background: #eee;}
+tr.odd:hover {background-color: #ddd;}
+tr.even {background: #fff;}
+tr.even:hover {background-color: #ddd;}
+div#updatedb {font-weight:bold;color:blue;}
