@@ -10,10 +10,10 @@
  {if $unmap}
  <li><span class="warning">Warning: the following files do not have legitimate mappings!  Running updatedb is recommended.</span></li>
  {foreach from=$unmap item=i}
- <li>{$i.file}</li>
+ <li><span class="warning">{$i.file}</span></li>
  {/foreach}
  {else}
- <li><span class="italic">No unmapped files</span></li>
+ <li><span class="italic highlight">No unmapped files</span></li>
  {/if}
  </ul>
  </div>
@@ -21,7 +21,7 @@
  <div class="dbcheck">Optimizing tables:<br />
  <ul>
  {foreach from=$optables key=table item=status}
- <li>Optimizing table {$table}... {if $status}ok{else}failed{/if}</li>
+ <li>Optimizing table <span class="highlight">{$table}</span>... {if $status}<span class="highlight">ok</span>{else}<span class="warning">failed</span>{/if}</li>
  {/foreach}
  </ul>
  </div>
