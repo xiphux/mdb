@@ -209,4 +209,12 @@ $mdb_conf['dbmutex'] = TRUE;
  */
 $mdb_conf['debug'] = TRUE;
 
+/*
+ * theme
+ * This is the default theme to use
+ * Specified as the name of a css file in css/themes/*.css,
+ * without the .css extension
+ */
+$mdb_conf['theme'] = "dark";
+
 ?>
