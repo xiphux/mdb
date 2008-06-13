@@ -10,7 +10,8 @@
      <h4>login</h4>
      <ul>
        {if $user}
-         <li>logged in as: {$user.username}</li>
+         <li>logged in as:</li>
+	 <li><span class="highlight">{$user.username}</span></li>
 	 <li><a href="{$SCRIPT_NAME}?u=logout">logout</a></li>
        {else}
          <form action="{$SCRIPT_NAME}?u=login" method="post">
