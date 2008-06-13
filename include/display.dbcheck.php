@@ -23,7 +23,7 @@ function dbcheck()
 	if ($mdb_conf['optimize']) {
 		$optables = array();
 		foreach ($tables as $i => $table) {
-			$optables[$i] = $db->Execute("OPTIMIZE TABLE " . $table);
+			$optables[$table] = $db->Execute("OPTIMIZE TABLE " . $table);
 		}
 		$tpl->assign("optables",$optables);
 	}
