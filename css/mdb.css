@@ -24,8 +24,8 @@ div.blocktitle {background: #336699;}
 div.blocktitle div {background: #336699; padding-left:0.25em; margin-left: 0.25em;}
 div.blockcontent ul {list-style:none;font-size:12px;padding:0;margin:0}
 div.blockcontent ul li {color: black; #cddbeb; list-style:none;font-size:12px;display:block;}
-div.miniblocktitle {background: #cddbeb; z-index: 10; padding-left:0.25em;}
-div.miniblockcontent ul li {background: #cfcfcf; z-index: 9; padding-left:0.5em;}
+div.miniblocktitle {background: #cddbeb; z-index: 10; padding-left:0.125em;}
+div.miniblockcontent ul li {background: #cfcfcf; z-index: 9; padding-left:0.25em; padding-right:0.25em;}
 div.blockcontent ul li a:link {color: red;}
 div.miniblockcontent ul li a:link {color: red;}
 div.blockcontent ul li a:active {color: red;}
