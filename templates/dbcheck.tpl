@@ -17,6 +17,19 @@
  {/if}
  </ul>
  </div>
+ {if $dbmutexcheck}
+ <div class="dbcheck">Checking database update consistency:<br />
+ <ul>
+ <li>
+ {if $dbmutexfixed}
+ <span class="warning">inconsistency detected, fixed</span>
+ {else}
+ <span class="highlight">consistent</span>
+ {/if}
+ </li>
+ </ul>
+ </div>
+ {/if}
  {if $optables}
  <div class="dbcheck">Optimizing tables:<br />
  <ul>

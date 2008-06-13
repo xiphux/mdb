@@ -20,6 +20,17 @@ function dbcheck()
 	}
 	$tpl->clear_all_assign();
 	$tpl->assign("unmap",unmapped());
+	if ($mdb_conf['dbmutex'] && (php_uname("s") == "Linux")) {
+		$tpl->assign("dbmutexcheck",1);
+		$status = $db->GetOne("SELECT MAX(progress) FROM " . $tables['dbupdate']);
+		if ($status && $status > 0) {
+			$updating = shell_exec("ps ax | grep -v 'grep' | grep -c '" . $mdb_conf['phpexec'] . " include/updatedb.php'");
+			if ($updating < 1) {
+				$db->Execute("UPDATE " . $tables['dbupdate'] . " SET progress=0 WHERE progress!=0");
+				$tpl->assign("dbmutexfixed",1);
+			}
+		}
+	}
 	if ($mdb_conf['optimize']) {
 		$optables = array();
 		foreach ($tables as $i => $table) {
