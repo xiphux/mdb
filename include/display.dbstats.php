@@ -31,6 +31,7 @@ function dbstats()
 	$tpl->assign("titles",$db->GetOne("SELECT COUNT(id) FROM " . $tables['titles']));
 	$tpl->assign("users",$db->GetOne("SELECT COUNT(id) FROM " . $tables['users']));
 	$tpl->assign("tags",$db->GetOne("SELECT COUNT(id) FROM " . $tables['tags']));
+	$tpl->assign("links",$db->GetOne("SELECT COUNT(id) FROM " . $tables['links']));
 	$tpl->assign("downloads",$db->GetOne("SELECT COUNT(id) FROM " . $tables['downloads']));
 	$tpl->assign("dbupdate",$db->GetOne("SELECT COUNT(id) FROM " . $tables['dbupdate']));
 	$tpl->display("stats.tpl");

@@ -20,6 +20,7 @@
 <br /><strong>Titles: </strong>{$titles}
 <br /><strong>Users: </strong>{$users}
 <br /><strong>Tags: </strong>{$tags}
+<br /><strong>Links: </strong>{$links}
 <br /><strong>Downloads: </strong>{$downloads}
 <br /><strong>Updates: </strong>{$dbupdate}
 </p>
