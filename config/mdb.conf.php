@@ -197,6 +197,9 @@ $mdb_conf['adodb_prefix'] = "adodb/";
   * changed.
   * Also, every AJAX call to updatedbstatus (according to the interval
   * set in updatedbstatus_interval) will query the database.
+  *
+  * Turning dbmutex off and using ps/grep hacks has not been tested on
+  * any platform but Linux, and will definitely not work on Windows.
   */
 $mdb_conf['dbmutex'] = TRUE;
 
