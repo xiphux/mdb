@@ -14,6 +14,7 @@ header("Content-Type: $contentType; charset=utf-8"); *}
 <title>{$title}</title>
 {literal}
 <link rel="stylesheet" href="css/mdb.css" type="text/css" />
+<link rel="stylesheet" href="css/dark.css" type="text/css" />
 <script type="text/javascript" src="scripts/prototype.lite.js"></script>
 <script type="text/javascript" src="scripts/moo.fx.js"></script>
 <script type="text/javascript" src="scripts/accordion.js"></script>

@@ -1,48 +1,23 @@
-html {background-color:#000;}
-body {color:white; background: #000 url('../images/mdb.png') 0 0 no-repeat fixed; font-family:"Verdana",sans-serif;}
-a:link {color:lime; text-decoration: none;}
-a:active {color:lime; text-decoration: none;}
-a:visited {color:lime; text-decoration: none;}
 .italic {font-style:italic;}
 .bold {font-weight:bold;}
 .underline {text-decoration:underline;}
-.highlight {color:yellow;}
-.warning {color:red;}
 .smalltext {font-size: smaller;}
 .textcenter {text-align: center;}
-form input.focus, form textarea.focus {border-color:lime; color: #000;}
 div#bodydiv {}
 div#leftbox {float: left; width: 180px;}
 div#leftbox * {padding: 0; margin: 0;}
 div#leftbox ul {list-style-position: inside; list-style-type: none;}
-div#leftbox div {border: 1px solid #ccc; margin: 5px 5px 5px 5px; padding: 2px 2px 2px 2px; background: #000 url('../images/mdb-pixel.png') 0 0 no-repeat fixed;}
-div#leftbox h4 {text-align: center;background: #3371a3;}
+div#leftbox div {margin: 5px 5px 5px 5px; padding: 2px 2px 2px 2px;}
 div#rightbox {width: 180px; float: right; padding: 5px 5px 5px 5px; position: absolute; top: 5px; right: 0px; margin: 3px 3px 3px 3px;}
-div#rightbox h4 {text-align: center; padding: 0; margin: 2px 2px 2px 2px;background: #3371a3 url('../images/mdb-pixel.png') 0 0 no-repeat fixed;}
-div#rightbox div#categoryblock {border: 1px solid #ccc; background: #000 url('../images/mdb-pixel.png') 0 0 no-repeat fixed;}
-div.blocktitle {background: #336699;}
-div.blocktitle div {background: #336699; padding-left:0.25em; margin-left: 0.25em;}
-div.blockcontent {background: #cfcfcf;}
+div#rightbox h4 {padding: 0; margin: 2px 2px 2px 2px;}
+div.blocktitle div {padding-left:0.25em; margin-left: 0.25em;}
 div.blockcontent ul {list-style:none;font-size:12px;padding:0;margin:0}
-div.blockcontent ul li {color: black; #cddbeb; list-style:none;font-size:12px;display:block;}
-div.miniblocktitle {background: #cddbeb; z-index: 10; padding-left:0.125em;}
-div.miniblockcontent ul li {background: #cfcfcf; z-index: 9; padding-left:0.25em; padding-right:0.25em;}
-div.blockcontent ul li a:link {color: red;}
-div.miniblockcontent ul li a:link {color: red;}
-div.blockcontent ul li a:active {color: red;}
-div.miniblockcontent ul li a:active {color: red;}
-div.blockcontent ul li a:visited {color: red;}
-div.miniblockcontent ul li a:visited {color: red;}
-div.main {background: #000 url('../images/mdb-pixel.png') 0 0 no-repeat fixed; padding: 5px 5px 5px 5px; margin-left: 180px; margin-right: 187px; position: relative; top: 5px; border: 1px solid #ccc;}
+div.blockcontent ul li {list-style:none;display:block;}
+div.miniblockcontent ul li {z-index: 9; padding-left:0.25em; padding-right:0.25em;}
+div.main {padding: 5px 5px 5px 5px; margin-left: 180px; margin-right: 187px; position: relative; top: 5px;}
 div.main div {position:relative;}
-table {border-style:none;}
 table.filelist {table-layout: fixed; width: 100%;}
-tr.odd {background: #111 url('../images/mdb-pixel.png') 0 0 no-repeat fixed;}
-tr.odd:hover {background-color: #222;}
-tr.even {background: #000 url('../images/mdb-pixel.png') 0 0 no-repeat fixed;}
-tr.even:hover {background-color: #222;}
 td.filename {width: 90%;overflow: hidden;}
-div#updatedb {font-weight:bold;color:blue;}
 div#tagbox {padding: 5px 5px 5px 5px;}
 div#clearer {clear: both;margin: 0;}
 div.dbcheck ul {list-style-type: none;}
