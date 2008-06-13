@@ -10,7 +10,7 @@
      <h4>login</h4>
      <ul>
        {if $user}
-         <li>logged in as:</li>
+         <li>logged in as</li>
 	 <li><span class="highlight">{$user.username}</span></li>
 	 <li><a href="{$SCRIPT_NAME}?u=logout">logout</a></li>
        {else}

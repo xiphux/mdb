@@ -6,7 +6,7 @@ a:visited {color:lime; text-decoration: none;}
 .highlight {color:yellow;}
 .warning {color:red;}
 form input.focus, form textarea.focus {border-color:lime; color: #000;}
-div#leftbox div {border: 1px solid #ccc; background: #000 url('../../images/mdb-pixel.png') 0 0 no-repeat fixed;}
+div#leftbox div {border: 1px solid #ccc; background: #000 url('../../images/mdb-pixel.png') 0 0 no-repeat fixed; text-align: center;}
 div#leftbox h4 {text-align: center;background: #3371a3;}
 div#rightbox h4 {text-align: center;background: #3371a3 url('../../images/mdb-pixel.png') 0 0 no-repeat fixed;}
 div#rightbox div#categoryblock {border: 1px solid #ccc; background: #000 url('../../images/mdb-pixel.png') 0 0 no-repeat fixed;}
@@ -15,8 +15,8 @@ div.blocktitle div {background: #336699;}
 div.blockcontent {background: #cfcfcf;}
 div.blockcontent ul {font-size:12px;}
 div.blockcontent ul li {color: black; background: #cddbeb; font-size:12px;}
-div.miniblocktitle {background: #cddbeb;}
-div.miniblockcontent ul li {background: #cfcfcf;}
+div.miniblocktitle {background: #cddbeb; text-align: center;}
+div.miniblockcontent ul li {background: #cfcfcf; text-align: center;}
 div.blockcontent ul li a:link {color: red;}
 div.miniblockcontent ul li a:link {color: red;}
 div.blockcontent ul li a:active {color: red;}
