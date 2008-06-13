@@ -120,30 +120,16 @@
 			message("Tag removed");
 			break;
 		case "addtag":
-			include_once('include/title.titleinfo.php');
-			include_once('include/tag.taglist.php');
 			include_once('include/tag.addtag.php');
+			include_once('include/display.title.php');
 			addtag($_GET['tid'],$_POST['tag']);
-			$tpl->clear_all_assign();
-			$tpl->assign("title",titleinfo($_GET['tid']));
- 			$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
-			$tpl->assign("taglist",taglist());
-			if ($mdb_conf['download'])
-				$tpl->assign("download",TRUE);
-			$tpl->display("title.tpl");
+			title($_GET['tid']);
 			break;
 		case "untag":
-			include_once('include/title.titleinfo.php');
 			include_once('include/tag.untag.php');
-			include_once('include/tag.taglist.php');
+			include_once('include/display.title.php');
 			untag($_GET['tid'],$_GET['tag']);
-			$tpl->clear_all_assign();
-			$tpl->assign("title",titleinfo($_GET['tid']));
- 			$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
-			$tpl->assign("taglist",taglist());
-			if ($mdb_conf['download'])
-				$tpl->assign("download",TRUE);
-			$tpl->display("title.tpl");
+			title($_GET['tid']);
 			break;
 		case "tag":
 			include_once('include/tag.taginfo.php');
@@ -184,15 +170,8 @@
 			$tpl->display("search.tpl");
 			break;
 		case "title":
-			include_once('include/tag.taglist.php');
-			include_once('include/title.titleinfo.php');
-			$tpl->clear_all_assign();
-			$tpl->assign("title",titleinfo($_GET['id']));
- 			$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
-			$tpl->assign("taglist",taglist());
-			if ($mdb_conf['download'])
-				$tpl->assign("download",TRUE);
-			$tpl->display("title.tpl");
+			include_once('include/display.title.php');
+			title($_GET['id']);
 			break;
 		case "dbcheck":
 			include_once('include/display.dbcheck.php');
