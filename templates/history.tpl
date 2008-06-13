@@ -11,7 +11,7 @@
 </p>
 {/if}
 <p>Total: [<span class="highlight" title="{$userhistorysize}">{$userhistorysize|size}</span>]
-<table>
+<table class="dltable">
   <tr>
     <td class="date"><span class="bold">Date</span></td>
     <td class="ip"><span class="bold">IP</span></td>
@@ -42,7 +42,7 @@
 {foreach from=$otherhistory item=uhistory}
 <p>
 Downloads for {$uhistory.username} [<span class="highlight" title="{$uhistory.total}">{$uhistory.total|size}</span>]:
-<table>
+<table class="dltable">
   <tr>
     <td class="date"><span class="bold">Date</span></td>
     <td class="ip"><span class="bold">IP</span></td>

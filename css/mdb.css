@@ -45,3 +45,8 @@ div#updatedb {font-weight:bold;color:blue;}
 div#tagbox {padding: 5px 5px 5px 5px;}
 div#clearer {clear: both;margin: 0;}
 div.dbcheck ul {list-style-type: none;}
+table.dltable {table-layout: fixed; width: 100%;}
+table.dltable td.date {width: 100px;}
+table.dltable td.ip {width: 145px;}
+table.dltable td.filename {}
+table.dltable td.filesize {width: 90px;}
