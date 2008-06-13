@@ -16,17 +16,13 @@
 {/foreach}
 </table>
 {/if}
-<p>
 Tags:
 {foreach from=$title.tags name=tags item=tag}
 {if !$smarty.foreach.tags.first},{/if} <a href="{$SCRIPT_NAME}?u=tag&id={$tag.id}">{$tag.tag}</a> {if $user}<a href="{$SCRIPT_NAME}?u=untag&tid={$title.id}&tag={$tag.id}"><span class="smalltext">[x]</span></a>{/if}
 {foreachelse}
 <span class="italic">None</span>
 {/foreach}
-</p>
-<br />
 {if $user}
-<p>
 {if $taglist}
 <form action="{$SCRIPT_NAME}?u=addtag&tid={$title.id}" method="POST">
 <label for="tag">Tag:</label> <select id="tag" name="tag">
@@ -35,11 +31,9 @@ Tags:
 {/foreach}
 </select> <input class="submit" type="submit" name="submit" value="Tag" />
 </form>
-<br />
 {/if}
 <form action="{$SCRIPT_NAME}?u=addtag&tid={$title.id}" method="POST">
 <label for="tag">New tag:</label> <input type="text" id="tag" name="tag" /> <input class="submit" type="submit" name="submit" value="Add tag" />
 </form>
-</p>
 {/if}
 {include file='filelist.tpl' filelist=$title.files}
