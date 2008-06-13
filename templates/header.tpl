@@ -16,7 +16,7 @@ header("Content-Type: $contentType; charset=utf-8"); *}
 <link rel="stylesheet" href="css/mdb.css" type="text/css" />
 <script type="text/javascript" src="scripts/prototype.lite.js"></script>
 <script type="text/javascript" src="scripts/moo.fx.js"></script>
-<script type="text/javascript" src="scripts/moo.fx.pack.js"></script>
+<script type="text/javascript" src="scripts/accordion.js"></script>
 <script type="text/javascript">
 //<!CDATA[
 function highlightFormElements() {
@@ -37,7 +37,7 @@ function init_effects() {
 	var minicontentblocks = document.getElementsByClassName('miniblockcontent');
 	var minititleblocks = document.getElementsByClassName('miniblocktitle');
 	var subAccordion = new fx.Accordion(
-		minititleblocks,minicontentblocks,{opacity:true}
+		minititleblocks,minicontentblocks,{}
 	);
 }
 window.onload = function() {highlightFormElements();init_effects();}

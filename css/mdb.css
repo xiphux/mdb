@@ -22,6 +22,7 @@ div#rightbox h4 {text-align: center; padding: 0; margin: 2px 2px 2px 2px;backgro
 div#rightbox div#categoryblock {border: 1px solid #ccc; background: #000 url('../images/mdb-pixel.png') 0 0 no-repeat fixed;}
 div.blocktitle {background: #336699;}
 div.blocktitle div {background: #336699; padding-left:0.25em; margin-left: 0.25em;}
+div.blockcontent {background: #cfcfcf;}
 div.blockcontent ul {list-style:none;font-size:12px;padding:0;margin:0}
 div.blockcontent ul li {color: black; #cddbeb; list-style:none;font-size:12px;display:block;}
 div.miniblocktitle {background: #cddbeb; z-index: 10; padding-left:0.125em;}
