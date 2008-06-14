@@ -17,12 +17,12 @@ div.blockcontent ul {font-size:12px;}
 div.blockcontent ul li {color: black; background: #cddbeb; font-size:12px;}
 div.miniblocktitle {background: #cddbeb; text-align: center;}
 div.miniblockcontent ul li {background: #cfcfcf; text-align: center;}
-div.blockcontent ul li a:link {color: red;}
-div.miniblockcontent ul li a:link {color: red;}
-div.blockcontent ul li a:active {color: red;}
-div.miniblockcontent ul li a:active {color: red;}
-div.blockcontent ul li a:visited {color: red;}
-div.miniblockcontent ul li a:visited {color: red;}
+div.blockcontent ul li a:link {color: #0a0;}
+div.miniblockcontent ul li a:link {color: #0a0;}
+div.blockcontent ul li a:active {color: #0a0;}
+div.miniblockcontent ul li a:active {color: #0a0;}
+div.blockcontent ul li a:visited {color: #0a0;}
+div.miniblockcontent ul li a:visited {color: #0a0;}
 div.main {background: #000 url('../../images/mdb-pixel.png') 0 0 no-repeat fixed; border: 1px solid #ccc;}
 table {border-style:none;}
 tr.odd {background: #111 url('../../images/mdb-pixel.png') 0 0 no-repeat fixed;}
