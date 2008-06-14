@@ -22,6 +22,7 @@ function listthemes()
 			}
 		}
 	}
+	sort($themes);
 	return $themes;
 }
 
