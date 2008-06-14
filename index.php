@@ -217,6 +217,12 @@
 			updatepass($_POST['oldpass'],$_POST['newpass'],$_POST['newpass2']);
 			preferences();
 			break;
+		case "changetheme":
+			include_once('include/display.preferences.php');
+			include_once('include/user.setpref.php');
+			setpref("theme",$_POST['theme']);
+			preferences();
+			break;
 		default:
 			include_once('include/display.message.php');
 			message("404","warning");

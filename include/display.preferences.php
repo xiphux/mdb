@@ -9,6 +9,8 @@
  */
 
  include_once('display.message.php');
+ include_once('user.getpref.php');
+ include_once('util.listthemes.php');
 
  function preferences()
  {
@@ -18,6 +20,8 @@
 		return;
 	}
 	$tpl->clear_all_assign();
+	$tpl->assign("selectedtheme",getpref("theme",$mdb_conf['theme']));
+	$tpl->assign("themes",listthemes());
 	$tpl->display("preferences.tpl");
  }
 
