@@ -32,6 +32,7 @@ function userdel($uid)
 	}
 	$db->Execute("DELETE FROM " . $tables['users'] . " WHERE id=" . $uid . " LIMIT 1");
 	$db->Execute("DELETE FROM " . $tables['downloads'] . " WHERE uid=" . $uid);
+	$db->Execute("DELETE FROM " . $tables['preferences'] . " WHERE uid=" . $uid);
 }
 
 ?>
