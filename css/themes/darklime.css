@@ -1,32 +1,144 @@
-html {background-color:#000;}
-body {color:white; background: #000 url('../../images/mdb.png') 0 0 no-repeat fixed; font-family:"Verdana",sans-serif;}
-a:link {color:lime; text-decoration: none;}
-a:active {color:lime; text-decoration: none;}
-a:visited {color:lime; text-decoration: none;}
-.highlight {color:yellow;}
-.warning {color:red;}
-form input.focus, form textarea.focus {border-color:lime; color: #000;}
-div#leftbox div {border: 1px solid #ccc; background: #000 url('../../images/mdb-pixel.png') 0 0 no-repeat fixed; text-align: center;}
-div#leftbox h4 {text-align: center;background: #3371a3;}
-div#rightbox h4 {text-align: center;background: #3371a3 url('../../images/mdb-pixel.png') 0 0 no-repeat fixed;}
-div#rightbox div#categoryblock {border: 1px solid #ccc; background: #000 url('../../images/mdb-pixel.png') 0 0 no-repeat fixed;}
-div.blocktitle {background: #336699;}
-div.blocktitle div {background: #336699;}
-div.blockcontent {background: #cfcfcf;}
-div.blockcontent ul {font-size:12px;}
-div.blockcontent ul li {color: black; background: #cddbeb; font-size:12px;}
-div.miniblocktitle {background: #cddbeb; font-size: 14px;}
-div.miniblockcontent ul li {background: #cfcfcf; text-align: center;}
-div.blockcontent ul li a:link {color: #080;}
-div.miniblockcontent ul li a:link {color: #080;}
-div.blockcontent ul li a:active {color: #080;}
-div.miniblockcontent ul li a:active {color: #080;}
-div.blockcontent ul li a:visited {color: #080;}
-div.miniblockcontent ul li a:visited {color: #080;}
-div.main {background: #000 url('../../images/mdb-pixel.png') 0 0 no-repeat fixed; border: 1px solid #ccc;}
-table {border-style:none;}
-tr.odd {background: #111 url('../../images/mdb-pixel.png') 0 0 no-repeat fixed;}
-tr.odd:hover {background-color: #222;}
-tr.even {background: #000 url('../../images/mdb-pixel.png') 0 0 no-repeat fixed;}
-tr.even:hover {background-color: #222;}
-div#updatedb {font-weight:bold;color:blue;}
+html {
+	background-color: #000;
+}
+
+body {
+	color: white;
+	background: #000 url('../../images/mdb.png') 0 0 no-repeat fixed;
+	font-family: "Verdana",sans-serif;
+}
+
+a:link {
+	color: lime;
+	text-decoration: none;
+}
+
+a:active {
+	color: lime;
+	text-decoration: none;
+}
+
+a:visited {
+	color: lime;
+	text-decoration: none;
+}
+
+.highlight {
+	color: yellow;
+}
+
+.warning {
+	color: red;
+}
+
+form input.focus, form textarea.focus {
+	border-color: lime;
+	color: #000;
+}
+
+div#leftbox div {
+	border: 1px solid #ccc;
+	background: #000 url('../../images/mdb-pixel.png') 0 0 no-repeat fixed;
+	text-align: center;
+}
+
+div#leftbox h4 {
+	text-align: center;
+	background: #3371a3;
+}
+
+div#rightbox h4 {
+	text-align: center;
+	background: #3371a3 url('../../images/mdb-pixel.png') 0 0 no-repeat fixed;
+}
+
+div#rightbox div#categoryblock {
+	border: 1px solid #ccc;
+	background: #000 url('../../images/mdb-pixel.png') 0 0 no-repeat fixed;
+}
+
+div.blocktitle {
+	background: #336699;
+}
+
+div.blocktitle div {
+	background: #336699;
+}
+
+div.blockcontent {
+	background: #cfcfcf;
+}
+
+div.blockcontent ul {
+	font-size: 12px;
+}
+
+div.blockcontent ul li {
+	color: black;
+	background: #cddbeb;
+	font-size: 12px;
+}
+
+div.miniblocktitle {
+	background: #cddbeb;
+	font-size: 14px;
+}
+
+div.miniblockcontent ul li {
+	background: #cfcfcf;
+	text-align: center;
+}
+
+div.blockcontent ul li a:link {
+	color: #080;
+}
+
+div.miniblockcontent ul li a:link {
+	color: #080;
+}
+
+div.blockcontent ul li a:active {
+	color: #080;
+}
+
+div.miniblockcontent ul li a:active {
+	color: #080;
+}
+
+div.blockcontent ul li a:visited {
+	color: #080;
+}
+
+div.miniblockcontent ul li a:visited {
+	color: #080;
+}
+
+div.main {
+	background: #000 url('../../images/mdb-pixel.png') 0 0 no-repeat fixed;
+	border: 1px solid #ccc;
+}
+
+table {
+	border-style: none;
+}
+
+tr.odd {
+	background: #111 url('../../images/mdb-pixel.png') 0 0 no-repeat fixed;
+}
+
+tr.odd:hover {
+	background-color: #222;
+}
+
+tr.even {
+	background: #000 url('../../images/mdb-pixel.png') 0 0 no-repeat fixed;
+}
+
+tr.even:hover {
+	background-color: #222;
+}
+
+div#updatedb {
+	font-weight: bold;
+	color: blue;
+}
