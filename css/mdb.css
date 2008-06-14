@@ -11,7 +11,7 @@ div#leftbox div {margin: 5px 5px 5px 5px; padding: 2px 2px 2px 2px;}
 div#rightbox {width: 180px; float: right; padding: 5px 5px 5px 5px; position: absolute; top: 5px; right: 0px; margin: 3px 3px 3px 3px;}
 div#rightbox h4 {padding: 0; margin: 2px 2px 2px 2px;}
 div.blocktitle div {padding-left:0.25em; margin-left: 0.25em;}
-div.blockcontent ul {list-style:none;font-size:12px;padding:0;margin:0}
+div.blockcontent ul {list-style:none;padding:0;margin:0}
 div.blockcontent ul li {list-style:none;display:block;padding-left: 0.125em;}
 div.miniblockcontent ul li {z-index: 9; padding-left:0.25em; padding-right:0.25em;}
 div.main {padding: 5px 5px 5px 5px; margin-left: 180px; margin-right: 187px; position: relative; top: 5px;}
