@@ -89,18 +89,6 @@ $mdb_conf['adodb_prefix'] = "adodb/";
  $mdb_conf['prefix'] = "";
 
  /*
-  * Adodb cache dir
-  * Where adodb will cache its queries
-  */
- $ADODB_CACHE_DIR = "cache";
-
- /*
-  * Adodb cache timeout
-  * Number of seconds a query will be cached for
-  */
- $mdb_conf['secs2cache'] = 10;
-
- /*
   * Files/directories to exclude
   */
  $mdb_conf['excludes'] = array(
