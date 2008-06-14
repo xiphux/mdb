@@ -15,7 +15,7 @@ div.blocktitle div {background: #336699;}
 div.blockcontent {background: #cfcfcf;}
 div.blockcontent ul {font-size:12px;}
 div.blockcontent ul li {color: black; background: #cddbeb; font-size:12px;}
-div.miniblocktitle {background: #cddbeb;}
+div.miniblocktitle {background: #cddbeb; font-size: 14px;}
 div.miniblockcontent ul li {background: #cfcfcf; text-align: center;}
 div.blockcontent ul li a:link {color: #080;}
 div.miniblockcontent ul li a:link {color: #080;}
