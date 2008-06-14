@@ -37,7 +37,7 @@
        <li><a href="{$SCRIPT_NAME}?u=taglist">taglist</a></li>
        {if $user}
          <li><a href="{$SCRIPT_NAME}?u=history">history</a></li>
-	 <li><a href="{$SCRIPT_NAME}?u=changepass">password</a></li>
+	 <li><a href="{$SCRIPT_NAME}?u=preferences">preferences</a></li>
        {/if}
        {if $user.privilege > 0}
          <li><a href="{$SCRIPT_NAME}?u=usermanage">usermanage</a></li>

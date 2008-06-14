@@ -1,11 +1,11 @@
 {*
- *  changepass.tpl
+ *  preferences.tpl
  *  MDB: A media database
- *  Component: Change password template
+ *  Component: Edit preferences template
  *
  *  Copyright (C) 2008 Christopher Han <xiphux@gmail.com>
  *}
-<div>
+<div>Change password:<br />
 <form action="{$SCRIPT_NAME}?u=updatepass" method="post">
   <label class="short" for="oldpass">Old password:</label>
   <input type="password" class="textfield" id="oldpass" name="oldpass" />

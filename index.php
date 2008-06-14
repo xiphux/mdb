@@ -207,15 +207,15 @@
 			changeprivilege($_GET['uid'],$_GET['privilege']);
 			usermanage();
 			break;
-		case "changepass":
-			include_once('include/display.changepass.php');
-			changepass();
+		case "preferences":
+			include_once('include/display.preferences.php');
+			preferences();
 			break;
 		case "updatepass":
-			include_once('include/display.changepass.php');
+			include_once('include/display.preferences.php');
 			include_once('include/user.updatepass.php');
 			updatepass($_POST['oldpass'],$_POST['newpass'],$_POST['newpass2']);
-			changepass();
+			preferences();
 			break;
 		default:
 			include_once('include/display.message.php');
