@@ -24,7 +24,7 @@
    {/if}
    </td>
    <td title="{$user.size}">{$user.size|size}</td>
-   <td class="textcenter">{if $user.id != $currentid}<a href="{$SCRIPT_NAME}?u=userdel&uid={$user.id}"><span class="smalltext">[X]</span></a>{/if}</td>
+   <td class="textcenter">{if $user.id != $currentid}<a href="{$SCRIPT_NAME}?u=userdel&uid={$user.id}"><span class="smalltext warning">[X]</span></a>{/if}</td>
  </tr>
  {foreachelse}
  <tr>
