@@ -13,7 +13,7 @@
 
 function untag($tid, $tag)
 {
-	global $db,$tables,$mdb_conf;
+	global $tables,$mdb_conf;
 	if (!isset($_SESSION[$mdb_conf['session_key']]['user'])) {
 		message("You do not have access to this feature!","warning");
 		return;
@@ -26,7 +26,7 @@ function untag($tid, $tag)
 		message("No tag specified","warning");
 		return;
 	}
-	$db->Execute("DELETE FROM " . $tables['title_tag'] . " WHERE title_id=" . $tid . " AND tag_id=" . $tag);
+	DBExecute("DELETE FROM " . $tables['title_tag'] . " WHERE title_id=" . $tid . " AND tag_id=" . $tag);
 	prunetags();
 }
 

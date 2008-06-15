@@ -12,7 +12,7 @@
 
 function userhistory($uid)
 {
-	global $db,$tables,$mdb_conf;
+	global $tables,$mdb_conf;
 	if (!isset($_SESSION[$mdb_conf['session_key']]['user'])) {
 		message("You do not have access to this feature!","warning");
 		return;
@@ -22,7 +22,7 @@ function userhistory($uid)
 		return;
 	}
 	$q = "SELECT " . $tables['downloads'] . ".*, " . $tables['files'] . ".id AS file_exists FROM " . $tables['downloads'] . " LEFT JOIN " . $tables['files'] . " ON (" . $tables['downloads'] . ".fid = " . $tables['files'] . ".id AND " . $tables['downloads'] . ".file = " . $tables['files'] . ".file) WHERE uid=" . $uid . " ORDER BY " . $tables['downloads'] . ".time DESC";
-	$ret = $db->GetArray($q);
+	$ret = DBGetArray($q);
 	return $ret;
 }
 

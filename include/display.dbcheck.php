@@ -13,7 +13,7 @@
 
 function dbcheck()
 {
-	global $mdb_conf, $db, $tpl, $tables;
+	global $mdb_conf, $tpl, $tables;
 	if (!(isset($_SESSION[$mdb_conf['session_key']]['user']) && ($_SESSION[$mdb_conf['session_key']]['user']['privilege'] > 0))) {
 		message("You do not have access to this feature!","warning");
 		return;
@@ -22,11 +22,11 @@ function dbcheck()
 	$tpl->assign("unmap",unmapped());
 	if ($mdb_conf['dbmutex'] && (php_uname("s") == "Linux")) {
 		$tpl->assign("dbmutexcheck",1);
-		$status = $db->GetOne("SELECT MAX(progress) FROM " . $tables['dbupdate']);
+		$status = DBGetOne("SELECT MAX(progress) FROM " . $tables['dbupdate']);
 		if ($status && $status > 0) {
 			$updating = shell_exec("ps ax | grep -v 'grep' | grep -c '" . $mdb_conf['phpexec'] . " include/updatedb.php'");
 			if ($updating < 1) {
-				$db->Execute("UPDATE " . $tables['dbupdate'] . " SET progress=0 WHERE progress!=0");
+				DBExecute("UPDATE " . $tables['dbupdate'] . " SET progress=0 WHERE progress!=0");
 				$tpl->assign("dbmutexfixed",1);
 			}
 		}
@@ -34,7 +34,7 @@ function dbcheck()
 	if ($mdb_conf['optimize']) {
 		$optables = array();
 		foreach ($tables as $i => $table) {
-			$optables[$table] = $db->Execute("OPTIMIZE TABLE " . $table);
+			$optables[$table] = DBExecute("OPTIMIZE TABLE " . $table);
 		}
 		$tpl->assign("optables",$optables);
 	}

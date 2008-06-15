@@ -11,11 +11,11 @@
 
  if ($mdb_conf['dbmutex']) {
  	include_once('db.php');
-	$status = $db->GetOne("SELECT MAX(progress) FROM " . $tables['dbupdate']);
+	$status = DBGetOne("SELECT MAX(progress) FROM " . $tables['dbupdate']);
 	if ($status && $status > 0)
  		echo "Database updating";
  	else {
-		$lastupdate = $db->GetOne("SELECT UNIX_TIMESTAMP(MAX(time)) FROM " . $tables['dbupdate']);
+		$lastupdate = DBGetOne("SELECT UNIX_TIMESTAMP(MAX(time)) FROM " . $tables['dbupdate']);
 		if ($lastupdate) {
 			$diff = time() - $lastupdate;
 			if (($diff < $mdb_conf['dbupdate_wait']) && (($diff * 1000) > ($mdb_conf['updatedbstatus_interval'] * 2))) {

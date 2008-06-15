@@ -10,7 +10,7 @@
 
 function dbstats()
 {
-	global $mdb_conf,$db,$tpl,$tables,$mdb_appstring;
+	global $mdb_conf,$tpl,$tables,$mdb_appstring;
 	$tpl->clear_all_assign();
 	$tpl->assign("appstring",$mdb_appstring);
 	$tpl->assign("cdate","2006");
@@ -27,15 +27,15 @@ function dbstats()
 		$tpl->assign("uptime_days",$uptime);
 		$tpl->assign("loadavg",$load);
 	}
-	$tpl->assign("files",$db->GetOne("SELECT COUNT(id) FROM " . $tables['files']));
-	$tpl->assign("titles",$db->GetOne("SELECT COUNT(id) FROM " . $tables['titles']));
-	$tpl->assign("users",$db->GetOne("SELECT COUNT(id) FROM " . $tables['users']));
-	$tpl->assign("tags",$db->GetOne("SELECT COUNT(id) FROM " . $tables['tags']));
-	$tpl->assign("links",$db->GetOne("SELECT COUNT(id) FROM " . $tables['links']));
-	$tpl->assign("downloads",$db->GetOne("SELECT COUNT(id) FROM " . $tables['downloads']));
-	$tpl->assign("dbupdate",$db->GetOne("SELECT COUNT(id) FROM " . $tables['dbupdate']));
-	$tpl->assign("preferences",$db->GetOne("SELECT COUNT(id) FROM " . $tables['preferences']));
-	$dbstats = $db->GetArray("SHOW TABLE STATUS");
+	$tpl->assign("files",DBGetOne("SELECT COUNT(id) FROM " . $tables['files']));
+	$tpl->assign("titles",DBGetOne("SELECT COUNT(id) FROM " . $tables['titles']));
+	$tpl->assign("users",DBGetOne("SELECT COUNT(id) FROM " . $tables['users']));
+	$tpl->assign("tags",DBGetOne("SELECT COUNT(id) FROM " . $tables['tags']));
+	$tpl->assign("links",DBGetOne("SELECT COUNT(id) FROM " . $tables['links']));
+	$tpl->assign("downloads",DBGetOne("SELECT COUNT(id) FROM " . $tables['downloads']));
+	$tpl->assign("dbupdate",DBGetOne("SELECT COUNT(id) FROM " . $tables['dbupdate']));
+	$tpl->assign("preferences",DBGetOne("SELECT COUNT(id) FROM " . $tables['preferences']));
+	$dbstats = DBGetArray("SHOW TABLE STATUS");
 	$total = 0;
 	$tablelist = array();
 	foreach ($dbstats as $row) {

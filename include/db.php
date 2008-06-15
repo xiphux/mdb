@@ -27,4 +27,74 @@ else
 	$db->Connect($mdb_conf['db_host'],$mdb_conf['db_user'],$mdb_conf['db_pass'],$mdb_conf['database']);
 $db->SetFetchMode(ADODB_FETCH_ASSOC);
 
+$querycount = 0;
+
+function DBExecute($sql,$inputarr=false)
+{
+	global $db,$querycount;
+	$querycount++;
+	return $db->Execute($sql,$inputarr);
+}
+
+function DBqstr($s,$magic_quotes_enabled=false)
+{
+	global $db;
+	return $db->qstr($s,$magic_quotes_enabled);
+}
+
+function DBGetOne($sql)
+{
+	global $db,$querycount;
+	$querycount++;
+	return $db->GetOne($sql);
+}
+
+function DBGetRow($sql)
+{
+	global $db,$querycount;
+	$querycount++;
+	return $db->GetRow($sql);
+}
+
+function DBGetArray($sql,$inputarr=false)
+{
+	global $db,$querycount;
+	$querycount++;
+	return $db->GetArray($sql,$inputarr);
+}
+
+function DBInsertID()
+{
+	global $db,$querycount;
+	$querycount++;
+	return $db->Insert_ID();
+}
+
+function DBPrepare($sql)
+{
+	global $db,$querycount;
+	$querycount++;
+	return $db->Prepare($sql);
+}
+
+function DBStartTrans()
+{
+	global $db,$querycount;
+	$querycount++;
+	return $db->StartTrans();
+}
+
+function DBCompleteTrans($autoComplete=true)
+{
+	global $db,$querycount;
+	$querycount++;
+	return $db->CompleteTrans($autoComplete);
+}
+
+function DBErrorMsg()
+{
+	global $db;
+	return $db->ErrorMsg();
+}
+
 ?>

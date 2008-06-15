@@ -14,12 +14,12 @@
 
 function otherhistory()
 {
-	global $db,$tables,$mdb_conf;
+	global $tables,$mdb_conf;
 	if (!(isset($_SESSION[$mdb_conf['session_key']]['user']) && ($_SESSION[$mdb_conf['session_key']]['user']['privilege'] > 0))) {
 		message("You do not have access to this feature!","warning");
 		return;
 	}
-	$u = $db->GetArray("SELECT * FROM " . $tables['users'] . " WHERE id!=" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . " ORDER BY username");
+	$u = DBGetArray("SELECT * FROM " . $tables['users'] . " WHERE id!=" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . " ORDER BY username");
 	$size = count($u);
 	for ($i = 0; $i < $size; $i++) {
 		$ret2 = userhistory($u[$i]['id']);

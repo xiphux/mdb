@@ -12,7 +12,7 @@
 
 function updatepass($oldpass,$newpass,$newpass2)
 {
-	global $mdb_conf,$db,$tables;
+	global $mdb_conf,$tables;
  	if (!isset($_SESSION[$mdb_conf['session_key']]['user'])) {
 		message("Not valid for anonymous users!","warning");
 		return;
@@ -29,7 +29,7 @@ function updatepass($oldpass,$newpass,$newpass2)
 		message("No password repeat specified","warning");
 		return;
 	}
-	$user = $db->GetRow("SELECT * FROM " . $tables['users'] . " WHERE id=" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . " LIMIT 1");
+	$user = DBGetRow("SELECT * FROM " . $tables['users'] . " WHERE id=" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . " LIMIT 1");
 	if (!$user) {
 		message("User not found","warning");
 		return;
@@ -42,8 +42,8 @@ function updatepass($oldpass,$newpass,$newpass2)
 		message("New password fields do not match","warning");
 		return;
 	}
-	$q = "UPDATE " . $tables['users'] . " SET password=" . $db->qstr(md5($newpass)) . " WHERE id=" . $user['id'] . " LIMIT 1";
-	if ($db->Execute($q))
+	$q = "UPDATE " . $tables['users'] . " SET password=" . DBqstr(md5($newpass)) . " WHERE id=" . $user['id'] . " LIMIT 1";
+	if (DBExecute($q))
 		message("Password changed successfully");
 	else
 		message("Password change failed","warning");

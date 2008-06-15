@@ -10,9 +10,9 @@
 
 function unmapped()
 {
-	global $db,$tables;
+	global $tables;
 	$q = "SELECT file FROM " . $tables['files'] . " LEFT JOIN " . $tables['file_title'] . " ON " . $tables['files'] . ".id = " . $tables['file_title'] . ".file_id WHERE " . $tables['file_title'] . ".title_id IS NULL";
-	$files = $db->GetArray($q);
+	$files = DBGetArray($q);
 	if (sizeof($files) > 0)
 		return $files;
 	return null;

@@ -13,32 +13,32 @@
 
  function titlelist()
  {
- 	global $db,$tables;
+ 	global $tables;
 	$titles = array();
-	$titlecount = $db->GetOne("SELECT COUNT(id) FROM " . $tables['titles']);
+	$titlecount = DBGetOne("SELECT COUNT(id) FROM " . $tables['titles']);
 	if ($titlecount > (SQL_QUERIES * QUERY_TO_ITERATION_RATIO)) {
 		$letters = array("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z");
 		$numbers = array("0","1","2","3","4","5","6","7","8","9");
 
-		$stmt = $db->Prepare("SELECT * FROM " . $tables['titles'] . " WHERE LEFT(TRIM(title),1)=? ORDER BY title");
+		$stmt = DBPrepare("SELECT * FROM " . $tables['titles'] . " WHERE LEFT(TRIM(title),1)=? ORDER BY title");
 		foreach ($numbers as $i => $number) {
-			$temp = $db->GetArray($stmt,array($number));
+			$temp = DBGetArray($stmt,array($number));
 			if (sizeof($temp) > 0)
 				$titles[$number] = $temp;
 		}
 
-		$stmt = $db->Prepare("SELECT * FROM " . $tables['titles'] . " WHERE LEFT(UPPER(TRIM(title)),1)=? ORDER BY title");
+		$stmt = DBPrepare("SELECT * FROM " . $tables['titles'] . " WHERE LEFT(UPPER(TRIM(title)),1)=? ORDER BY title");
 		foreach ($letters as $i => $letter) {
-			$temp = $db->GetArray($stmt,array($letter));
+			$temp = DBGetArray($stmt,array($letter));
 			if (sizeof($temp) > 0)
 				$titles[strtolower($letter)] = $temp;
 		}
 
-		$temp = $db->GetArray("SELECT * FROM " . $tables['titles'] . " WHERE LEFT(UPPER(TRIM(title)),1) NOT IN ('" . implode("','",$letters) . "','" . implode("','",$numbers) . "') ORDER BY title");
+		$temp = DBGetArray("SELECT * FROM " . $tables['titles'] . " WHERE LEFT(UPPER(TRIM(title)),1) NOT IN ('" . implode("','",$letters) . "','" . implode("','",$numbers) . "') ORDER BY title");
 		if (sizeof($temp) > 0)
 			$titles['other'] = $temp;
 	} else {
-		$titlelist = $db->GetArray("SELECT id, title FROM " . $tables['titles'] . " ORDER BY title");
+		$titlelist = DBGetArray("SELECT id, title FROM " . $tables['titles'] . " ORDER BY title");
 		foreach ($titlelist as $i => $title) {
 			$titles[substr(strtolower(trim($titlelist[$i]["title"])),0,1)][] = $titlelist[$i];
 		}

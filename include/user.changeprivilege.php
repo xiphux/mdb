@@ -12,7 +12,7 @@
 
 function changeprivilege($uid, $priv)
 {
-	global $mdb_conf,$db,$tables;
+	global $mdb_conf,$tables;
 	if (!(isset($_SESSION[$mdb_conf['session_key']]['user']) && ($_SESSION[$mdb_conf['session_key']]['user']['privilege'] > 0))) {
 		message("You do not have access to this feature!","warning");
 		return;
@@ -33,13 +33,13 @@ function changeprivilege($uid, $priv)
 		message("You are this user","warning");
 		return;
 	}
-	$testid = $db->GetOne("SELECT id FROM " . $tables['users'] . " WHERE id=" . $uid . " LIMIT 1");
+	$testid = DBGetOne("SELECT id FROM " . $tables['users'] . " WHERE id=" . $uid . " LIMIT 1");
 	if (!$testid) {
 		message("No such user","warning");
 		return;
 	}
-	$q = "UPDATE " . $tables['users'] . " SET privilege=" . $db->qstr($priv) . " WHERE id=" . $uid . " LIMIT 1";
-	$db->Execute($q);
+	$q = "UPDATE " . $tables['users'] . " SET privilege=" . DBqstr($priv) . " WHERE id=" . $uid . " LIMIT 1";
+	DBExecute($q);
 }
 
 ?>

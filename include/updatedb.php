@@ -15,12 +15,12 @@
  include_once('db.php');
 
  if ($mdb_conf['dbmutex']) {
- 	$status = $db->GetOne("SELECT MAX(progress) FROM " . $tables['dbupdate']);
+ 	$status = DBGetOne("SELECT MAX(progress) FROM " . $tables['dbupdate']);
 	if ($status && $status > 0)
 		exit;
  }
 
- $lastupdate = $db->GetOne("SELECT UNIX_TIMESTAMP(MAX(time)) FROM " . $tables['dbupdate']);
+ $lastupdate = DBGetOne("SELECT UNIX_TIMESTAMP(MAX(time)) FROM " . $tables['dbupdate']);
  if ($lastupdate) {
  	$diff = time() - $lastupdate;
 	if ($diff < $mdb_conf['dbupdate_wait'])
@@ -45,11 +45,11 @@
   */
  function insert_file($file)
  {
- 	global $db,$tables,$mdb_conf;
+ 	global $tables,$mdb_conf;
 	if (!in_array(substr($file,-3),$mdb_conf['ext_excludes'])) {
-		$ok = $db->Execute("INSERT INTO " . $tables['files'] . " (file,size) VALUES (" . $db->qstr(substr($file,strlen($mdb_conf['root'])+1)) . "," . $db->qstr(fsize($file)) . ") ON DUPLICATE KEY UPDATE size=VALUES(size)");
+		$ok = DBExecute("INSERT INTO " . $tables['files'] . " (file,size) VALUES (" . DBqstr(substr($file,strlen($mdb_conf['root'])+1)) . "," . DBqstr(fsize($file)) . ") ON DUPLICATE KEY UPDATE size=VALUES(size)");
 		if ($mdb_conf['debug'] && !$ok)
-			echo "insert_file: " . $db->ErrorMsg() . "\n";
+			echo "insert_file: " . DBErrorMsg() . "\n";
 	}
  }
 
@@ -81,16 +81,16 @@
   */
  function prunedb()
  {
- 	global $db,$tables,$mdb_conf;
-	$files = $db->GetArray("SELECT * FROM " . $tables['files']);
+ 	global $tables,$mdb_conf;
+	$files = DBGetArray("SELECT * FROM " . $tables['files']);
 	foreach ($files as $i => $file) {
 		if ((!file_exists($mdb_conf['root'] . $file['file'])) || in_array(substr($file['file'],(strripos($file['file'],"/")===false?0:strripos($file['file'],"/")+1)),$mdb_conf['excludes']) || is_link($mdb_conf['root'] . $file['file']) || in_array(substr($file['file'],-3),$mdb_conf['ext_excludes'])) {
-			$ok = $db->Execute("DELETE FROM " . $tables['files'] . " WHERE id=" . $file['id'] . " LIMIT 1");
+			$ok = DBExecute("DELETE FROM " . $tables['files'] . " WHERE id=" . $file['id'] . " LIMIT 1");
 			if ($mdb_conf['debug'] && !$ok)
-				echo "prunedb:1: " . $db->ErrorMsg() . "\n";
-			$ok = $db->Execute("DELETE FROM " . $tables['file_title'] . " WHERE file_id=" . $file['id']);
+				echo "prunedb:1: " . DBErrorMsg() . "\n";
+			$ok = DBExecute("DELETE FROM " . $tables['file_title'] . " WHERE file_id=" . $file['id']);
 			if ($mdb_conf['debug'] && !$ok)
-				echo "prunedb:2: " . $db->ErrorMsg() . "\n";
+				echo "prunedb:2: " . DBErrorMsg() . "\n";
 		}
 	}
  }
@@ -138,7 +138,7 @@
   */
  function update_titles(&$deleted)
  {
- 	global $mdb_conf,$db,$tables;
+ 	global $mdb_conf,$tables;
 	foreach ($mdb_conf['titlebase'] as $i => $title) {
 		if (is_dir($mdb_conf['root'] . $title)) {
 			if ($dh = opendir($mdb_conf['root'] . $title)) {
@@ -146,16 +146,16 @@
 					if (!(in_array($file,$mdb_conf['excludes']) || is_link($mdb_conf['root'] . $title . "/" . $file) || (substr($file,0,1) == "."))) {
 						$q = "INSERT IGNORE INTO " . $tables['titles'] . "(";
 						$q2 = "path,title) VALUES(";
-						$q3 = $db->qstr($title . "/" . $file) . "," . $db->qstr(uppercase($file)) . ")";
+						$q3 = DBqstr($title . "/" . $file) . "," . DBqstr(uppercase($file)) . ")";
 						$path = $title . "/" . $file;
 						$bn = basename($path);
 						if (isset($deleted[$bn])) {
 							$q .= "id,";
 							$q2 .= $deleted[$bn] . ",";
 						}
-						$ok = $db->Execute($q . $q2 . $q3);
+						$ok = DBExecute($q . $q2 . $q3);
 						if ($mdb_conf['debug'] && !$ok)
-							echo "update_titles: " . $db->ErrorMsg() . "\n";
+							echo "update_titles: " . DBErrorMsg() . "\n";
 						unset($deleted[$bn]);
 					}
 				}
@@ -172,17 +172,17 @@
   */
  function prune_titles()
  {
- 	global $db,$tables,$mdb_conf;
+ 	global $tables,$mdb_conf;
 	$deleted = array();
-	$titles = $db->GetArray("SELECT * FROM " . $tables['titles']);
+	$titles = DBGetArray("SELECT * FROM " . $tables['titles']);
 	foreach ($titles as $i => $title) {
 		if ((!file_exists($mdb_conf['root'] . $title['path'])) || is_link($mdb_conf['root'] . $title['path'])) {
-			$ok = $db->Execute("DELETE FROM " . $tables['titles'] . " WHERE id=" . $title['id'] . " LIMIT 1");
+			$ok = DBExecute("DELETE FROM " . $tables['titles'] . " WHERE id=" . $title['id'] . " LIMIT 1");
 			if ($mdb_conf['debug'] && !$ok)
-				echo "prune_titles:1: " . $db->ErrorMsg() . "\n";
-			$ok = $db->Execute("DELETE FROM " . $tables['file_title'] . " WHERE title_id=" . $title['id']);
+				echo "prune_titles:1: " . DBErrorMsg() . "\n";
+			$ok = DBExecute("DELETE FROM " . $tables['file_title'] . " WHERE title_id=" . $title['id']);
 			if ($mdb_conf['debug'] && !$ok)
-				echo "prune_titles:2: " . $db->ErrorMsg() . "\n";
+				echo "prune_titles:2: " . DBErrorMsg() . "\n";
 			$deleted[basename($title['path'])] = $title['id'];
 		}
 	}
@@ -197,14 +197,14 @@
   */
  function prune_titles_2($deleted)
  {
- 	global $db,$tables,$mdb_conf;
+ 	global $tables,$mdb_conf;
 	foreach ($deleted as $i => $k) {
-		$ok = $db->Execute("DELETE FROM " . $tables['title_tag'] . " WHERE title_id=" . $k);
+		$ok = DBExecute("DELETE FROM " . $tables['title_tag'] . " WHERE title_id=" . $k);
 		if ($mdb_conf['debug'] && !$ok)
-			echo "prune_titles_2:1: " . $db->ErrorMsg() . "\n";
-		$ok = $db->Execute("DELETE FROM " . $tables['links'] . " WHERE title_id=" . $k);
+			echo "prune_titles_2:1: " . DBErrorMsg() . "\n";
+		$ok = DBExecute("DELETE FROM " . $tables['links'] . " WHERE title_id=" . $k);
 		if ($mdb_conf['debug'] && !$ok)
-			echo "prune_titles_2:2: " . $db->ErrorMsg() . "\n";
+			echo "prune_titles_2:2: " . DBErrorMsg() . "\n";
 	}
  }
 
@@ -214,15 +214,15 @@
   */
  function maintain_associations()
  {
- 	global $db,$tables,$mdb_conf;
-	$files = $db->GetArray("SELECT * FROM " . $tables['files']);
-	$titles = $db->GetArray("SELECT * FROM " . $tables['titles']);
+ 	global $tables,$mdb_conf;
+	$files = DBGetArray("SELECT * FROM " . $tables['files']);
+	$titles = DBGetArray("SELECT * FROM " . $tables['titles']);
 	foreach ($files as $i => $file) {
 		foreach ($titles as $j => $title) {
 			if (strpos($file['file'],$title['path'] . "/") !== false) {
-				$ok = $db->Execute("INSERT INTO " . $tables['file_title'] . " (file_id,title_id) VALUES (" . $file['id'] . "," . $title['id'] . ") ON DUPLICATE KEY UPDATE title_id=VALUES(title_id)");
+				$ok = DBExecute("INSERT INTO " . $tables['file_title'] . " (file_id,title_id) VALUES (" . $file['id'] . "," . $title['id'] . ") ON DUPLICATE KEY UPDATE title_id=VALUES(title_id)");
 				if ($mdb_conf['debug'] && !$ok)
-					echo "maintain_associations: " . $db->ErrorMsg() . "\n";
+					echo "maintain_associations: " . DBErrorMsg() . "\n";
 			}
 		}
 	}
@@ -234,21 +234,21 @@
   */
  function optimizedb()
  {
- 	global $db,$tables,$mdb_conf;
+ 	global $tables,$mdb_conf;
 	foreach ($tables as $i => $table) {
-		$ok = $db->Execute("OPTIMIZE TABLE " . $table);
+		$ok = DBExecute("OPTIMIZE TABLE " . $table);
 		if ($mdb_conf['debug'] && !$ok)
-			echo "optimizedb: " . $db->ErrorMsg() . "\n";
+			echo "optimizedb: " . DBErrorMsg() . "\n";
 	}
  }
 
  if ($mdb_conf['dbmutex']) {
- 	$ok = $db->Execute("INSERT INTO " . $tables['dbupdate'] . " (progress) VALUES(1)");
+ 	$ok = DBExecute("INSERT INTO " . $tables['dbupdate'] . " (progress) VALUES(1)");
 	if ($mdb_conf['debug'] && !$ok)
-		echo "dbmutex init: " . $db->ErrorMsg() . "\n";
+		echo "dbmutex init: " . DBErrorMsg() . "\n";
  }
 
- $db->StartTrans();
+ DBStartTrans();
  
  $del = prune_titles();
 
@@ -266,22 +266,22 @@
  	optimizedb();
 
  if (!($mdb_conf['dbmutex'])) {
- 	$ok = $db->Execute("INSERT INTO " . $tables['dbupdate'] . " (progress) VALUES(0)");
+ 	$ok = DBExecute("INSERT INTO " . $tables['dbupdate'] . " (progress) VALUES(0)");
 	if ($mdb_conf['debug'] && !$ok)
-		echo "non-dbmutex: " . $db->ErrorMsg() . "\n";
+		echo "non-dbmutex: " . DBErrorMsg() . "\n";
  }
 
- $success = $db->CompleteTrans();
+ $success = DBCompleteTrans();
 
  if ($mdb_conf['dbmutex']) {
  	if ($success) {
- 		$ok = $db->Execute("UPDATE " . $tables['dbupdate'] . " SET progress=0 WHERE progress!=0");
+ 		$ok = DBExecute("UPDATE " . $tables['dbupdate'] . " SET progress=0 WHERE progress!=0");
 		if ($mdb_conf['debug'] && !$ok)
-			echo "dbmutex success: " . $db->ErrorMsg() . "\n";
+			echo "dbmutex success: " . DBErrorMsg() . "\n";
 	} else {
-		$ok = $db->Execute("DELETE FROM " . $tables['dbupdate'] . " WHERE progress!=0");
+		$ok = DBExecute("DELETE FROM " . $tables['dbupdate'] . " WHERE progress!=0");
 		if ($mdb_conf['debug'] && !$ok)
-			echo "dbmutex failure: " . $db->ErrorMsg() . "\n";
+			echo "dbmutex failure: " . DBErrorMsg() . "\n";
 	}
  }
 

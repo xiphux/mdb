@@ -12,16 +12,16 @@
 
  function setpref($pref, $value)
  {
-	global $mdb_conf,$db,$tables;
+	global $mdb_conf,$tables;
 	if (!isset($_SESSION[$mdb_conf['session_key']]['user'])) {
 		message("Not valid for anonymous users","warning");
 		return;
 	}
-	$val = $db->GetRow("SELECT * FROM " . $tables['preferences'] . " WHERE uid=" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . " AND pref=" . $db->qstr($pref));
+	$val = DBGetRow("SELECT * FROM " . $tables['preferences'] . " WHERE uid=" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . " AND pref=" . DBqstr($pref));
 	if ($val) {
-		$db->Execute("UPDATE " . $tables['preferences'] . " SET value=" . $db->qstr($value) . " WHERE id=" . $val['id'] . " AND uid=" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . " AND pref=" . $db->qstr($pref) . " LIMIT 1");
+		DBExecute("UPDATE " . $tables['preferences'] . " SET value=" . DBqstr($value) . " WHERE id=" . $val['id'] . " AND uid=" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . " AND pref=" . DBqstr($pref) . " LIMIT 1");
 	} else {
-		$db->Execute("INSERT INTO " . $tables['preferences'] . " (uid,pref,value) VALUES (" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . "," . $db->qstr($pref) . "," . $db->qstr($value) . ")");
+		DBExecute("INSERT INTO " . $tables['preferences'] . " (uid,pref,value) VALUES (" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . "," . DBqstr($pref) . "," . DBqstr($value) . ")");
 	}
  }
 

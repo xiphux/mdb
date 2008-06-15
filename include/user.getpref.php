@@ -10,10 +10,10 @@
 
 function getpref($pref, $default)
 {
-	global $mdb_conf,$db,$tables;
+	global $mdb_conf,$tables;
 	if (!isset($_SESSION[$mdb_conf['session_key']]['user']))
 		return $default;
-	$val = $db->GetRow("SELECT * FROM " . $tables['preferences'] . " WHERE uid=" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . " AND pref=" . $db->qstr($pref));
+	$val = DBGetRow("SELECT * FROM " . $tables['preferences'] . " WHERE uid=" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . " AND pref=" . DBqstr($pref));
 	if ($val)
 		return $val['value'];
 	return $default;

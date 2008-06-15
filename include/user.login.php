@@ -13,7 +13,7 @@
 
  function login($user,$pass)
  {
- 	global $mdb_conf,$db,$tables;
+ 	global $mdb_conf,$tables;
 	if (!(isset($user) && strlen($user) > 0)) {
 		message("No username entered","warning");
 		return;
@@ -22,7 +22,7 @@
 		message("No password entered","warning");
 		return;
 	}
-	$u = $db->GetRow("SELECT * FROM " . $tables['users'] . " WHERE username=" . $db->qstr($user) . " LIMIT 1");
+	$u = DBGetRow("SELECT * FROM " . $tables['users'] . " WHERE username=" . DBqstr($user,get_magic_quotes_gpc()) . " LIMIT 1");
 	if (!$u) {
 		message("No such user","warning");
 		return;

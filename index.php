@@ -52,7 +52,7 @@
  	else if (!isset($_GET['id']))
 		$errorstr = "No file specified";
 	else {
-		$file = $db->GetRow("SELECT * FROM " . $tables['files'] . " WHERE id=" . $_GET['id'] . " LIMIT 1");
+		$file = DBGetRow("SELECT * FROM " . $tables['files'] . " WHERE id=" . $_GET['id'] . " LIMIT 1");
 		if (!$file)
 			$errorstr = "No such file";
 		else {
@@ -78,7 +78,7 @@
 			ob_clean();
 			flush();
 			if ($mdb_conf['download_log']) {
-				$db->Execute("INSERT INTO " . $tables['downloads'] . " (ip,uid,user,fid,file,fsize) VALUES (" . $db->qstr($_SERVER['REMOTE_ADDR']) . "," . $_SESSION[$mdb_conf['session_key']]['user']['id'] . "," . $db->qstr($_SESSION[$mdb_conf['session_key']]['user']['username']) . "," . $file['id'] . "," . $db->qstr($file['file']) . "," . $file['size'] . ")");
+				DBExecute("INSERT INTO " . $tables['downloads'] . " (ip,uid,user,fid,file,fsize) VALUES (" . DBqstr($_SERVER['REMOTE_ADDR']) . "," . $_SESSION[$mdb_conf['session_key']]['user']['id'] . "," . DBqstr($_SESSION[$mdb_conf['session_key']]['user']['username']) . "," . $file['id'] . "," . DBqstr($file['file']) . "," . $file['size'] . ")");
 			}
 			readfile($mdb_conf['root'] . $file['file']);
 			exit;
