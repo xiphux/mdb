@@ -28,13 +28,13 @@
   * it will iterate, otherwise it will select.
   * From my testing and calculations, on my machine with
   * an optimal setup (mysql on the same server as php,
-  * php running eaccelerator), it was estimated that the
-  * iteration would be slower than the selects when the
-  * title count surpassed about 1850, therefore the ratio
-  * is set at 50 (37 * 50 = 1850).  If your setup is not
-  * as optimal (mysql on a slower separate database server,
-  * php not running eaccelerator, etc), you may want to
-  * adjust this ratio.
+  * php running eaccelerator, adodb-ext), it was estimated
+  * that the iteration would be slower than the selects
+  * when the title count surpassed about 1850, therefore 
+  * the ratio is set at 50 (37 * 50 = 1850).  If your setup
+  * is not as optimal (mysql on a slower separate database
+  * server, php not running eaccelerator, no adodb-ext, etc),
+  * you may want to adjust this ratio.
   */
  define('QUERY_TO_ITERATION_RATIO',50);
  define('SQL_QUERIES',37);
