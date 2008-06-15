@@ -45,25 +45,34 @@ function DBqstr($s,$magic_quotes_enabled=false)
 	return $db->qstr($s,$magic_quotes_enabled);
 }
 
-function DBGetOne($sql)
+function DBGetOne($sql,$inputarr=false)
 {
-	global $db,$querycount;
+	global $db,$querycount,$mdb_conf;
 	$querycount++;
-	return $db->GetOne($sql);
+	if ($mdb_conf['adodbcache'])
+		return $db->CacheGetOne($mdb_conf['secs2cache'],$sql,$inputarr);
+	else
+		return $db->GetOne($sql,$inputarr);
 }
 
-function DBGetRow($sql)
+function DBGetRow($sql,$inputarr=false)
 {
-	global $db,$querycount;
+	global $db,$querycount,$mdb_conf;
 	$querycount++;
-	return $db->GetRow($sql);
+	if ($mdb_conf['adodbcache'])
+		return $db->CacheGetRow($mdb_conf['secs2cache'],$sql,$inputarr);
+	else
+		return $db->GetRow($sql,$inputarr);
 }
 
 function DBGetArray($sql,$inputarr=false)
 {
-	global $db,$querycount;
+	global $db,$querycount,$mdb_conf;
 	$querycount++;
-	return $db->GetArray($sql,$inputarr);
+	if ($mdb_conf['adodbcache'])
+		return $db->CacheGetArray($mdb_conf['secs2cache'],$sql,$inputarr);
+	else
+		return $db->GetArray($sql,$inputarr);
 }
 
 function DBInsertID()
