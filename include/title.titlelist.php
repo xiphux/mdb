@@ -8,7 +8,7 @@
  *  Copyright (C) 2006 Christopher Han <xiphux@gmail.com>
  */
 
- define('QUERY_TO_ITERATION_RATIO',3);
+ define('QUERY_TO_ITERATION_RATIO',50);
  define('SQL_QUERIES',37);
 
  function titlelist()
