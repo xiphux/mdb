@@ -31,9 +31,12 @@ $querycount = 0;
 
 function DBExecute($sql,$inputarr=false)
 {
-	global $db,$querycount;
+	global $db,$querycount,$mdb_conf;
 	$querycount++;
-	return $db->Execute($sql,$inputarr);
+	$ret = $db->Execute($sql,$inputarr);
+	if ($mdb_conf['adodbcache'])
+		$db->CacheFlush();
+	return $ret;
 }
 
 function DBqstr($s,$magic_quotes_enabled=false)
