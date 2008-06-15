@@ -83,7 +83,7 @@ $mdb_conf['adodb_prefix'] = "adodb/";
   * is much slower than your web server, or your database server
   * is very overloaded.  Otherwise it could reduce performance.
   */
- $mdb_conf['adodbcache'] = TRUE;
+ $mdb_conf['adodbcache'] = FALSE;
 
  /*
   * Adodb cache dir
