@@ -12,6 +12,7 @@
  Last update: {if $update}{$update|date_format:"%D %T"}{else}Never{/if}
  {if $updating}<br /><span class="warning">Database currently updating</span>{/if}
  <br />Queries executed: {$queries}
+ <br />Execution time: {$exectime} sec
  </div>
  </body>
  </html>

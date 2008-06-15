@@ -8,7 +8,7 @@
  *  Copyright (C) 2006 Christopher Han <xiphux@gmail.com>
  */
 
-function footer()
+function footer($starttime)
 {
 	global $tpl,$mdb_appstring,$tables,$mdb_conf,$querycount;
 	$tpl->clear_all_assign();
@@ -29,6 +29,7 @@ function footer()
 	}
 	$tpl->assign("queries",$querycount);
 	date_default_timezone_set("UTC");
+	$tpl->assign("exectime",round(microtime(true)-$starttime,8));
 	$tpl->display("footer.tpl");
 }
 

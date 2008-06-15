@@ -7,6 +7,8 @@
  *  Copyright (C) 2006 Christopher Han <xiphux@gmail.com>
  */
 
+ $mdbstarttime = microtime(true);
+
  /*
   * Start session
   */
@@ -261,7 +263,7 @@
  $tpl->display("rightbox.tpl");
 
  include_once('include/display.footer.php');
- footer();
+ footer($mdbstarttime);
 
  ob_end_flush();
 ?>
