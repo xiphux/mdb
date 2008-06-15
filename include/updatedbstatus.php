@@ -26,7 +26,7 @@
  		echo "Database update complete";
 	}
  } else {
- 	if (shell_exec("ps ax | grep -v 'grep' | grep -c '" . $mdb_conf['phpexec'] . " include/updatedb.php'") >= 1)
+ 	if (shell_exec("ps ax | grep -v 'grep' | grep -c '" . basename($mdb_conf['phpexec']) . " include/updatedb.php'") >= 1)
  		echo "Database updating";
  	else
  		echo "Database update complete";

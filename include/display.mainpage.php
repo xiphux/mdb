@@ -22,7 +22,7 @@ function mainpage()
 		if ($status && $status > 0)
 			$tpl->assign("updating",TRUE);
 	} else {
-		if (shell_exec("ps ax | grep -v 'grep' | grep -c '" . $mdb_conf['phpexec'] . " include/updatedb.php'") >= 1)
+		if (shell_exec("ps ax | grep -v 'grep' | grep -c '" . basename($mdb_conf['phpexec']) . " include/updatedb.php'") >= 1)
 			$tpl->assign("updating",TRUE);
 	}
 	if ($update)

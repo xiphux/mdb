@@ -24,7 +24,7 @@ function dbcheck()
 		$tpl->assign("dbmutexcheck",1);
 		$status = DBGetOne("SELECT MAX(progress) FROM " . $tables['dbupdate']);
 		if ($status && $status > 0) {
-			$updating = shell_exec("ps ax | grep -v 'grep' | grep -c '" . $mdb_conf['phpexec'] . " include/updatedb.php'");
+			$updating = shell_exec("ps ax | grep -v 'grep' | grep -c '" . basename($mdb_conf['phpexec']) . " include/updatedb.php'");
 			if ($updating < 1) {
 				DBExecute("UPDATE " . $tables['dbupdate'] . " SET progress=0 WHERE progress!=0");
 				$tpl->assign("dbmutexfixed",1);
