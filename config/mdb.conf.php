@@ -215,8 +215,12 @@ $mdb_conf['dbmutex'] = TRUE;
 /*
  * debug
  * Show debug messages
+ * Warning: debugging dumps a lot of information on the web page,
+ * some of it sensitive database information.  Do not enable this
+ * unless something is very wrong, and do not allow other users
+ * to access the site with debugging on.
  */
-$mdb_conf['debug'] = TRUE;
+$mdb_conf['debug'] = FALSE;
 
 /*
  * theme
