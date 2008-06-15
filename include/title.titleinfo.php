@@ -17,7 +17,7 @@
 		message("No title specified","warning");
 		return;
 	}
-	$title = DBGetRow("SELECT * FROM " . $tables['titles'] . " WHERE id=" . $tid . " LIMIT 1");
+	$title = DBGetRow("SELECT * FROM " . $tables['titles'] . " WHERE id=" . $tid);
 	if (!$title) {
 		message("No such title","warning");
 		return;

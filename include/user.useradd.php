@@ -25,7 +25,7 @@
 		message("No pass given","warning");
 		return;
 	}
-	$testid = DBGetOne("SELECT * FROM " . $tables['users'] . " WHERE username=" . DBqstr($user,get_magic_quotes_gpc()) . " LIMIT 1");
+	$testid = DBGetOne("SELECT * FROM " . $tables['users'] . " WHERE username=" . DBqstr($user,get_magic_quotes_gpc()));
 	if ($testid) {
 		message("User already exists","warning");
 		return;

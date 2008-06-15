@@ -21,7 +21,7 @@ function deltag($tid)
 		message("No series specified","warning");
 		return;
 	}
-	DBExecute("DELETE FROM " . $tables['tags'] . " WHERE id=" . $tid . " LIMIT 1");
+	DBExecute("DELETE FROM " . $tables['tags'] . " WHERE id=" . $tid);
 	DBExecute("DELETE FROM " . $tables['title_tag'] . " WHERE tag_id=" . $tid);
 }
 

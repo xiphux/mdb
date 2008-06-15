@@ -25,12 +25,12 @@ function userdel($uid)
 		message("You are this user","warning");
 		return;
 	}
-	$testid = DBGetOne("SELECT id FROM " . $tables['users'] . " WHERE id=" . $uid . " LIMIT 1");
+	$testid = DBGetOne("SELECT id FROM " . $tables['users'] . " WHERE id=" . $uid);
 	if (!$testid) {
 		message("No such user","warning");
 		return;
 	}
-	DBExecute("DELETE FROM " . $tables['users'] . " WHERE id=" . $uid . " LIMIT 1");
+	DBExecute("DELETE FROM " . $tables['users'] . " WHERE id=" . $uid);
 	DBExecute("DELETE FROM " . $tables['downloads'] . " WHERE uid=" . $uid);
 	DBExecute("DELETE FROM " . $tables['preferences'] . " WHERE uid=" . $uid);
 }

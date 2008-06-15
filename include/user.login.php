@@ -22,7 +22,7 @@
 		message("No password entered","warning");
 		return;
 	}
-	$u = DBGetRow("SELECT * FROM " . $tables['users'] . " WHERE username=" . DBqstr($user,get_magic_quotes_gpc()) . " LIMIT 1");
+	$u = DBGetRow("SELECT * FROM " . $tables['users'] . " WHERE username=" . DBqstr($user,get_magic_quotes_gpc()));
 	if (!$u) {
 		message("No such user","warning");
 		return;

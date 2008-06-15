@@ -85,7 +85,7 @@
 	$files = DBGetArray("SELECT * FROM " . $tables['files']);
 	foreach ($files as $i => $file) {
 		if ((!file_exists($mdb_conf['root'] . $file['file'])) || in_array(substr($file['file'],(strripos($file['file'],"/")===false?0:strripos($file['file'],"/")+1)),$mdb_conf['excludes']) || is_link($mdb_conf['root'] . $file['file']) || in_array(substr($file['file'],-3),$mdb_conf['ext_excludes'])) {
-			$ok = DBExecute("DELETE FROM " . $tables['files'] . " WHERE id=" . $file['id'] . " LIMIT 1");
+			$ok = DBExecute("DELETE FROM " . $tables['files'] . " WHERE id=" . $file['id']);
 			if ($mdb_conf['debug'] && !$ok)
 				echo "prunedb:1: " . DBErrorMsg() . "\n";
 			$ok = DBExecute("DELETE FROM " . $tables['file_title'] . " WHERE file_id=" . $file['id']);
@@ -177,7 +177,7 @@
 	$titles = DBGetArray("SELECT * FROM " . $tables['titles']);
 	foreach ($titles as $i => $title) {
 		if ((!file_exists($mdb_conf['root'] . $title['path'])) || is_link($mdb_conf['root'] . $title['path'])) {
-			$ok = DBExecute("DELETE FROM " . $tables['titles'] . " WHERE id=" . $title['id'] . " LIMIT 1");
+			$ok = DBExecute("DELETE FROM " . $tables['titles'] . " WHERE id=" . $title['id']);
 			if ($mdb_conf['debug'] && !$ok)
 				echo "prune_titles:1: " . DBErrorMsg() . "\n";
 			$ok = DBExecute("DELETE FROM " . $tables['file_title'] . " WHERE title_id=" . $title['id']);

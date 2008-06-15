@@ -19,7 +19,7 @@
 	}
 	$val = DBGetRow("SELECT * FROM " . $tables['preferences'] . " WHERE uid=" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . " AND pref=" . DBqstr($pref));
 	if ($val) {
-		DBExecute("UPDATE " . $tables['preferences'] . " SET value=" . DBqstr($value) . " WHERE id=" . $val['id'] . " AND uid=" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . " AND pref=" . DBqstr($pref) . " LIMIT 1");
+		DBExecute("UPDATE " . $tables['preferences'] . " SET value=" . DBqstr($value) . " WHERE id=" . $val['id'] . " AND uid=" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . " AND pref=" . DBqstr($pref));
 	} else {
 		DBExecute("INSERT INTO " . $tables['preferences'] . " (uid,pref,value) VALUES (" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . "," . DBqstr($pref) . "," . DBqstr($value) . ")");
 	}

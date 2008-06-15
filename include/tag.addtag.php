@@ -26,12 +26,12 @@ function addtag($tid,$tag)
 		message("No tag specified","warning");
 		return;
 	}
-	$id = DBGetOne("SELECT id FROM " . $tables['tags'] . " WHERE UPPER(tag) LIKE '%" . strtoupper($tag) . "%' LIMIT 1");
+	$id = DBGetOne("SELECT id FROM " . $tables['tags'] . " WHERE UPPER(tag) LIKE '%" . strtoupper($tag) . "%'");
 	if (!$id) {
 		DBExecute("INSERT INTO " . $tables['tags'] . " (tag) VALUES (" . DBqstr(strtolower($tag),get_magic_quotes_gpc()) . ")");
 		$id = DBInsertID();
 		if ($id === false)
-			$id = DBGetOne("SELECT id FROM " . $tables['tags'] . " WHERE UPPER(tag) LIKE '%" . strtoupper($tag) . "%' LIMIT 1");
+			$id = DBGetOne("SELECT id FROM " . $tables['tags'] . " WHERE UPPER(tag) LIKE '%" . strtoupper($tag) . "%'");
 	}
 	DBExecute("INSERT IGNORE INTO " . $tables['title_tag'] . " (title_id,tag_id) VALUES (" . $tid . "," . $id . ")");
 	return;

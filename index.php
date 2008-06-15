@@ -52,7 +52,7 @@
  	else if (!isset($_GET['id']))
 		$errorstr = "No file specified";
 	else {
-		$file = DBGetRow("SELECT * FROM " . $tables['files'] . " WHERE id=" . $_GET['id'] . " LIMIT 1");
+		$file = DBGetRow("SELECT * FROM " . $tables['files'] . " WHERE id=" . $_GET['id']);
 		if (!$file)
 			$errorstr = "No such file";
 		else {

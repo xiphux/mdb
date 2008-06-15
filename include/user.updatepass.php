@@ -29,7 +29,7 @@ function updatepass($oldpass,$newpass,$newpass2)
 		message("No password repeat specified","warning");
 		return;
 	}
-	$user = DBGetRow("SELECT * FROM " . $tables['users'] . " WHERE id=" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . " LIMIT 1");
+	$user = DBGetRow("SELECT * FROM " . $tables['users'] . " WHERE id=" . $_SESSION[$mdb_conf['session_key']]['user']['id']);
 	if (!$user) {
 		message("User not found","warning");
 		return;
@@ -42,7 +42,7 @@ function updatepass($oldpass,$newpass,$newpass2)
 		message("New password fields do not match","warning");
 		return;
 	}
-	$q = "UPDATE " . $tables['users'] . " SET password=" . DBqstr(md5($newpass)) . " WHERE id=" . $user['id'] . " LIMIT 1";
+	$q = "UPDATE " . $tables['users'] . " SET password=" . DBqstr(md5($newpass)) . " WHERE id=" . $user['id'];
 	if (DBExecute($q))
 		message("Password changed successfully");
 	else

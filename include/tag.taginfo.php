@@ -13,7 +13,7 @@ function taginfo($id)
 	global $tables;
 	if (!isset($id))
 		return null;
-	$tag = DBGetRow("SELECT * FROM " . $tables['tags'] . " WHERE id=" . $id . " LIMIT 1");
+	$tag = DBGetRow("SELECT * FROM " . $tables['tags'] . " WHERE id=" . $id);
 	if (!$tag)
 		return null;
 	$temp = DBGetArray("SELECT t1.* FROM " . $tables['titles'] . " AS t1, " . $tables['title_tag'] . " AS t2 WHERE t2.tag_id=" . $id . " AND t2.title_id=t1.id ORDER BY t1.title");

@@ -33,12 +33,12 @@ function changeprivilege($uid, $priv)
 		message("You are this user","warning");
 		return;
 	}
-	$testid = DBGetOne("SELECT id FROM " . $tables['users'] . " WHERE id=" . $uid . " LIMIT 1");
+	$testid = DBGetOne("SELECT id FROM " . $tables['users'] . " WHERE id=" . $uid);
 	if (!$testid) {
 		message("No such user","warning");
 		return;
 	}
-	$q = "UPDATE " . $tables['users'] . " SET privilege=" . DBqstr($priv) . " WHERE id=" . $uid . " LIMIT 1";
+	$q = "UPDATE " . $tables['users'] . " SET privilege=" . DBqstr($priv) . " WHERE id=" . $uid;
 	DBExecute($q);
 }
 
