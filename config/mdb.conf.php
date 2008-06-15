@@ -79,6 +79,9 @@ $mdb_conf['adodb_prefix'] = "adodb/";
  /*
   * Adodb cache
   * Whether to use ADOdb caching
+  * Note: caching is only recommended if your database server
+  * is much slower than your web server, or your database server
+  * is very overloaded.  Otherwise it could reduce performance.
   */
  $mdb_conf['adodbcache'] = TRUE;
 
