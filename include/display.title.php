@@ -16,7 +16,8 @@ function title($tid)
 	global $mdb_conf,$tpl;
 	$tpl->clear_all_assign();
 	$tpl->assign("title",titleinfo($tid));
- 	$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
+	if (isset($_SESSION[$mdb_conf['session_key']]['user']))
+ 		$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
 	$tpl->assign("taglist",taglist());
 	if ($mdb_conf['download'])
 		$tpl->assign("download",TRUE);

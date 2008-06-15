@@ -19,6 +19,7 @@ function mainpage()
 	$update = $db->GetOne("SELECT MAX(time) FROM " . $tables['dbupdate'] . " WHERE progress=0");
 	if ($update)
 		$tpl->assign("update",$update);
+	date_default_timezone_set("UTC");
 	$tpl->display("main.tpl");
 }
 

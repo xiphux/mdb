@@ -15,6 +15,7 @@
  function search($search,$criteria)
  {
  	global $db,$tables;
+	$results = array();
 	if (!(isset($search) && (strlen($search) > 0))) {
 		message("Invalid search string","warning");
 		return;

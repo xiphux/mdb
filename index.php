@@ -28,6 +28,9 @@
  include_once('config/mdb.conf.php');
  include_once('include/db.php');
 
+ if ($mdb_conf['debug'])
+ 	error_reporting(E_ALL | E_STRICT);
+
  /*
   * Instantiate Smarty
   */
@@ -41,7 +44,7 @@
   * Early check for file download so we
   * can skip headers
   */
- if ($_GET['u'] === "file") {
+ if (isset($_GET['u']) && ($_GET['u'] === "file")) {
  	if (!(isset($_SESSION[$mdb_conf['session_key']]['user'])))
 		$errorstr = "You do not have permission to use this feature!";
 	else if (!$mdb_conf['download'])
@@ -135,7 +138,8 @@
 			include_once('include/tag.taginfo.php');
 			$tpl->clear_all_assign();
 			$tpl->assign("tag",taginfo($_GET['id']));
- 			$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
+			if (isset($_SESSION[$mdb_conf['session_key']]['user']))
+ 				$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
 			$tpl->display("tag.tpl");
 			break;
 		case "file":
@@ -164,7 +168,8 @@
 			$tpl->clear_all_assign();
 			$tpl->assign("search",$_POST['search']);
 			$tpl->assign("results",search($_POST['search'],$_POST['criteria']));
- 			$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
+			if (isset($_SESSION[$mdb_conf['session_key']]['user']))
+ 				$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
 			if ($mdb_conf['download'])
 				$tpl->assign("download",TRUE);
 			$tpl->display("search.tpl");
@@ -243,7 +248,8 @@
  $tpl->assign("theme",getpref("theme",$mdb_conf['theme']));
  $tpl->display("header.tpl");
 
- $tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
+ if (isset($_SESSION[$mdb_conf['session_key']]['user']))
+ 	$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
  if ($mdb_conf['dbstats'])
  	$tpl->assign("dbstats",TRUE);
  $tpl->display("leftbox.tpl");
