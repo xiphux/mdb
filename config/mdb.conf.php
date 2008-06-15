@@ -77,6 +77,24 @@ $mdb_conf['adodb_prefix'] = "adodb/";
  $mdb_conf['persist'] = TRUE;
 
  /*
+  * Adodb cache
+  * Whether to use ADOdb caching
+  */
+ $mdb_conf['adodbcache'] = TRUE;
+
+ /*
+  * Adodb cache dir
+  * Where adodb will cache its queries
+  */
+ $ADODB_CACHE_DIR = "cache";
+
+ /*
+  * Adodb cache timeout
+  * Number of seconds a query will be cached for
+  */
+ $mdb_conf['secs2cache'] = 3600;
+
+ /*
   * Table prefix
   * In case you have an extra string appended
   * to the front of the table names to separate
