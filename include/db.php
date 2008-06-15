@@ -27,6 +27,9 @@ else
 	$db->Connect($mdb_conf['db_host'],$mdb_conf['db_user'],$mdb_conf['db_pass'],$mdb_conf['database']);
 $db->SetFetchMode(ADODB_FETCH_ASSOC);
 
+if ($mdb_conf['debug'])
+	$db->debug = TRUE;
+
 $querycount = 0;
 
 function DBExecute($sql,$inputarr=false)
