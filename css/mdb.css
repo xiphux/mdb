@@ -103,6 +103,13 @@ div.main div {
 	position: relative;
 }
 
+div#footer {
+	margin-left: 180px;
+	margin-right: 187px;
+	position: relative;
+	top: 10px;
+}
+
 table.filelist {
 	table-layout: fixed;
 	width: 100%;

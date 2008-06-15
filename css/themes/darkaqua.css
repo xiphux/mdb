@@ -126,6 +126,11 @@ div.main {
 	border: 1px solid #ccc;
 }
 
+div#footer {
+	text-align: center;
+	font-size: 0.75em;
+}
+
 table {
 	border-style: none;
 }

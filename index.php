@@ -260,7 +260,8 @@
  $tpl->assign("titlelist",titlelist());
  $tpl->display("rightbox.tpl");
 
- $tpl->display("footer.tpl");
+ include_once('include/display.footer.php');
+ footer();
 
  ob_end_flush();
 ?>
