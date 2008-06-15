@@ -1,48 +1,44 @@
 -- phpMyAdmin SQL Dump
--- version 2.10.1
+-- version 2.11.6
 -- http://www.phpmyadmin.net
--- 
+--
 -- Host: localhost
--- Generation Time: Jul 14, 2007 at 11:17 PM
--- Server version: 5.0.44
--- PHP Version: 5.2.2-pl1-gentoo
+-- Generation Time: Jun 15, 2008 at 05:30 PM
+-- Server version: 5.0.60
+-- PHP Version: 5.2.6-pl1-gentoo
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
--- 
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
 -- Database: `mdb`
--- 
+--
 
 -- --------------------------------------------------------
 
--- 
--- Table structure for table `animenfo`
--- 
+--
+-- Table structure for table `dbupdate`
+--
 
-CREATE TABLE `animenfo` (
+CREATE TABLE IF NOT EXISTS `dbupdate` (
   `id` int(11) NOT NULL auto_increment,
-  `title_id` int(11) NOT NULL,
-  `name` varchar(255) default NULL,
-  `nfo_type` varchar(255) NOT NULL,
-  `nfo_id` varchar(255) NOT NULL,
-  `nfo_n` varchar(255) NOT NULL,
-  `nfo_t` varchar(255) NOT NULL,
+  `time` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `progress` tinyint(1) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
--- 
--- RELATIONS FOR TABLE `animenfo`:
---   `title_id`
---       `titles` -> `id`
--- 
-
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `downloads`
--- 
+--
 
-CREATE TABLE `downloads` (
+CREATE TABLE IF NOT EXISTS `downloads` (
   `id` int(11) NOT NULL auto_increment,
   `time` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `ip` varchar(16) NOT NULL,
@@ -54,13 +50,21 @@ CREATE TABLE `downloads` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
+--
+-- RELATIONS FOR TABLE `downloads`:
+--   `fid`
+--       `files` -> `id`
+--   `uid`
+--       `users` -> `id`
+--
+
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `files`
--- 
+--
 
-CREATE TABLE `files` (
+CREATE TABLE IF NOT EXISTS `files` (
   `id` int(11) NOT NULL auto_increment,
   `file` varchar(255) NOT NULL,
   `size` bigint(20) NOT NULL,
@@ -71,31 +75,74 @@ CREATE TABLE `files` (
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `file_title`
--- 
+--
 
-CREATE TABLE `file_title` (
+CREATE TABLE IF NOT EXISTS `file_title` (
   `file_id` int(11) NOT NULL,
   `title_id` int(11) NOT NULL,
   UNIQUE KEY `file_id` (`file_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- 
+--
 -- RELATIONS FOR TABLE `file_title`:
 --   `file_id`
 --       `files` -> `id`
 --   `title_id`
 --       `titles` -> `id`
--- 
+--
 
 -- --------------------------------------------------------
 
--- 
--- Table structure for table `tags`
--- 
+--
+-- Table structure for table `links`
+--
 
-CREATE TABLE `tags` (
+CREATE TABLE IF NOT EXISTS `links` (
+  `id` int(11) NOT NULL auto_increment,
+  `title_id` int(11) NOT NULL,
+  `site` varchar(255) NOT NULL,
+  `name` varchar(255) default NULL,
+  `url` text NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `title_id` (`title_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+--
+-- RELATIONS FOR TABLE `links`:
+--   `title_id`
+--       `titles` -> `id`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `preferences`
+--
+
+CREATE TABLE IF NOT EXISTS `preferences` (
+  `id` int(11) NOT NULL auto_increment,
+  `uid` int(11) NOT NULL,
+  `pref` varchar(255) NOT NULL,
+  `value` text NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `uid` (`uid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+--
+-- RELATIONS FOR TABLE `preferences`:
+--   `uid`
+--       `users` -> `id`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tags`
+--
+
+CREATE TABLE IF NOT EXISTS `tags` (
   `id` int(11) NOT NULL auto_increment,
   `tag` varchar(255) NOT NULL,
   PRIMARY KEY  (`id`),
@@ -104,11 +151,11 @@ CREATE TABLE `tags` (
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `titles`
--- 
+--
 
-CREATE TABLE `titles` (
+CREATE TABLE IF NOT EXISTS `titles` (
   `id` int(11) NOT NULL auto_increment,
   `path` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
@@ -119,23 +166,31 @@ CREATE TABLE `titles` (
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `title_tag`
--- 
+--
 
-CREATE TABLE `title_tag` (
+CREATE TABLE IF NOT EXISTS `title_tag` (
   `title_id` int(11) NOT NULL,
   `tag_id` int(11) NOT NULL,
   UNIQUE KEY `title_id` (`title_id`,`tag_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+--
+-- RELATIONS FOR TABLE `title_tag`:
+--   `tag_id`
+--       `tags` -> `id`
+--   `title_id`
+--       `titles` -> `id`
+--
+
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `users`
--- 
+--
 
-CREATE TABLE `users` (
+CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL auto_increment,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
