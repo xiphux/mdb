@@ -43,13 +43,18 @@
   * insert_file
   * Inserts a file
   */
- function insert_file($file)
+ function insert_file($file, $titlelist)
  {
  	global $tables,$mdb_conf;
 	if (!in_array(substr($file,-3),$mdb_conf['ext_excludes'])) {
-		$ok = DBExecute("INSERT INTO " . $tables['files'] . " (file,size) VALUES (" . DBqstr(substr($file,strlen($mdb_conf['root'])+1)) . "," . DBqstr(fsize($file)) . ") ON DUPLICATE KEY UPDATE size=VALUES(size)");
-		if ($mdb_conf['debug'] && !$ok)
-			echo "insert_file: " . DBErrorMsg() . "\n";
+		foreach ($titlelist as $i => $title) {
+			if (strpos($file,$title['path'] . "/") !== false) {
+				$ok = DBExecute("INSERT INTO " . $tables['files'] . " (file,tid,size) VALUES (" . DBqstr(substr($file,strlen($mdb_conf['root'])+1)) . "," . $title['id'] . "," . DBqstr(fsize($file)) . ") ON DUPLICATE KEY UPDATE size=VALUES(size), tid=VALUES(tid)");
+				if ($mdb_conf['debug'] && !$ok)
+					echo "insert_file: " . DBErrorMsg() . "\n";
+				return;
+			}
+		}
 	}
  }
 
@@ -57,7 +62,7 @@
   * index_dir
   * Recursively indexes and inserts files in a dir
   */
- function index_dir($dir)
+ function index_dir($dir, $titlelist)
  {
  	global $mdb_conf;
  	if (is_dir($dir)) {
@@ -65,9 +70,9 @@
 			while (($file = readdir($dh)) !== false) {
 				if (!(in_array($file,$mdb_conf['excludes']) || is_link($dir . "/" . $file) || (substr($file,0,1) == "."))) {
 					if (is_dir($dir . "/" . $file))
-						index_dir($dir . "/" . $file);
+						index_dir($dir . "/" . $file, $titlelist);
 					else
-						insert_file($dir . "/" . $file);
+						insert_file($dir . "/" . $file, $titlelist);
 				}
 			}
 			closedir($dh);
@@ -87,10 +92,7 @@
 		if ((!file_exists($mdb_conf['root'] . $file['file'])) || in_array(substr($file['file'],(strripos($file['file'],"/")===false?0:strripos($file['file'],"/")+1)),$mdb_conf['excludes']) || is_link($mdb_conf['root'] . $file['file']) || in_array(substr($file['file'],-3),$mdb_conf['ext_excludes'])) {
 			$ok = DBExecute("DELETE FROM " . $tables['files'] . " WHERE id=" . $file['id']);
 			if ($mdb_conf['debug'] && !$ok)
-				echo "prunedb:1: " . DBErrorMsg() . "\n";
-			$ok = DBExecute("DELETE FROM " . $tables['file_title'] . " WHERE file_id=" . $file['id']);
-			if ($mdb_conf['debug'] && !$ok)
-				echo "prunedb:2: " . DBErrorMsg() . "\n";
+				echo "prunedb: " . DBErrorMsg() . "\n";
 		}
 	}
  }
@@ -179,10 +181,7 @@
 		if ((!file_exists($mdb_conf['root'] . $title['path'])) || is_link($mdb_conf['root'] . $title['path'])) {
 			$ok = DBExecute("DELETE FROM " . $tables['titles'] . " WHERE id=" . $title['id']);
 			if ($mdb_conf['debug'] && !$ok)
-				echo "prune_titles:1: " . DBErrorMsg() . "\n";
-			$ok = DBExecute("DELETE FROM " . $tables['file_title'] . " WHERE title_id=" . $title['id']);
-			if ($mdb_conf['debug'] && !$ok)
-				echo "prune_titles:2: " . DBErrorMsg() . "\n";
+				echo "prune_titles: " . DBErrorMsg() . "\n";
 			$deleted[basename($title['path'])] = $title['id'];
 		}
 	}
@@ -209,26 +208,6 @@
  }
 
  /*
-  * maintain_associations
-  * Updates file/title associations
-  */
- function maintain_associations()
- {
- 	global $tables,$mdb_conf;
-	$files = DBGetArray("SELECT * FROM " . $tables['files']);
-	$titles = DBGetArray("SELECT * FROM " . $tables['titles']);
-	foreach ($files as $i => $file) {
-		foreach ($titles as $j => $title) {
-			if (strpos($file['file'],$title['path'] . "/") !== false) {
-				$ok = DBExecute("INSERT INTO " . $tables['file_title'] . " (file_id,title_id) VALUES (" . $file['id'] . "," . $title['id'] . ") ON DUPLICATE KEY UPDATE title_id=VALUES(title_id)");
-				if ($mdb_conf['debug'] && !$ok)
-					echo "maintain_associations: " . DBErrorMsg() . "\n";
-			}
-		}
-	}
- }
-
- /*
   * optimizedb
   * Calls mysql optimize on all tables
   */
@@ -249,21 +228,38 @@
  }
 
  DBStartTrans();
- 
+
+ if ($mdb_conf['debug'])
+ 	echo "prune_titles()\n";
+	
  $del = prune_titles();
+
+ if ($mdb_conf['debug'])
+ 	echo "update_titles()\n";
 
  update_titles($del);
 
+ if ($mdb_conf['debug'])
+ 	echo "prune_titles_2()\n";
+
  prune_titles_2($del);
+
+ if ($mdb_conf['debug'])
+ 	echo "prunedb()\n";
 
  prunedb();
 
- index_dir($mdb_conf['root']);
+ if ($mdb_conf['debug'])
+ 	echo "index_dir()\n";
 
- maintain_associations();
+ $newtitlelist = DBGetArray("SELECT * FROM " . $tables['titles']);
+ index_dir($mdb_conf['root'], $newtitlelist);
 
- if ($mdb_conf['optimize'])
+ if ($mdb_conf['optimize']) {
+ 	if ($mdb_conf['debug'])
+		echo "optimizedb()\n";
  	optimizedb();
+ }
 
  if (!($mdb_conf['dbmutex'])) {
  	$ok = DBExecute("INSERT INTO " . $tables['dbupdate'] . " (progress) VALUES(0)");
@@ -283,6 +279,15 @@
 		if ($mdb_conf['debug'] && !$ok)
 			echo "dbmutex failure: " . DBErrorMsg() . "\n";
 	}
+ }
+
+ if ($mdb_conf['debug']) {
+ 	echo "DBUpdate ";
+	if ($success)
+		echo "succeeded";
+	else
+		echo "failed";
+	echo " (" . $querycount . " queries)\n";
  }
 
 ?> 

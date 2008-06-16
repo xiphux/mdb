@@ -22,7 +22,7 @@
 		message("No such title","warning");
 		return;
 	}
-	$temp = DBGetArray("SELECT t1.* FROM " . $tables['files'] . " AS t1, " . $tables['file_title'] . " AS t2 WHERE t2.title_id=" . $tid . " AND t2.file_id=t1.id ORDER BY t1.file");
+	$temp = DBGetArray("SELECT * FROM " . $tables['files'] . " WHERE tid=" . $tid . " ORDER BY file");
 	if (sizeof($temp) > 0) {
 		$len = strlen($title['path'])+1;
 		$size = count($temp);
@@ -33,7 +33,7 @@
 	$temp = DBGetArray("SELECT t1.* FROM " . $tables['tags'] . " AS t1, " . $tables['title_tag'] . " AS t2 WHERE t2.title_id=" . $tid . " AND t2.tag_id=t1.id ORDER BY t1.tag");
 	if (sizeof($temp) > 0)
 		$title['tags'] = $temp;
-	$title['size'] = DBGetOne("SELECT SUM(t1.size) FROM " . $tables['files'] . " AS t1, " . $tables['file_title'] . " AS t2 WHERE t1.id=t2.file_id AND t2.title_id=" . $title['id']);
+	$title['size'] = DBGetOne("SELECT SUM(size) FROM " . $tables['files'] . " WHERE tid=" . $title['id']);
 	$temp = DBGetArray("SELECT * FROM " . $tables['links'] . " WHERE title_id=" . $tid);
 	if ($temp && (sizeof($temp) > 0))
 		$title['links'] = $temp;

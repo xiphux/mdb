@@ -11,7 +11,6 @@
 $tables = array();
 $tables['files'] = $mdb_conf['prefix'] . "files";
 $tables['titles'] = $mdb_conf['prefix'] . "titles";
-$tables['file_title'] = $mdb_conf['prefix'] . "file_title";
 $tables['tags'] = $mdb_conf['prefix'] . "tags";
 $tables['title_tag'] = $mdb_conf['prefix'] . "title_tag";
 $tables['users'] = $mdb_conf['prefix'] . "users";
