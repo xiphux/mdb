@@ -25,7 +25,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Table structure for table `dbupdate`
 --
 
-CREATE TABLE IF NOT EXISTS `dbupdate` (
+CREATE TABLE `dbupdate` (
   `id` int(11) NOT NULL auto_increment,
   `time` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `progress` tinyint(1) NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `dbupdate` (
 -- Table structure for table `downloads`
 --
 
-CREATE TABLE IF NOT EXISTS `downloads` (
+CREATE TABLE `downloads` (
   `id` int(11) NOT NULL auto_increment,
   `time` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `ip` varchar(16) NOT NULL,
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `downloads` (
 -- Table structure for table `files`
 --
 
-CREATE TABLE IF NOT EXISTS `files` (
+CREATE TABLE `files` (
   `id` int(11) NOT NULL auto_increment,
   `tid` int(11) NOT NULL,
   `file` varchar(255) NOT NULL,
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `files` (
 -- Table structure for table `links`
 --
 
-CREATE TABLE IF NOT EXISTS `links` (
+CREATE TABLE `links` (
   `id` int(11) NOT NULL auto_increment,
   `title_id` int(11) NOT NULL,
   `site` varchar(255) NOT NULL,
@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `links` (
 -- Table structure for table `preferences`
 --
 
-CREATE TABLE IF NOT EXISTS `preferences` (
+CREATE TABLE `preferences` (
   `id` int(11) NOT NULL auto_increment,
   `uid` int(11) NOT NULL,
   `pref` varchar(255) NOT NULL,
@@ -130,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `preferences` (
 -- Table structure for table `tags`
 --
 
-CREATE TABLE IF NOT EXISTS `tags` (
+CREATE TABLE `tags` (
   `id` int(11) NOT NULL auto_increment,
   `tag` varchar(255) NOT NULL,
   PRIMARY KEY  (`id`),
@@ -143,7 +143,7 @@ CREATE TABLE IF NOT EXISTS `tags` (
 -- Table structure for table `titles`
 --
 
-CREATE TABLE IF NOT EXISTS `titles` (
+CREATE TABLE `titles` (
   `id` int(11) NOT NULL auto_increment,
   `path` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
@@ -158,7 +158,7 @@ CREATE TABLE IF NOT EXISTS `titles` (
 -- Table structure for table `title_tag`
 --
 
-CREATE TABLE IF NOT EXISTS `title_tag` (
+CREATE TABLE `title_tag` (
   `title_id` int(11) NOT NULL,
   `tag_id` int(11) NOT NULL,
   UNIQUE KEY `title_id` (`title_id`,`tag_id`)
@@ -178,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `title_tag` (
 -- Table structure for table `users`
 --
 
-CREATE TABLE IF NOT EXISTS `users` (
+CREATE TABLE `users` (
   `id` int(11) NOT NULL auto_increment,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
