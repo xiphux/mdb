@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 15, 2008 at 05:30 PM
+-- Generation Time: Jun 16, 2008 at 12:51 AM
 -- Server version: 5.0.60
 -- PHP Version: 5.2.6-pl1-gentoo
 
@@ -66,30 +66,18 @@ CREATE TABLE IF NOT EXISTS `downloads` (
 
 CREATE TABLE IF NOT EXISTS `files` (
   `id` int(11) NOT NULL auto_increment,
+  `tid` int(11) NOT NULL,
   `file` varchar(255) NOT NULL,
   `size` bigint(20) NOT NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `file` (`file`),
-  KEY `size` (`size`)
+  KEY `size` (`size`),
+  KEY `tid` (`tid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `file_title`
---
-
-CREATE TABLE IF NOT EXISTS `file_title` (
-  `file_id` int(11) NOT NULL,
-  `title_id` int(11) NOT NULL,
-  UNIQUE KEY `file_id` (`file_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- RELATIONS FOR TABLE `file_title`:
---   `file_id`
---       `files` -> `id`
---   `title_id`
+-- RELATIONS FOR TABLE `files`:
+--   `tid`
 --       `titles` -> `id`
 --
 
