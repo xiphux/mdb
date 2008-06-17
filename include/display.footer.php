@@ -8,6 +8,8 @@
  *  Copyright (C) 2006 Christopher Han <xiphux@gmail.com>
  */
 
+ include_once('database.updating.php');
+
 function footer($starttime)
 {
 	global $tpl,$mdb_appstring,$tables,$mdb_conf,$querycount;
@@ -19,14 +21,7 @@ function footer($starttime)
 	$update = DBGetOne("SELECT MAX(time) FROM " . $tables['dbupdate'] . " WHERE progress=0");
 	if ($update)
 		$tpl->assign("update",$update);
-	if ($mdb_conf['dbmutex']) {
-		$status = DBGetOne("SELECT MAX(progress) FROM " . $tables['dbupdate']);
-		if ($status && $status > 0)
-			$tpl->assign("updating",TRUE);
-	} else {
-		if (shell_exec("ps ax | grep -v 'grep' | grep -c '" . basename($mdb_conf['phpexec']) . " include/updatedb.php'") >= 1)
-			$tpl->assign("updating",TRUE);
-	}
+	$tpl->assign("updating",updating());
 	$tpl->assign("queries",$querycount);
 	date_default_timezone_set("UTC");
 	$tpl->assign("exectime",round(microtime(true)-$starttime,8));

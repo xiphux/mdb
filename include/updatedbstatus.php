@@ -8,11 +8,12 @@
  */
 
  include_once('../config/mdb.conf.php');
+ include_once('database.updating_dbmutex.php');
+ include_once('database.updating_shellmutex.php');
 
  if ($mdb_conf['dbmutex']) {
  	include_once('db.php');
-	$status = DBGetOne("SELECT MAX(progress) FROM " . $tables['dbupdate']);
-	if ($status && $status > 0)
+	if (updating_dbmutex())
  		echo "Database updating";
  	else {
 		$lastupdate = DBGetOne("SELECT UNIX_TIMESTAMP(MAX(time)) FROM " . $tables['dbupdate']);
@@ -26,7 +27,7 @@
  		echo "Database update complete";
 	}
  } else {
- 	if (shell_exec("ps ax | grep -v 'grep' | grep -c '" . basename($mdb_conf['phpexec']) . " include/updatedb.php'") >= 1)
+ 	if (updating_shellmutex())
  		echo "Database updating";
  	else
  		echo "Database update complete";

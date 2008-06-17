@@ -10,6 +10,8 @@
 
  include_once('display.message.php');
  include_once('database.unmapped.php');
+ include_once('database.updating_dbmutex.php');
+ include_once('database.updating_shellmutex.php');
 
 function dbcheck()
 {
@@ -22,13 +24,9 @@ function dbcheck()
 	$tpl->assign("unmap",unmapped());
 	if ($mdb_conf['dbmutex'] && (php_uname("s") == "Linux")) {
 		$tpl->assign("dbmutexcheck",1);
-		$status = DBGetOne("SELECT MAX(progress) FROM " . $tables['dbupdate']);
-		if ($status && $status > 0) {
-			$updating = shell_exec("ps ax | grep -v 'grep' | grep -c '" . basename($mdb_conf['phpexec']) . " include/updatedb.php'");
-			if ($updating < 1) {
-				DBExecute("DELETE FROM " . $tables['dbupdate'] . " WHERE progress!=0");
-				$tpl->assign("dbmutexfixed",1);
-			}
+		if (updating_dbmutex() && !updating_shellmutex()) {
+			DBExecute("DELETE FROM " . $tables['dbupdate'] . " WHERE progress!=0");
+			$tpl->assign("dbmutexfixed",1);
 		}
 	}
 	if ($mdb_conf['optimize']) {

@@ -8,6 +8,8 @@
  *  Copyright (C) 2006 Christopher Han <xiphux@gmail.com>
  */
 
+ include_once('database.updating.php');
+
 function mainpage()
 {
 	global $tpl,$mdb_appstring,$tables,$mdb_conf;
@@ -16,15 +18,8 @@ function mainpage()
 	$tpl->assign("titlecount",DBGetOne("SELECT COUNT(id) FROM " . $tables['titles']));
 	$tpl->assign("filecount",DBGetOne("SELECT COUNT(id) FROM " . $tables['files']));
 	$tpl->assign("size",DBGetOne("SELECT SUM(size) FROM " . $tables['files']));
+	$tpl->assign("updating",updating());
 	$update = DBGetOne("SELECT MAX(time) FROM " . $tables['dbupdate'] . " WHERE progress=0");
-	if ($mdb_conf['dbmutex']) {
-		$status = DBGetOne("SELECT MAX(progress) FROM " . $tables['dbupdate']);
-		if ($status && $status > 0)
-			$tpl->assign("updating",TRUE);
-	} else {
-		if (shell_exec("ps ax | grep -v 'grep' | grep -c '" . basename($mdb_conf['phpexec']) . " include/updatedb.php'") >= 1)
-			$tpl->assign("updating",TRUE);
-	}
 	if ($update)
 		$tpl->assign("update",$update);
 	date_default_timezone_set("UTC");
