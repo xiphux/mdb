@@ -9,22 +9,38 @@
  <table>
  <tr>
    <td>Username</td>
-   <td>Class</td>
+   <td>Privilege</td>
+   <td>Change</td>
    <td>Downloaded</td>
    <td>Delete</td>
  </tr>
  {foreach from=$users item=user}
  <tr class="{cycle values="odd,even"}">
    <td>{$user.username}</td>
-   <td>
+   <td>{if $user.privilege > 0}Admin{else}User{/if}</td>
+   <td class="textcenter">
+   {if $user.id != $currentid}
+   <form class="inline" action="{$SCRIPT_NAME}?u=changeprivilege" method="post">
+   <input type="hidden" name="uid" value="{$user.id}" />
    {if $user.privilege > 0}
-   Admin {if $user.id != $currentid}<a href="{$SCRIPT_NAME}?u=changeprivilege&uid={$user.id}&privilege=0"><span class="smalltext">[v]</span></a>{/if}
+   <input type="hidden" name="privilege" value="0" />
+   <input type="submit" name="submit" value="v" />
    {else}
-   User {if $user.id != $currentid}<a href="{$SCRIPT_NAME}?u=changeprivilege&uid={$user.id}&privilege=1"><span class="smalltext">[^]</span></a>{/if}
+   <input type="hidden" name="privilege" value="1" />
+   <input type="submit" name="submit" value="^" />
+   {/if}
+   </form>
    {/if}
    </td>
    <td title="{$user.size}">{$user.size|size}</td>
-   <td class="textcenter">{if $user.id != $currentid}<a href="{$SCRIPT_NAME}?u=userdel&uid={$user.id}"><span class="smalltext warning">[X]</span></a>{/if}</td>
+   <td class="textcenter">
+   {if $user.id != $currentid}
+   <form class="inline" action="{$SCRIPT_NAME}?u=userdel" method="post">
+   <input type="hidden" name="uid" value="{$user.id}" />
+   <input class="warning" type="submit" name="submit" value="x" />
+   </form>
+   {/if}
+   </td>
  </tr>
  {foreachelse}
  <tr>

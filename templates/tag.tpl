@@ -9,7 +9,7 @@
  {if $tag}
  <span class="bold">{$tag.tag} ({$tag.count})</span>
  {if $user.privilege > 0}
- <br /><a href="{$SCRIPT_NAME}?u=deltag&id={$tag.id}"><span class="warning">Delete tag</span></a>
+ <form action="{$SCRIPT_NAME}?u=deltag" method="post"><input type="hidden" name="id" value="{$tag.id}" /><input class="warning" type="submit" name="submit" value="Delete tag" /></form></a>
  {/if}
  </p>
  <p>Matching titles:

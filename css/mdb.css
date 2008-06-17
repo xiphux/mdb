@@ -152,3 +152,9 @@ table.dltable td.filename {
 table.dltable td.filesize {
 	width: 90px;
 }
+
+form.inline {
+	display: inline;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}

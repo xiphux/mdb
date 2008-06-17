@@ -12,7 +12,11 @@
        {if $user}
          <li>logged in as</li>
 	 <li><span class="highlight">{$user.username}</span></li>
-	 <li><a href="{$SCRIPT_NAME}?u=logout">logout</a></li>
+	 <li>
+	 <form class="inline" action="{$SCRIPT_NAME}?u=logout" method="post">
+	 <input type="submit" name="submit" value="logout" />
+	 </form>
+	 </li>
        {else}
          <form action="{$SCRIPT_NAME}?u=login" method="post">
            <li>

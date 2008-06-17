@@ -16,12 +16,20 @@
 {/foreach}
 </table>
 {/if}
-Tags:
+<table>
 {foreach from=$title.tags name=tags item=tag}
-{if !$smarty.foreach.tags.first},{/if} <a href="{$SCRIPT_NAME}?u=tag&id={$tag.id}">{$tag.tag}</a> {if $user}<a href="{$SCRIPT_NAME}?u=untag&tid={$title.id}&tag={$tag.id}"><span class="smalltext warning">[x]</span></a>{/if}
+<tr>
+<td>{if $smarty.foreach.tags.first}Tags:{/if}</td>
+<td><a href="{$SCRIPT_NAME}?u=tag&id={$tag.id}">{$tag.tag}</a></td>
+{if $user}<td><form class="inline" action="{$SCRIPT_NAME}?u=untag" method="post"><input type="hidden" name="tid" value="{$title.id}" /><input type="hidden" name="tag" value="{$tag.id}" /><input class="warning" type="submit" name="submit" value="x" /></form></td>{/if}
+</tr>
 {foreachelse}
-<span class="italic">None</span>
+<tr>
+<td>Tags:</td>
+<td><span class="italic">None</span></td>
+</tr>
 {/foreach}
+</table>
 {if $user}
 {if $taglist}
 <form action="{$SCRIPT_NAME}?u=addtag&tid={$title.id}" method="POST">

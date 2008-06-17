@@ -120,9 +120,13 @@
 			break;
 		case "deltag":
 			include_once('include/tag.deltag.php');
-			include_once('include/display.message.php');
-			deltag($_GET['id']);
-			message("Tag removed");
+			deltag($_POST['id']);
+			include_once('include/tag.taglist.php');
+			$tpl->assign("taglist",taglist());
+			$tpl->assign("tagcloudmax",$mdb_conf['tagcloudmax']);
+			$tpl->assign("tagcloudmin",$mdb_conf['tagcloudmin']);
+			$tpl->assign("tagcloudrange",$mdb_conf['tagcloudmax']-$mdb_conf['tagcloudmin']);
+			$tpl->display("taglist.tpl");
 			break;
 		case "addtag":
 			include_once('include/tag.addtag.php');
@@ -133,8 +137,8 @@
 		case "untag":
 			include_once('include/tag.untag.php');
 			include_once('include/display.title.php');
-			untag($_GET['tid'],$_GET['tag']);
-			title($_GET['tid']);
+			untag($_POST['tid'],$_POST['tag']);
+			title($_POST['tid']);
 			break;
 		case "tag":
 			include_once('include/tag.taginfo.php');
@@ -205,13 +209,13 @@
 		case "userdel":
 			include_once('include/display.usermanage.php');
 			include_once('include/user.userdel.php');
-			userdel($_GET['uid']);
+			userdel($_POST['uid']);
 			usermanage();
 			break;
 		case "changeprivilege":
 			include_once('include/display.usermanage.php');
 			include_once('include/user.changeprivilege.php');
-			changeprivilege($_GET['uid'],$_GET['privilege']);
+			changeprivilege($_POST['uid'],$_POST['privilege']);
 			usermanage();
 			break;
 		case "preferences":
