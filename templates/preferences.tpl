@@ -13,7 +13,7 @@
   <option value="{$theme}" {if $theme == $selectedtheme}selected{/if}>{$theme}</option>
 {/foreach}
   </select>
-  <input type="submit" type="submit" name="submit" value="Change" />
+  <input type="submit" name="submit" value="Change" />
 </form>
 </div>
 <br />
@@ -28,6 +28,6 @@
   <label class="short" for="newpass2">New password (again):</label>
   <input type="password" class="textfield" id="newpass2" name="newpass2" />
 <br />
-  <input type="submit" type="submit" name="submit" value="Change" />
+  <input type="submit" name="submit" value="Change" />
 </form>
 </div>

@@ -63,6 +63,6 @@
    <label class="short" for="admin">Admin</label>
    <input type="checkbox" id="admin" name="admin" />
  <br />
-   <input type="submit" type="submit" name="submit" value="Create" />
+   <input type="submit" name="submit" value="Create" />
  </form>
  </div>
