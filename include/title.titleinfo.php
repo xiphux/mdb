@@ -22,14 +22,9 @@
 		message("No such title","warning");
 		return;
 	}
-	$temp = DBGetArray("SELECT * FROM " . $tables['files'] . " WHERE tid=" . $tid . " ORDER BY file");
-	if (sizeof($temp) > 0) {
-		$len = strlen($title['path'])+1;
-		$size = count($temp);
-		for ($i = 0; $i < $size; $i++)
-			$temp[$i]['file'] = substr($temp[$i]['file'],$len);
+	$temp = DBGetArray("SELECT id,tid,size,SUBSTRING(file FROM " . (strlen($title['path'])+2) . ") AS file FROM " . $tables['files'] . " WHERE tid=" . $tid . " ORDER BY file");
+	if (sizeof($temp) > 0)
 		$title['files'] = $temp;
-	}
 	$temp = DBGetArray("SELECT t1.* FROM " . $tables['tags'] . " AS t1, " . $tables['title_tag'] . " AS t2 WHERE t2.title_id=" . $tid . " AND t2.tag_id=t1.id ORDER BY t1.tag");
 	if (sizeof($temp) > 0)
 		$title['tags'] = $temp;
