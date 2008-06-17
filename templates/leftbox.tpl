@@ -38,7 +38,7 @@
      <h4>functions</h4>
      <ul>
        <li><a href="{$SCRIPT_NAME}?u=main">main</a></li>
-       <li><a href="{$SCRIPT_NAME}?u=taglist">taglist</a></li>
+       <li><a href="{$SCRIPT_NAME}?u=tagcloud">tagcloud</a></li>
        {if $user}
          <li><a href="{$SCRIPT_NAME}?u=history">history</a></li>
 	 <li><a href="{$SCRIPT_NAME}?u=preferences">preferences</a></li>

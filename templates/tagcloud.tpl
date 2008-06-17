@@ -1,7 +1,7 @@
 {*
- *  taglist.tpl
+ *  tagcloud.tpl
  *  MDB: A media database
- *  Component: Tag listing template
+ *  Component: Tag cloud template
  *
  *  Copyright (C) 2006 Christopher Han <xiphux@gmail.com>
  *}

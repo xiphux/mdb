@@ -110,23 +110,16 @@
 				$tpl->display("history.tpl");
 			}
 			break;
-		case "taglist":
+		case "tagcloud":
 			include_once('include/tag.taglist.php');
-			$tpl->assign("taglist",taglist());
-			$tpl->assign("tagcloudmax",$mdb_conf['tagcloudmax']);
-			$tpl->assign("tagcloudmin",$mdb_conf['tagcloudmin']);
-			$tpl->assign("tagcloudrange",$mdb_conf['tagcloudmax']-$mdb_conf['tagcloudmin']);
-			$tpl->display("taglist.tpl");
+			include_once('include/display.tagcloud.php');
+			tagcloud();
 			break;
 		case "deltag":
 			include_once('include/tag.deltag.php');
+			include_once('include/display.tagcloud.php');
 			deltag($_POST['id']);
-			include_once('include/tag.taglist.php');
-			$tpl->assign("taglist",taglist());
-			$tpl->assign("tagcloudmax",$mdb_conf['tagcloudmax']);
-			$tpl->assign("tagcloudmin",$mdb_conf['tagcloudmin']);
-			$tpl->assign("tagcloudrange",$mdb_conf['tagcloudmax']-$mdb_conf['tagcloudmin']);
-			$tpl->display("taglist.tpl");
+			tagcloud();
 			break;
 		case "addtag":
 			include_once('include/tag.addtag.php');
