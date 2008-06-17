@@ -145,7 +145,7 @@
 		if (is_dir($mdb_conf['root'] . $title)) {
 			if ($dh = opendir($mdb_conf['root'] . $title)) {
 				while (($file = readdir($dh)) !== false) {
-					if (!(in_array($file,$mdb_conf['excludes']) || is_link($mdb_conf['root'] . $title . "/" . $file) || (substr($file,0,1) == "."))) {
+					if (is_dir($mdb_conf['root'] . $title . "/" . $file) && !(in_array($file,$mdb_conf['excludes']) || (substr($file,0,1) == "."))) {
 						$q = "INSERT IGNORE INTO " . $tables['titles'] . "(";
 						$q2 = "path,title) VALUES(";
 						$q3 = DBqstr($title . "/" . $file) . "," . DBqstr(uppercase($file)) . ")";
