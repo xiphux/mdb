@@ -146,12 +146,6 @@ $mdb_conf['adodb_prefix'] = "adodb/";
  $mdb_conf['session_key'] = "mdb";
 
  /*
-  * dbstats
-  * Whether you want a database stats link to appear
-  */
- $mdb_conf['dbstats'] = TRUE;
-
- /*
   * optimize
   * Whether you want to optimize tables on dbcheck page
   * and after db update

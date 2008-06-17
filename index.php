@@ -185,6 +185,10 @@
 			include_once('include/display.dbstats.php');
 			dbstats();
 			break;
+		case "database":
+			include_once('include/display.database.php');
+			database();
+			break;
 		case "main":
 			include_once('include/display.mainpage.php');
 			mainpage();
@@ -249,8 +253,6 @@
 
  if (isset($_SESSION[$mdb_conf['session_key']]['user']))
  	$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
- if ($mdb_conf['dbstats'])
- 	$tpl->assign("dbstats",TRUE);
  $tpl->display("leftbox.tpl");
 
  echo $main;
