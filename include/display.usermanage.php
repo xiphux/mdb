@@ -9,7 +9,6 @@
  */
 
  include_once('display.message.php');
- include_once('user.userhistorysize.php');
 
 function usermanage()
 {
@@ -18,9 +17,7 @@ function usermanage()
 		message("You do not have access to this feature!","warning");
 		return;
 	}
-	$users = DBGetArray("SELECT id,username,privilege FROM " . $tables['users']);
-	foreach ($users as $i => $user)
-		$users[$i]['size'] = userhistorysize($user['id']);
+	$users = DBGetArray("SELECT " . $tables['users'] . ".id, " . $tables['users'] . ".username, " . $tables['users'] . ".privilege, SUM(" . $tables['downloads'] . ".fsize) AS size FROM " . $tables['users'] . " LEFT JOIN " . $tables['downloads'] . " ON " . $tables['users'] . ".id=" . $tables['downloads'] . ".uid GROUP BY " . $tables['users'] . ".id ORDER BY username");
 	$tpl->clear_all_assign();
 	$tpl->assign("users",$users);
 	$tpl->assign("currentid",$_SESSION[$mdb_conf['session_key']]['user']['id']);
