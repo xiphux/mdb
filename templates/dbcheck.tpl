@@ -33,8 +33,8 @@
  {if $optables}
  <div class="dbcheck">Optimizing tables:<br />
  <ul>
- {foreach from=$optables key=table item=status}
- <li>Optimizing table <span class="highlight">{$table}</span>... {if $status}<span class="highlight">ok</span>{else}<span class="warning">failed</span>{/if}</li>
+ {foreach from=$optables item=table}
+ <li>Optimizing table <span class="highlight">{$table.Table}</span>... <span class="highlight">{$table.Msg_text}</span></li>
  {/foreach}
  </ul>
  </div>

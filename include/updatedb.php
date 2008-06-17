@@ -214,11 +214,9 @@
  function optimizedb()
  {
  	global $tables,$mdb_conf;
-	foreach ($tables as $i => $table) {
-		$ok = DBExecute("OPTIMIZE TABLE " . $table);
-		if ($mdb_conf['debug'] && !$ok)
-			echo "optimizedb: " . DBErrorMsg() . "\n";
-	}
+	$ok = DBExecute("OPTIMIZE TABLE " . implode(",",$tables));
+	if ($mdb_conf['debug'] && !$ok)
+		echo "optimizedb: " . DBErrorMsg() . "\n";
  }
 
  if ($mdb_conf['dbmutex']) {
