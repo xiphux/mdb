@@ -5,12 +5,15 @@
  *
  *  Copyright (C) 2008 Christopher Han <xiphux@gmail.com>
  *}
-<p>
-<a href="{$SCRIPT_NAME}?u=updatedb">updatedb</a>
-</p>
-<p>
-<a href="{$SCRIPT_NAME}?u=dbcheck">dbcheck</a>
-</p>
-<p>
-<a href="{$SCRIPT_NAME}?u=dbstats">dbstats</a>
-</p>
+<form action="{$SCRIPT_NAME}?u=updatedb" method="post">
+<label class="short" for="updatedb">Update file database:</label>
+<input type="submit" name="updatedb" value="updatedb" />
+</form>
+<form action="{$SCRIPT_NAME}?u=dbcheck" method="post">
+<label class="short" for="dbcheck">Check database status:</label>
+<input type="submit" name="dbcheck" value="dbcheck" />
+</form>
+<form action="{$SCRIPT_NAME}?u=dbstats" method="post">
+<label class="short" for="dbstats">Query database statistics:</label>
+<input type="submit" name="dbstats" value="dbstats" />
+</form>
