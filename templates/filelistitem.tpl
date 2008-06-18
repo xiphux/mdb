@@ -9,7 +9,7 @@
 <tr><td colspan="2"><span class="italic">No files!</span></td></tr>
 {else}
 <tr class="{$class}">
-<td class="filename" style="padding-left: {if $indentamt}{$indentamt}{else}0{/if}px">
+<td class="filename" style="padding-left: {if $indentamt}{$indentamt*25}{else}0{/if}px">
 {if $download && $user && !$dir}
 <a href="{$SCRIPT_NAME}?u=file&id={$fileid}">{$filename}</a>
 {else}

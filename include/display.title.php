@@ -38,7 +38,7 @@ function title($tid)
 				$file['file'] = substr($file['file'],$pos+1);
 				$newdir = TRUE;
 				$tpl->clear_all_assign();
-				$tpl->assign("indentamt",((count($currentdir)-1)*20));
+				$tpl->assign("indentamt",(count($currentdir)-1));
 				$tpl->assign("dir",TRUE);
 				$tpl->assign("filename",$dir);
 				$tpl->display("filelistitem.tpl");
@@ -49,7 +49,7 @@ function title($tid)
 				$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
 			if ($mdb_conf['download'])
 				$tpl->assign("download",TRUE);
-			$tpl->assign("indentamt",(count($currentdir)*20));
+			$tpl->assign("indentamt",count($currentdir));
 			$tpl->assign("class",($odd?"odd":"even"));
 			$tpl->assign("fileid",$file['id']);
 			$tpl->assign("filename",$file['file']);
