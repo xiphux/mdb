@@ -44,4 +44,3 @@
 <label for="tag">New tag:</label> <input type="text" id="tag" name="tag" /> <input class="submit" type="submit" name="submit" value="Add tag" />
 </form>
 {/if}
-{include file='filelist.tpl' filelist=$title.files}
