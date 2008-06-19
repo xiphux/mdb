@@ -18,12 +18,12 @@ function toggleVis(obj)
 	if (document.getElementById(obj).innerHTML=="-") {
 		document.getElementById(obj).innerHTML="+";
 		for (var i = 0; i < elements.length; i++) {
-			elements[i].style.display="none";
+			$(elements[i]).tween('display','none');
 		}
 	} else {
 		document.getElementById(obj).innerHTML="-";
 		for (var i = 0; i < elements.length; i++) {
-			elements[i].style.display="";
+			$(elements[i]).tween('display','');
 		}
 	}
 }
