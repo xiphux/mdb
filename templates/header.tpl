@@ -15,9 +15,8 @@ header("Content-Type: $contentType; charset=utf-8"); *}
 {literal}
 <link rel="stylesheet" href="css/mdb.css" type="text/css" />
 <link rel="stylesheet" href="css/themes/{/literal}{$theme}{literal}" type="text/css" />
-<script type="text/javascript" src="scripts/prototype.lite.js"></script>
-<script type="text/javascript" src="scripts/moo.fx.js"></script>
-<script type="text/javascript" src="scripts/accordion.js"></script>
+<script type="text/javascript" src="scripts/mootools-1.2-core-yc.js"></script>
+<script type="text/javascript" src="scripts/mootools-1.2-more.js"></script>
 <script type="text/javascript">
 //<!CDATA[
 function highlightFormElements() {
@@ -37,8 +36,8 @@ function addFocusHandlers(elements) {
 function init_effects() {
 	var minicontentblocks = document.getElementsByClassName('miniblockcontent');
 	var minititleblocks = document.getElementsByClassName('miniblocktitle');
-	var subAccordion = new fx.Accordion(
-		minititleblocks,minicontentblocks,{}
+	var subAccordion = new Accordion(
+		minititleblocks,minicontentblocks,{display:false}
 	);
 }
 window.onload = function() {highlightFormElements();init_effects();}
