@@ -26,6 +26,7 @@ function title($tid)
 	if (count($title['files']) > 0) {
 		$odd = TRUE;
 		$currentdir = array();
+		$allowed = "/[^a-z0-9\\/\\.\\-\\_\\\\]/i"; 
 		foreach ($title['files'] as $file) {
 			while ((count($currentdir) > 0) && strpos($file['file'],implode("/",$currentdir)) === false) {
 				array_pop($currentdir);
@@ -36,12 +37,15 @@ function title($tid)
 				$dir = substr($file['file'],0,$pos);
 				$currentdir[] = $dir;
 				$file['file'] = substr($file['file'],$pos+1);
-				$newdir = TRUE;
 				$tpl->clear_all_assign();
 				$tpl->assign("indentamt",(count($currentdir)-1));
 				$tpl->assign("dir",TRUE);
 				$tpl->assign("filename",$dir);
+				if (count($currentdir) > 1);
+					$tpl->assign("itemid",preg_replace($allowed,"_",implode("/",array_slice($currentdir,0,count($currentdir)-1))));
+				$tpl->assign("subid",preg_replace($allowed,"_",implode("/",$currentdir)));
 				$tpl->display("filelistitem.tpl");
+				$tpl->clear_all_assign();
 				$odd = !$odd;
 			}
 			$tpl->clear_all_assign();
@@ -50,6 +54,8 @@ function title($tid)
 			if ($mdb_conf['download'])
 				$tpl->assign("download",TRUE);
 			$tpl->assign("indentamt",count($currentdir));
+			if (count($currentdir) > 0)
+				$tpl->assign("itemid",preg_replace($allowed,"_",implode("/",$currentdir)));
 			$tpl->assign("class",($odd?"odd":"even"));
 			$tpl->assign("fileid",$file['id']);
 			$tpl->assign("filename",$file['file']);
