@@ -21,7 +21,7 @@ function addtag($tid,$tag)
 		message("No series specified","warning");
 		return;
 	}
-	$tag = trim($tag);
+	$tag = preg_replace("/[^a-z0-9]/i","",$tag);
 	if (!(isset($tag) && (strlen($tag) > 0))) {
 		message("No tag specified","warning");
 		return;
