@@ -104,7 +104,7 @@ $mdb_conf['adodb_prefix'] = "adodb/";
   * them from other tables, put it here.
   * So, for example, setting the prefix to
   * "mdb_" would make the table names
-  * "mdb_files", "mdb_", etc.
+  * "mdb_files", "mdb_titles", etc.
   * If you don't want a prefix just leave it empty.
   */
  $mdb_conf['prefix'] = "";
