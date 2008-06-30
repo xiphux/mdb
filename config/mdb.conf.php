@@ -115,6 +115,7 @@ $mdb_conf['adodb_prefix'] = "adodb/";
  $mdb_conf['excludes'] = array(
  	"non-anime",
 	"incoming",
+	"lost+found"
  );
 
  /*
