@@ -10,6 +10,7 @@
 
  include_once('display.message.php');
  include_once('database.unmapped.php');
+ include_once('database.existence.php');
  include_once('database.updating_dbmutex.php');
  include_once('database.updating_shellmutex.php');
 
@@ -22,6 +23,7 @@ function dbcheck()
 	}
 	$tpl->clear_all_assign();
 	$tpl->assign("unmap",unmapped());
+	$tpl->assign("exist",existence());
 	if ($mdb_conf['dbmutex'] && (php_uname("s") == "Linux")) {
 		$tpl->assign("dbmutexcheck",1);
 		if (updating_dbmutex() && !updating_shellmutex()) {

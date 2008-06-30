@@ -17,6 +17,18 @@
  {/if}
  </ul>
  </div>
+ <div class="dbcheck">Checking file existence:<br />
+ <ul>
+ {if $exist}
+ <li><span class="warning">Warning: the following files in the database do not exist on disk!  Running updatedb is recommended.</span></li>
+ {foreach from=$exist item=j}
+ <li><span class="warning">{$j.file}</span></li>
+ {/foreach}
+ {else}
+ <li><span class="italic highlight">No nonexistent files</span></li>
+ {/if}
+ </ul>
+ </div>
  {if $dbmutexcheck}
  <div class="dbcheck">Checking database update consistency:<br />
  <ul>
