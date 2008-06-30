@@ -10,7 +10,7 @@
 <input type="submit" name="updatedb" value="updatedb" />
 </form>
 <form action="{$SCRIPT_NAME}?u=dbcheck" method="post">
-<label class="short" for="dbcheck">Check database status:</label>
+<label class="short" for="dbcheck">Check database status (may take awhile):</label>
 <input type="submit" name="dbcheck" value="dbcheck" />
 </form>
 <form action="{$SCRIPT_NAME}?u=dbstats" method="post">
