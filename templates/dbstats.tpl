@@ -1,9 +1,9 @@
 {*
  * dbstats.tpl
- * CS161 project: Bookstore
+ * MDB: A media database
  * Component: Database stats template
  *
- * Copyright (C) 2006 Christopher Han <cfh@gwu.edu>
+ * Copyright (C) 2006 Christopher Han <xiphux@gmail.com>
  *}
 <p><strong><span class="underline">{$appstring}</span></strong>:
 <br />Copyright (c) {$cdate} {mailto address=$cauthor_email encode="hex" text=$cauthor} 
