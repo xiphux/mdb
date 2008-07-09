@@ -21,21 +21,33 @@
 		return;
 	}
 	if ($criteria === "All" || $criteria === "Titles") {
-		$ret = DBGetArray("SELECT * FROM " . $tables['titles'] . " WHERE title LIKE '%" . addslashes($search) . "%' ORDER BY title");
-		$size = count($ret);
-		if ($size > 0) {
-			for ($i = 0; $i < $size; $i++)
-				highlight($ret[$i]['title'],$search);
-			$results['titles'] = $ret;
+		$tmp = mdb_memcache_get("search_titles_" . md5($search));
+		if ($tmp)
+			$results['titles'] = $tmp;
+		else {
+			$ret = DBGetArray("SELECT * FROM " . $tables['titles'] . " WHERE title LIKE '%" . addslashes($search) . "%' ORDER BY title");
+			$size = count($ret);
+			if ($size > 0) {
+				for ($i = 0; $i < $size; $i++)
+					highlight($ret[$i]['title'],$search);
+				$results['titles'] = $ret;
+				mdb_memcache_set("search_titles_" . md5($search), $ret);
+			}
 		}
 	}
 	if ($criteria === "All" || $criteria === "Files") {
-		$ret = DBGetArray("SELECT * FROM " . $tables['files'] . " WHERE file LIKE '%/%/%" . addslashes($search) . "%' ORDER BY file");
-		$size = count($ret);
-		if ($size > 0) {
-			for ($i = 0; $i < $size; $i++)
-				highlight($ret[$i]['file'],$search);
-			$results['files'] = $ret;
+		$tmp = mdb_memcache_get("search_files_" . md5($search));
+		if ($tmp)
+			$results['files'] = $tmp;
+		else {
+			$ret = DBGetArray("SELECT * FROM " . $tables['files'] . " WHERE file LIKE '%/%/%" . addslashes($search) . "%' ORDER BY file");
+			$size = count($ret);
+			if ($size > 0) {
+				for ($i = 0; $i < $size; $i++)
+					highlight($ret[$i]['file'],$search);
+				$results['files'] = $ret;
+				mdb_memcache_set("search_files_" . md5($search), $ret);
+			}
 		}
 	}
 	return $results;
