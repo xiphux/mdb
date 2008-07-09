@@ -18,7 +18,7 @@
 {if $memcached}
 <p><strong><span class="underline">Memcached statistics:</span></strong>
 {foreach from=$memcached key=type item=value}
-<strong>{$type}: </strong>{$value}<br />
+<br /><strong>{$type}: </strong>{$value}
 {/foreach}
 </p>
 {/if}
