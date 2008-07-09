@@ -15,10 +15,34 @@ function footer($starttime)
 	global $tpl,$mdb_appstring,$tables,$mdb_conf,$querycount;
 	$tpl->clear_all_assign();
 	$tpl->assign("banner",$mdb_appstring);
-	$tpl->assign("titlecount",DBGetOne("SELECT COUNT(id) FROM " . $tables['titles']));
-	$tpl->assign("filecount",DBGetOne("SELECT COUNT(id) FROM " . $tables['files']));
-	$tpl->assign("size",DBGetOne("SELECT SUM(size) FROM " . $tables['files']));
-	$update = DBGetOne("SELECT MAX(time) FROM " . $tables['dbupdate'] . " WHERE progress=0");
+
+	$tmp = mdb_memcache_get("titlecount");
+	if (!$tmp) {
+		$tmp = DBGetOne("SELECT COUNT(id) FROM " . $tables['titles']);
+		mdb_memcache_set("titlecount",$tmp);
+	}
+	$tpl->assign("titlecount", $tmp);
+
+	$tmp2 = mdb_memcache_get("filecount");
+	if (!$tmp2) {
+		$tmp2 = DBGetOne("SELECT COUNT(id) FROM " . $tables['files']);
+		mdb_memcache_set("filecount", $tmp2);
+	}
+	$tpl->assign("filecount", $tmp2);
+
+	$tmp3 = mdb_memcache_get("collectionsize");
+	if (!$tmp3) {
+		$tmp3 = DBGetOne("SELECT SUM(size) FROM " . $tables['files']);
+		mdb_memcache_set("collectionsize", $tmp3);
+	}
+	$tpl->assign("size", $tmp3);
+
+	$update = mdb_memcache_get("lastupdate");
+	if (!$update) {
+		$update = DBGetOne("SELECT MAX(time) FROM " . $tables['dbupdate'] . " WHERE progress=0");
+		if ($update)
+			mdb_memcache_set("lastupdate", $update);
+	}
 	if ($update)
 		$tpl->assign("update",$update);
 	$tpl->assign("updating",updating());
