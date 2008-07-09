@@ -113,12 +113,45 @@ function DBErrorMsg()
 
 
 $memcached = null;
+$memcached_namespace = getenv('SERVER_NAME') . "_mdb_";
 
 if ($mdb_conf['memcached'] && function_exists('memcache_add')) {
 	if ($mdb_conf['memcached_persist'])
 		$memcached = memcache_pconnect($mdb_conf['memcached_address'],$mdb_conf['memcached_port']);
 	else
 		$memcached = memcache_connect($mdb_conf['memcached_address'],$mdb_conf['memcached_port']);
+	memcache_set_compress_threshold($memcached, 20000, 0.2);
+}
+
+function mdb_memcached_get($key)
+{
+	global $memcached, $memcached_namespace;
+	if (!$memcached)
+		return null;
+	return memcache_get($memcached, $memcached_namespace . $key);
+}
+
+function mdb_memcached_set($key, $val)
+{
+	global $memcached, $memcached_namespace;
+	if (!$memcached)
+		return FALSE;
+	return memcache_set($memcached, $memcached_namespace . $key, $val);
+}
+
+function mdb_memcached_delete($key)
+{
+	global $memcached, $memcached_namespace;
+	if (!$memcached)
+		return FALSE;
+	return memcache_delete($memcached, $memcached_namespace . $key, 0);
+}
+
+function mdb_memcached_close()
+{
+	global $memcached;
+	if ($memcached)
+		memcache_close($memcached);
 }
 
 ?>

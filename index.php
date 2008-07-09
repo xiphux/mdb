@@ -265,4 +265,7 @@
  footer($mdbstarttime);
 
  ob_end_flush();
+
+ mdb_memcached_close();
+
 ?>

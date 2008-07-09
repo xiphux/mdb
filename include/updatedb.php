@@ -261,6 +261,10 @@
 
  $success = DBCompleteTrans();
 
+ if ($success) {
+ 	mdb_memcached_delete("titlelist");
+ }
+
  if ($mdb_conf['dbmutex']) {
  	if ($success) {
  		$ok = DBExecute("UPDATE " . $tables['dbupdate'] . " SET progress=0 WHERE progress!=0");

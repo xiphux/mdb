@@ -42,6 +42,11 @@
  function titlelist()
  {
  	global $tables;
+
+	$tmp = mdb_memcached_get("titlelist");
+	if ($tmp)
+		return $tmp;
+	
 	$titles = array();
 	$titlecount = DBGetOne("SELECT COUNT(id) FROM " . $tables['titles']);
 	if ($titlecount > (SQL_QUERIES * QUERY_TO_ITERATION_RATIO)) {
@@ -71,6 +76,9 @@
 			$titles[substr(strtolower(trim($titlelist[$i]["title"])),0,1)][] = $titlelist[$i];
 		}
 	}
+
+	mdb_memcached_set("titlelist",$titles);
+
 	return $titles;
  }
 
