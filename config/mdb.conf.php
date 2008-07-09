@@ -113,7 +113,7 @@ $mdb_conf['adodb_prefix'] = "adodb/";
   * Memcached
   * Whether to use memcached
   */
- $mdb_conf['memcached'] = TRUE;
+ $mdb_conf['memcached'] = FALSE;
 
  /*
   * Memcached address
