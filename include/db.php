@@ -111,4 +111,14 @@ function DBErrorMsg()
 	return $db->ErrorMsg();
 }
 
+
+$memcached = null;
+
+if ($mdb_conf['memcached'] && function_exists('memcache_add')) {
+	if ($mdb_conf['memcached_persist'])
+		$memcached = memcache_pconnect($mdb_conf['memcached_address'],$mdb_conf['memcached_port']);
+	else
+		$memcached = memcache_connect($mdb_conf['memcached_address'],$mdb_conf['memcached_port']);
+}
+
 ?>

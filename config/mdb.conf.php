@@ -110,6 +110,30 @@ $mdb_conf['adodb_prefix'] = "adodb/";
  $mdb_conf['prefix'] = "";
 
  /*
+  * Memcached
+  * Whether to use memcached
+  */
+ $mdb_conf['memcached'] = TRUE;
+
+ /*
+  * Memcached address
+  * Address of memcached server
+  */
+ $mdb_conf['memcached_address'] = "127.0.0.1";
+
+ /*
+  * Memcached port
+  * Port of memcached server
+  */
+ $mdb_conf['memcached_port'] = 11211;
+
+ /*
+  * Memcached persist
+  * Whether to use a persistent connection to Memcached
+  */
+ $mdb_conf['memcached_persist'] = TRUE;
+
+ /*
   * Files/directories to exclude
   */
  $mdb_conf['excludes'] = array(
