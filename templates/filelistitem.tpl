@@ -13,7 +13,7 @@
 {if $download && $user && !$dir}
 <a href="{$SCRIPT_NAME}?u=file&id={$fileid}">{$filename}</a>
 {else}
-{if $subid}<span id="{$subid}">-</span> {/if}{$filename}
+{if $subid}[<span id="{$subid}">&ndash;</span>] {/if}{$filename}
 {/if}
 </td>
 {if $filesize}

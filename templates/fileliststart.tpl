@@ -15,15 +15,15 @@ function toggleVis(obj)
 	$A(all).each(function(el){
 		if (new RegExp(obj).test(el.className)) elements.push(el);
 	});
-	if (document.getElementById(obj).innerHTML=="-") {
+	if (document.getElementById(obj).innerHTML=="+") {
+		document.getElementById(obj).innerHTML="&ndash;";
+		for (var i = 0; i < elements.length; i++) {
+			$(elements[i]).tween('display','');
+		}
+	} else {
 		document.getElementById(obj).innerHTML="+";
 		for (var i = 0; i < elements.length; i++) {
 			$(elements[i]).tween('display','none');
-		}
-	} else {
-		document.getElementById(obj).innerHTML="-";
-		for (var i = 0; i < elements.length; i++) {
-			$(elements[i]).tween('display','');
 		}
 	}
 }
