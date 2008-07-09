@@ -74,7 +74,7 @@ $mdb_conf['adodb_prefix'] = "adodb/";
   * on a heavily loaded server with lots of connections
   * left open.
   */
- $mdb_conf['persist'] = TRUE;
+ $mdb_conf['persist'] = FALSE;
 
  /*
   * Adodb cache
@@ -131,7 +131,7 @@ $mdb_conf['adodb_prefix'] = "adodb/";
   * Memcached persist
   * Whether to use a persistent connection to Memcached
   */
- $mdb_conf['memcached_persist'] = TRUE;
+ $mdb_conf['memcached_persist'] = FALSE;
 
  /*
   * Files/directories to exclude
