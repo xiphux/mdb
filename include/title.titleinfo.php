@@ -17,6 +17,11 @@
 		message("No title specified","warning");
 		return;
 	}
+
+	$tmp = mdb_memcache_get("tid" . $tid);
+	if ($tmp)
+		return $tmp;
+
 	$title = DBGetRow("SELECT * FROM " . $tables['titles'] . " WHERE id=" . $tid);
 	if (!$title) {
 		message("No such title","warning");
@@ -32,6 +37,9 @@
 	$temp = DBGetArray("SELECT * FROM " . $tables['links'] . " WHERE title_id=" . $tid);
 	if ($temp && (sizeof($temp) > 0))
 		$title['links'] = $temp;
+	
+	mdb_memcache_set("tid" . $tid, $title);
+
 	return $title;
  }
 

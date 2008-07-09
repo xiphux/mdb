@@ -43,7 +43,7 @@
  {
  	global $tables;
 
-	$tmp = mdb_memcached_get("titlelist");
+	$tmp = mdb_memcache_get("titlelist");
 	if ($tmp)
 		return $tmp;
 	
@@ -77,7 +77,7 @@
 		}
 	}
 
-	mdb_memcached_set("titlelist",$titles);
+	mdb_memcache_set("titlelist",$titles);
 
 	return $titles;
  }

@@ -27,6 +27,7 @@ function untag($tid, $tag)
 		return;
 	}
 	DBExecute("DELETE FROM " . $tables['title_tag'] . " WHERE title_id=" . $tid . " AND tag_id=" . $tag);
+	mdb_memcache_delete("tid" . $tid);
 	prunetags();
 }
 

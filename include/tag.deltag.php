@@ -22,7 +22,11 @@ function deltag($tid)
 		return;
 	}
 	DBExecute("DELETE FROM " . $tables['tags'] . " WHERE id=" . $tid);
+	$titles = DBGetArray("SELECT title_id FROM " . $tables['title_tag'] . " WHERE tag_id=" . $tid);
 	DBExecute("DELETE FROM " . $tables['title_tag'] . " WHERE tag_id=" . $tid);
+	foreach ($titles as $ti) {
+		mdb_memcache_delete("tid" . $ti['title_id']);
+	}
 }
 
 ?>

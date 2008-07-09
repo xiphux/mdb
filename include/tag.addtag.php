@@ -34,6 +34,9 @@ function addtag($tid,$tag)
 			$id = DBGetOne("SELECT id FROM " . $tables['tags'] . " WHERE UPPER(tag)='" . strtoupper($tag) . "'");
 	}
 	DBExecute("INSERT IGNORE INTO " . $tables['title_tag'] . " (title_id,tag_id) VALUES (" . $tid . "," . $id . ")");
+
+	mdb_memcache_delete("tid" . $tid);
+
 	return;
 }
 

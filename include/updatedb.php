@@ -262,7 +262,7 @@
  $success = DBCompleteTrans();
 
  if ($success) {
- 	mdb_memcached_delete("titlelist");
+ 	mdb_memcache_flush();
  }
 
  if ($mdb_conf['dbmutex']) {

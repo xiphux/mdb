@@ -123,7 +123,7 @@ if ($mdb_conf['memcached'] && function_exists('memcache_add')) {
 	memcache_set_compress_threshold($memcached, 20000, 0.2);
 }
 
-function mdb_memcached_get($key)
+function mdb_memcache_get($key)
 {
 	global $memcached, $memcached_namespace;
 	if (!$memcached)
@@ -131,7 +131,7 @@ function mdb_memcached_get($key)
 	return memcache_get($memcached, $memcached_namespace . $key);
 }
 
-function mdb_memcached_set($key, $val)
+function mdb_memcache_set($key, $val)
 {
 	global $memcached, $memcached_namespace;
 	if (!$memcached)
@@ -139,7 +139,7 @@ function mdb_memcached_set($key, $val)
 	return memcache_set($memcached, $memcached_namespace . $key, $val);
 }
 
-function mdb_memcached_delete($key)
+function mdb_memcache_delete($key)
 {
 	global $memcached, $memcached_namespace;
 	if (!$memcached)
@@ -147,11 +147,18 @@ function mdb_memcached_delete($key)
 	return memcache_delete($memcached, $memcached_namespace . $key, 0);
 }
 
-function mdb_memcached_close()
+function mdb_memcache_close()
 {
 	global $memcached;
 	if ($memcached)
 		memcache_close($memcached);
+}
+
+function mdb_memcache_flush()
+{
+	global $memcached;
+	if ($memcached)
+		memcache_flush($memcached);
 }
 
 ?>
