@@ -36,6 +36,7 @@ function addtag($tid,$tag)
 	DBExecute("INSERT IGNORE INTO " . $tables['title_tag'] . " (title_id,tag_id) VALUES (" . $tid . "," . $id . ")");
 
 	mdb_memcache_delete("tid" . $tid);
+	mdb_memcache_delete("taglist");
 
 	return;
 }

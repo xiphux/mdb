@@ -27,6 +27,7 @@ function deltag($tid)
 	foreach ($titles as $ti) {
 		mdb_memcache_delete("tid" . $ti['title_id']);
 	}
+	mdb_memcache_delete("taglist");
 }
 
 ?>
