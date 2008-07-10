@@ -19,7 +19,13 @@ function otherhistory()
 		message("You do not have access to this feature!","warning");
 		return;
 	}
-	$u = DBGetArray("SELECT * FROM " . $tables['users'] . " WHERE id!=" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . " ORDER BY username");
+
+	$u = mdb_memcache_get("userlist_not_" . $_SESSION[$mdb_conf['session_key']]['user']['id']);
+	if (!$u) {
+		$u = DBGetArray("SELECT * FROM " . $tables['users'] . " WHERE id!=" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . " ORDER BY username");
+		if ($u)
+			mdb_memcache_set("userlist_not_" . $_SESSION[$mdb_conf['session_key']]['user']['id'], $u);
+	}
 	$size = count($u);
 	for ($i = 0; $i < $size; $i++) {
 		$ret2 = userhistory($u[$i]['id']);
