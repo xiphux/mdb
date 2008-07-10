@@ -96,22 +96,8 @@
  if (isset($_GET['u'])) {
  	switch ($_GET['u']) {
 		case "history":
-			include_once('include/user.userhistory.php');
-			include_once('include/user.userhistorysize.php');
-			include_once('include/user.otherhistory.php');
-			if (!isset($_SESSION[$mdb_conf['session_key']]['user'])) {
-				include_once('include/display.message.php');
-				message("Not valid for anonymous users!","warning");
-			} else {
-				$tpl->clear_all_assign();
-				$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
-				$tpl->assign("download_log",$mdb_conf['download_log']);
-				$tpl->assign("userhistory",userhistory($_SESSION[$mdb_conf['session_key']]['user']['id']));
-				$tpl->assign("userhistorysize",userhistorysize($_SESSION[$mdb_conf['session_key']]['user']['id']));
-				if ($_SESSION[$mdb_conf['session_key']]['user']['privilege'] > 0)
-					$tpl->assign("otherhistory",otherhistory());
-				$tpl->display("history.tpl");
-			}
+			include_once('include/display.history.php');
+			history();
 			break;
 		case "tagcloud":
 			include_once('include/tag.taglist.php');
@@ -137,12 +123,8 @@
 			title($_POST['tid']);
 			break;
 		case "tag":
-			include_once('include/tag.taginfo.php');
-			$tpl->clear_all_assign();
-			$tpl->assign("tag",taginfo($_GET['id']));
-			if (isset($_SESSION[$mdb_conf['session_key']]['user']))
- 				$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
-			$tpl->display("tag.tpl");
+			include_once('include/display.tag.php');
+			tag($_GET['id']);
 			break;
 		case "file":
 			include_once('include/display.message.php');
@@ -166,15 +148,8 @@
 			updatedb();
 			break;
 		case "search":
-			include_once('include/util.search.php');
-			$tpl->clear_all_assign();
-			$tpl->assign("search",$_POST['search']);
-			$tpl->assign("results",search($_POST['search'],$_POST['criteria']));
-			if (isset($_SESSION[$mdb_conf['session_key']]['user']))
- 				$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
-			if ($mdb_conf['download'])
-				$tpl->assign("download",TRUE);
-			$tpl->display("search.tpl");
+			include_once('include/display.searchpage.php');
+			searchpage($_POST['search'], $_POST['criteria']);
 			break;
 		case "title":
 			include_once('include/display.title.php');
