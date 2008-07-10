@@ -12,7 +12,7 @@ function updating_dbmutex()
 {
 	global $tables;
  	$status = DBGetOne("SELECT MAX(progress) FROM " . $tables['dbupdate']);
-	return ($status && $status > 0);
+	return (isset($status) && $status > 0);
 }
 
 ?>
