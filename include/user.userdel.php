@@ -33,6 +33,9 @@ function userdel($uid)
 	DBExecute("DELETE FROM " . $tables['users'] . " WHERE id=" . $uid);
 	DBExecute("DELETE FROM " . $tables['downloads'] . " WHERE uid=" . $uid);
 	DBExecute("DELETE FROM " . $tables['preferences'] . " WHERE uid=" . $uid);
+	mdb_memcache_delete("userlist");
+	mdb_memcache_delete("userhistory_" . $uid);
+	mdb_memcache_delete("userhistorysize_" . $uid);
 }
 
 ?>

@@ -37,6 +37,7 @@
 		$q .= "0";
 	$q .= ")";
 	DBExecute($q);
+	mdb_memcache_delete("userlist");
  }
 
 ?>
