@@ -255,15 +255,12 @@
 
  if (!($mdb_conf['dbmutex'])) {
  	$ok = DBExecute("INSERT INTO " . $tables['dbupdate'] . " (progress) VALUES(0)");
+	mdb_memcache_delete("lastupdate");
 	if ($mdb_conf['debug'] && !$ok)
 		echo "non-dbmutex: " . DBErrorMsg() . "\n";
  }
 
  $success = DBCompleteTrans();
-
- if ($success) {
- 	mdb_memcache_flush();
- }
 
  if ($mdb_conf['dbmutex']) {
  	if ($success) {
@@ -275,6 +272,10 @@
 		if ($mdb_conf['debug'] && !$ok)
 			echo "dbmutex failure: " . DBErrorMsg() . "\n";
 	}
+ }
+
+ if ($success) {
+ 	mdb_memcache_flush();
  }
 
  if ($mdb_conf['debug']) {
