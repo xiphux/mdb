@@ -28,6 +28,7 @@ function deltag($tid)
 		mdb_memcache_delete("tid" . $ti['title_id']);
 	}
 	mdb_memcache_delete("taglist");
+	mdb_memcache_delete("taginfo_" . $tid);
 }
 
 ?>

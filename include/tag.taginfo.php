@@ -13,6 +13,11 @@ function taginfo($id)
 	global $tables;
 	if (!isset($id))
 		return null;
+
+	$tmp = mdb_memcache_get("taginfo_" . $id);
+	if ($tmp)
+		return $tmp;
+
 	$tag = DBGetRow("SELECT * FROM " . $tables['tags'] . " WHERE id=" . $id);
 	if (!$tag)
 		return null;
@@ -20,6 +25,7 @@ function taginfo($id)
 	if (sizeof($temp) > 0)
 		$tag['titles'] = $temp;
 	$tag['count'] = sizeof($temp);
+	mdb_memcache_set("taginfo_" . $id, $tag);
 	return $tag;
 }
 
