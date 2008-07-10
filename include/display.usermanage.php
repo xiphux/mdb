@@ -17,7 +17,14 @@ function usermanage()
 		message("You do not have access to this feature!","warning");
 		return;
 	}
-	$users = DBGetArray("SELECT " . $tables['users'] . ".id, " . $tables['users'] . ".username, " . $tables['users'] . ".privilege, SUM(" . $tables['downloads'] . ".fsize) AS size FROM " . $tables['users'] . " LEFT JOIN " . $tables['downloads'] . " ON " . $tables['users'] . ".id=" . $tables['downloads'] . ".uid GROUP BY " . $tables['users'] . ".id ORDER BY username");
+	
+	$users = mdb_memcache_get("userlist");
+	if (!$users) {
+		$users = DBGetArray("SELECT " . $tables['users'] . ".id, " . $tables['users'] . ".username, " . $tables['users'] . ".privilege, SUM(" . $tables['downloads'] . ".fsize) AS size FROM " . $tables['users'] . " LEFT JOIN " . $tables['downloads'] . " ON " . $tables['users'] . ".id=" . $tables['downloads'] . ".uid GROUP BY " . $tables['users'] . ".id ORDER BY username");
+		if ($users)
+			mdb_memcache_set("userlist", $users);
+	}
+
 	$tpl->clear_all_assign();
 	$tpl->assign("users",$users);
 	$tpl->assign("currentid",$_SESSION[$mdb_conf['session_key']]['user']['id']);

@@ -21,8 +21,16 @@ function userhistory($uid)
 		message("No user specified!","warning");
 		return;
 	}
+
+	$tmp = mdb_memcache_get("userhistory_" . $uid);
+	if ($tmp)
+		return $tmp;
+
 	$q = "SELECT " . $tables['downloads'] . ".*, " . $tables['files'] . ".id AS file_exists FROM " . $tables['downloads'] . " LEFT JOIN " . $tables['files'] . " ON (" . $tables['downloads'] . ".fid = " . $tables['files'] . ".id AND " . $tables['downloads'] . ".file = " . $tables['files'] . ".file) WHERE uid=" . $uid . " ORDER BY " . $tables['downloads'] . ".time DESC";
 	$ret = DBGetArray($q);
+
+	mdb_memcache_set("userhistory_" . $uid, $ret);
+
 	return $ret;
 }
 

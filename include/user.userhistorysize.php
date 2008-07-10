@@ -21,7 +21,16 @@ function userhistorysize($uid)
 		message("No user specified!","warning");
 		return;
 	}
-	return DBGetOne("SELECT SUM(fsize) FROM " . $tables['downloads'] . " WHERE uid=" . $uid);
+
+	$tmp = mdb_memcache_get("userhistorysize_" . $uid);
+	if ($tmp)
+		return $tmp;
+	
+	$ret = DBGetOne("SELECT SUM(fsize) FROM " . $tables['downloads'] . " WHERE uid=" . $uid);
+
+	mdb_memcache_set("userhistorysize_" . $uid, $ret);
+
+	return $ret;
 }
 
 ?>
