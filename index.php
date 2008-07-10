@@ -203,7 +203,7 @@
 		case "useradd":
 			include_once('include/display.usermanage.php');
 			include_once('include/user.useradd.php');
-			useradd($_POST['user'],$_POST['pass'],$_POST['admin']);
+			useradd($_POST['user'],$_POST['pass'],(isset($_POST['admin'])?TRUE:FALSE));
 			usermanage();
 			break;
 		case "userdel":
