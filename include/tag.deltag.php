@@ -31,6 +31,7 @@ function deltag($tid)
 		mdb_memcache_delete("output_title_" . $ti['title_id'] . "_user_dl");
 	}
 	mdb_memcache_delete("taglist");
+	mdb_memcache_delete("output_tagcloud");
 	mdb_memcache_delete("taginfo_" . $tid);
 }
 
