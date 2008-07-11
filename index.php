@@ -176,7 +176,7 @@
 			break;
 		default:
 			include_once('include/display.message.php');
-			message("404","warning");
+			message("No such page","warning");
 			break;
 	}
  } else {
