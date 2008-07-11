@@ -231,9 +231,8 @@
  include_once('include/display.pageheader.php');
  pageheader();
 
- if (isset($_SESSION[$mdb_conf['session_key']]['user']))
- 	$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
- $tpl->display("leftbox.tpl");
+ include_once('include/display.leftbox.php');
+ leftbox();
 
  echo $main;
 
