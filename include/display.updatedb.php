@@ -19,9 +19,16 @@
 		return;
 	}
 	exec($mdb_conf['phpexec'] . " include/updatedb.php 2>/dev/null >&- <&- >/dev/null &");
-	$tpl->clear_all_assign();
-	$tpl->assign("interval",$mdb_conf['updatedbstatus_interval']);
-	$tpl->display("updatedb.tpl");
+
+	$out = mdb_memcache_get("output_updatedb_" . $mdb_conf['updatedbstatus_interval']);
+	if (!$out) {
+		$tpl->clear_all_assign();
+		$tpl->assign("interval",$mdb_conf['updatedbstatus_interval']);
+		$out = $tpl->fetch("updatedb.tpl");
+		mdb_memcache_set("output_updatedb_" . $mdb_conf['updatedbstatus_interval'], $out);
+	}
+
+	echo $out;
  }
 
  ?>
