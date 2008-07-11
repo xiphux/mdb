@@ -80,7 +80,10 @@
 			ob_clean();
 			flush();
 			if ($mdb_conf['download_log']) {
+				$db->debug = FALSE;
 				DBExecute("INSERT INTO " . $tables['downloads'] . " (ip,uid,user,fid,file,fsize) VALUES (" . DBqstr($_SERVER['REMOTE_ADDR']) . "," . $_SESSION[$mdb_conf['session_key']]['user']['id'] . "," . DBqstr($_SESSION[$mdb_conf['session_key']]['user']['username']) . "," . $file['id'] . "," . DBqstr($file['file']) . "," . $file['size'] . ")");
+				if ($mdb_conf['debug'])
+					$db->debug = TRUE;
 				mdb_memcache_delete("userhistory_" . $_SESSION[$mdb_conf['session_key']]['user']['id']);
 				mdb_memcache_delete("userhistorysize_" . $_SESSION[$mdb_conf['session_key']]['user']['id']);
 				mdb_memcache_delete("userlist");
