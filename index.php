@@ -92,7 +92,10 @@
  }
 
  ob_start();
- $tpl->display("mainstart.tpl");
+
+ include_once('include/display.mainstart.php');
+ mainstart();
+
  if (isset($_GET['u'])) {
  	switch ($_GET['u']) {
 		case "history":
@@ -218,7 +221,10 @@
 	include_once('include/display.mainpage.php');
  	mainpage();
  }
- $tpl->display("mainend.tpl");
+
+ include_once('include/display.mainend.php');
+ mainend();
+
  $main = ob_get_contents();
  ob_end_clean();
 
