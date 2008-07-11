@@ -29,6 +29,8 @@ function untag($tid, $tag)
 	DBExecute("DELETE FROM " . $tables['title_tag'] . " WHERE title_id=" . $tid . " AND tag_id=" . $tag);
 	mdb_memcache_delete("tid" . $tid);
 	mdb_memcache_delete("taginfo_" . $tag);
+	mdb_memcache_delete("output_tag_" . $tag);
+	mdb_memcache_delete("output_tag_" . $tag . "_priv");
 	mdb_memcache_delete("output_title_" . $tid);
 	mdb_memcache_delete("output_title_" . $tid . "_user");
 	mdb_memcache_delete("output_title_" . $tid . "_user_dl");

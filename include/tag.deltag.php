@@ -33,6 +33,8 @@ function deltag($tid)
 	mdb_memcache_delete("taglist");
 	mdb_memcache_delete("output_tagcloud");
 	mdb_memcache_delete("taginfo_" . $tid);
+	mdb_memcache_delete("output_tag_" . $tid);
+	mdb_memcache_delete("output_tag_" . $tid . "_priv");
 }
 
 ?>

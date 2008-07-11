@@ -39,6 +39,8 @@ function addtag($tid,$tag)
 	mdb_memcache_delete("taglist");
 	mdb_memcache_delete("output_tagcloud");
 	mdb_memcache_delete("taginfo_" . $id);
+	mdb_memcache_delete("output_tag_" . $id);
+	mdb_memcache_delete("output_tag_" . $id . "_priv");
 	mdb_memcache_delete("output_title_" . $tid);
 	mdb_memcache_delete("output_title_" . $tid . "_user");
 	mdb_memcache_delete("output_title_" . $tid . "_user_dl");
