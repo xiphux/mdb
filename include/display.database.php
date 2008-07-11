@@ -17,8 +17,15 @@
 		message("You do not have access to this feature!","warning");
 		return;
 	}
-	$tpl->clear_all_assign();
-	$tpl->display("database.tpl");
+
+	$out = mdb_memcache_get("output_database");
+	if (!$out) {
+		$tpl->clear_all_assign();
+		$out = $tpl->fetch("database.tpl");
+		mdb_memcache_set("output_database", $out);
+	}
+
+	echo $out;
  }
 
 ?>
