@@ -228,12 +228,8 @@
  $main = ob_get_contents();
  ob_end_clean();
 
- $tpl->clear_all_assign();
- $title = $mdb_conf['title'];
- $tpl->assign("title",$title);
- include_once('include/user.getpref.php');
- $tpl->assign("theme",getpref("theme",$mdb_conf['theme']));
- $tpl->display("header.tpl");
+ include_once('include/display.pageheader.php');
+ pageheader();
 
  if (isset($_SESSION[$mdb_conf['session_key']]['user']))
  	$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
