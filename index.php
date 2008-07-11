@@ -235,9 +235,8 @@
 
  echo $main;
 
- include_once('include/title.titlelist.php');
- $tpl->assign("titlelist",titlelist());
- $tpl->display("rightbox.tpl");
+ include_once('include/display.rightbox.php');
+ rightbox();
 
  include_once('include/display.footer.php');
  footer($mdbstarttime);
