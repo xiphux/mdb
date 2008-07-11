@@ -11,7 +11,14 @@
 function mainstart()
 {
 	global $tpl;
-	$tpl->display("mainstart.tpl");
+
+	$out = mdb_memcache_get("output_mainstart");
+	if (!$out) {
+		$out = $tpl->fetch("mainstart.tpl");
+		mdb_memcache_set("output_mainstart", $out);
+	}
+
+	echo $out;
 }
 
 ?>

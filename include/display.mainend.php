@@ -11,7 +11,14 @@
 function mainend()
 {
 	global $tpl;
-	$tpl->display("mainend.tpl");
+
+	$out = mdb_memcache_get("output_mainend");
+	if (!$out) {
+		$out = $tpl->fetch("mainend.tpl");
+		mdb_memcache_set("output_mainend", $out);
+	}
+
+	echo $out;
 }
 
 ?>
