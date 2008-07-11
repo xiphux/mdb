@@ -20,13 +20,24 @@ function otherhistory()
 		return;
 	}
 
-	$u = DBGetArray("SELECT * FROM " . $tables['users'] . " WHERE id!=" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . " ORDER BY username");
+	$u = mdb_memcache_get("userhistory");
+	if (!$u) {
+		$u = DBGetArray("SELECT * FROM " . $tables['users'] . " ORDER BY username");
+		$size = count($u);
+		for ($i = 0; $i < $size; $i++) {
+			$ret2 = userhistory($u[$i]['id']);
+			if ($ret2) {
+				$u[$i]['downloads'] = $ret2;
+				$u[$i]['total'] = userhistorysize($u[$i]['id']);
+			}
+		}
+		mdb_memcache_set("userhistory", $u);
+	}
 	$size = count($u);
 	for ($i = 0; $i < $size; $i++) {
-		$ret2 = userhistory($u[$i]['id']);
-		if ($ret2) {
-			$u[$i]['downloads'] = $ret2;
-			$u[$i]['total'] = userhistorysize($u[$i]['id']);
+		if ($u[$i]['id'] == $_SESSION[$mdb_conf['session_key']]['user']['id']) {
+			unset($u[$i]);
+			break;
 		}
 	}
 	return $u;

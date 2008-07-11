@@ -84,6 +84,7 @@
 				mdb_memcache_delete("userhistory_" . $_SESSION[$mdb_conf['session_key']]['user']['id']);
 				mdb_memcache_delete("userhistorysize_" . $_SESSION[$mdb_conf['session_key']]['user']['id']);
 				mdb_memcache_delete("userlist");
+				mdb_memcache_delete("userhistory");
 			}
 			readfile($mdb_conf['root'] . $file['file']);
 			exit;

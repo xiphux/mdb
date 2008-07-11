@@ -38,6 +38,7 @@
 	$q .= ")";
 	DBExecute($q);
 	mdb_memcache_delete("userlist");
+	mdb_memcache_delete("userhistory");
  }
 
 ?>
