@@ -15,7 +15,7 @@ function title($tid)
 {
 	global $mdb_conf,$tpl;
 
-	$key = "title_" . $tid;
+	$key = "output_title_" . $tid;
 	if (isset($_SESSION[$mdb_conf['session_key']]['user'])) {
 		$key .= "_user";
 		if ($mdb_conf['download'])

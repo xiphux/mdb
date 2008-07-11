@@ -26,6 +26,9 @@ function deltag($tid)
 	DBExecute("DELETE FROM " . $tables['title_tag'] . " WHERE tag_id=" . $tid);
 	foreach ($titles as $ti) {
 		mdb_memcache_delete("tid" . $ti['title_id']);
+		mdb_memcache_delete("output_title_" . $ti['title_id']);
+		mdb_memcache_delete("output_title_" . $ti['title_id'] . "_user");
+		mdb_memcache_delete("output_title_" . $ti['title_id'] . "_user_dl");
 	}
 	mdb_memcache_delete("taglist");
 	mdb_memcache_delete("taginfo_" . $tid);
