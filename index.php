@@ -40,7 +40,7 @@
  $tpl = new Smarty;
  include_once('include/util.size_readable.php');
  $tpl->register_modifier('size','size_readable');
- $tpl->load_filter('output','trimwhitespace');
+ $tpl->autoload_filters = array('output' => array('trimwhitespace'));
 
  /*
   * Early check for file download so we
