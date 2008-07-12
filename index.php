@@ -37,7 +37,7 @@
   * Instantiate Smarty
   */
  include_once($mdb_conf['smarty_prefix'] . "Smarty.class.php");
- $tpl =& new Smarty;
+ $tpl = new Smarty;
  include_once('include/util.size_readable.php');
  $tpl->register_modifier('size','size_readable');
  $tpl->load_filter('output','trimwhitespace');
