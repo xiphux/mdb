@@ -60,41 +60,18 @@
 
  if (isset($_GET['u'])) {
  	switch ($_GET['u']) {
-		case "history":
-			include_once('include/display.history.php');
-			history();
+
+		/*
+		 * Main page
+		 */
+		case "main":
+			include_once('include/display.mainpage.php');
+			mainpage();
 			break;
-		case "tagcloud":
-			include_once('include/tag.taglist.php');
-			include_once('include/display.tagcloud.php');
-			tagcloud();
-			break;
-		case "deltag":
-			include_once('include/tag.deltag.php');
-			include_once('include/display.tagcloud.php');
-			deltag($_POST['id']);
-			tagcloud();
-			break;
-		case "addtag":
-			include_once('include/tag.addtag.php');
-			include_once('include/display.title.php');
-			addtag($_GET['tid'],$_POST['tag']);
-			title($_GET['tid']);
-			break;
-		case "untag":
-			include_once('include/tag.untag.php');
-			include_once('include/display.title.php');
-			untag($_POST['tid'],$_POST['tag']);
-			title($_POST['tid']);
-			break;
-		case "tag":
-			include_once('include/display.tag.php');
-			tag($_GET['id']);
-			break;
-		case "file":
-			include_once('include/display.message.php');
-			message($errorstr,"warning");
-			break;
+
+		/*
+		 * User login actions
+		 */
 		case "login":
 			include_once('include/user.login.php');
 			include_once('include/display.mainpage.php');
@@ -108,34 +85,89 @@
 			message("Logged out");
 			mainpage();
 			break;
-		case "updatedb":
-			include_once('include/display.updatedb.php');
-			updatedb();
-			break;
-		case "search":
-			include_once('include/display.searchpage.php');
-			searchpage($_POST['search'], $_POST['criteria']);
-			break;
+
+		/*
+		 * Title actions
+		 */
 		case "title":
 			include_once('include/display.title.php');
 			title($_GET['id']);
 			break;
-		case "dbcheck":
-			include_once('include/display.dbcheck.php');
-			dbcheck();
+
+		/*
+		 * File actions
+		 */
+		case "file":
+			include_once('include/display.message.php');
+			message($errorstr,"warning");
 			break;
-		case "dbstats":
-			include_once('include/display.dbstats.php');
-			dbstats();
+		case "history":
+			include_once('include/display.history.php');
+			history();
 			break;
-		case "database":
-			include_once('include/display.database.php');
-			database();
+
+		/*
+		 * Tag actions
+		 */
+		case "tagcloud":
+			include_once('include/tag.taglist.php');
+			include_once('include/display.tagcloud.php');
+			tagcloud();
 			break;
-		case "main":
-			include_once('include/display.mainpage.php');
-			mainpage();
+		case "tag":
+			include_once('include/display.tag.php');
+			tag($_GET['id']);
 			break;
+		case "addtag":
+			include_once('include/tag.addtag.php');
+			include_once('include/display.title.php');
+			addtag($_GET['tid'],$_POST['tag']);
+			title($_GET['tid']);
+			break;
+		case "deltag":
+			include_once('include/tag.deltag.php');
+			include_once('include/display.tagcloud.php');
+			deltag($_POST['id']);
+			tagcloud();
+			break;
+		case "untag":
+			include_once('include/tag.untag.php');
+			include_once('include/display.title.php');
+			untag($_POST['tid'],$_POST['tag']);
+			title($_POST['tid']);
+			break;
+
+		/*
+		 * Search actions
+		 */
+		case "search":
+			include_once('include/display.searchpage.php');
+			searchpage($_POST['search'], $_POST['criteria']);
+			break;
+
+		/*
+		 * Preferences actions
+		 */
+		case "preferences":
+			include_once('include/display.preferences.php');
+			preferences();
+			break;
+		case "changetheme":
+			include_once('include/display.preferences.php');
+			include_once('include/user.setpref.php');
+			setpref("theme",$_POST['theme']);
+			preferences();
+			break;
+		case "updatepass":
+			include_once('include/display.preferences.php');
+			include_once('include/user.updatepass.php');
+			updatepass($_POST['oldpass'],$_POST['newpass'],$_POST['newpass2']);
+			preferences();
+			break;
+
+		/*
+		 * User managament actions
+		 */
 		case "usermanage":
 			include_once('include/display.usermanage.php');
 			usermanage();
@@ -158,22 +190,30 @@
 			changeprivilege($_POST['uid'],$_POST['privilege']);
 			usermanage();
 			break;
-		case "preferences":
-			include_once('include/display.preferences.php');
-			preferences();
+
+		/*
+		 * Database actions
+		 */
+		case "database":
+			include_once('include/display.database.php');
+			database();
 			break;
-		case "updatepass":
-			include_once('include/display.preferences.php');
-			include_once('include/user.updatepass.php');
-			updatepass($_POST['oldpass'],$_POST['newpass'],$_POST['newpass2']);
-			preferences();
+		case "updatedb":
+			include_once('include/display.updatedb.php');
+			updatedb();
 			break;
-		case "changetheme":
-			include_once('include/display.preferences.php');
-			include_once('include/user.setpref.php');
-			setpref("theme",$_POST['theme']);
-			preferences();
+		case "dbcheck":
+			include_once('include/display.dbcheck.php');
+			dbcheck();
 			break;
+		case "dbstats":
+			include_once('include/display.dbstats.php');
+			dbstats();
+			break;
+
+		/*
+		 * Default action
+		 */
 		default:
 			include_once('include/display.message.php');
 			message("No such page","warning");
