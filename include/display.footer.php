@@ -12,7 +12,7 @@
 
 function footer($starttime)
 {
-	global $tpl,$mdb_appstring,$tables,$mdb_conf,$querycount;
+	global $tpl,$mdb_appstring,$tables,$mdb_conf,$querycount, $memcached, $cachehits, $cachemisses;
 	$tpl->clear_all_assign();
 	$tpl->assign("banner",$mdb_appstring);
 
@@ -47,6 +47,11 @@ function footer($starttime)
 		$tpl->assign("update",$update);
 	$tpl->assign("updating",updating());
 	$tpl->assign("queries",$querycount);
+	if ($memcached) {
+		$tpl->assign("memcache", TRUE);
+		$tpl->assign("cachehits", $cachehits);
+		$tpl->assign("cachemisses", $cachemisses);
+	}
 	date_default_timezone_set("UTC");
 	$tpl->assign("exectime",round(microtime(true)-$starttime,8));
 	$tpl->display("footer.tpl");

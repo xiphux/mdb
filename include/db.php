@@ -114,6 +114,8 @@ function DBErrorMsg()
 
 $memcached = null;
 $memcached_namespace = getenv('SERVER_NAME') . "_mdb_";
+$cachehits = 0;
+$cachemisses = 0;
 
 if ($mdb_conf['memcached'] && function_exists('memcache_add')) {
 	if ($mdb_conf['memcached_persist'])
@@ -125,10 +127,15 @@ if ($mdb_conf['memcached'] && function_exists('memcache_add')) {
 
 function mdb_memcache_get($key)
 {
-	global $memcached, $memcached_namespace;
+	global $memcached, $memcached_namespace, $cachehits, $cachemisses;
 	if (!$memcached)
 		return null;
-	return memcache_get($memcached, $memcached_namespace . $key);
+	$ret = memcache_get($memcached, $memcached_namespace . $key);
+	if ($ret === FALSE)
+		$cachemisses++;
+	else
+		$cachehits++;
+	return $ret;
 }
 
 function mdb_memcache_set($key, $val)
