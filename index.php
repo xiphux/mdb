@@ -28,7 +28,7 @@
   * Database connection
   */
  include_once('config/mdb.conf.php');
- include_once('include/db.php');
+ include_once('include/database.php');
 
  /*
   * Caching

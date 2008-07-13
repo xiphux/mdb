@@ -1,6 +1,6 @@
 <?php
 /*
- *  db.php
+ *  database.php
  *  MDB: A media database
  *  Component: Database library
  *

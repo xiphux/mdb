@@ -12,7 +12,7 @@
  include_once('database.updating_shellmutex.php');
 
  if ($mdb_conf['dbmutex']) {
- 	include_once('db.php');
+ 	include_once('database.php');
 	if (updating_dbmutex())
  		echo "Database updating";
  	else {

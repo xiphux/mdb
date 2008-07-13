@@ -8,7 +8,7 @@
  */
  
  include_once('config/mdb.conf.php');
- include_once('db.php');
+ include_once('database.php');
  include_once('database.updating.php');
 
  if (updating())
