@@ -30,8 +30,10 @@
  include_once('config/mdb.conf.php');
  include_once('include/db.php');
 
- if ($mdb_conf['debug'])
- 	error_reporting(E_ALL | E_STRICT);
+ /*
+  * Caching
+  */
+ include_once('include/cache.memcache.php');
 
  /*
   * Instantiate Smarty
@@ -41,6 +43,9 @@
  include_once('include/util.size_readable.php');
  $tpl->register_modifier('size','size_readable');
  $tpl->autoload_filters = array('output' => array('trimwhitespace'));
+
+ if ($mdb_conf['debug'])
+ 	error_reporting(E_ALL | E_STRICT);
 
  /*
   * Early check for file download so we
