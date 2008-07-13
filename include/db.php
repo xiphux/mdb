@@ -164,8 +164,11 @@ function mdb_memcache_close()
 function mdb_memcache_flush()
 {
 	global $memcached;
-	if ($memcached)
+	if ($memcached) {
 		memcache_flush($memcached);
+		return TRUE;
+	}
+	return FALSE;
 }
 
 ?>

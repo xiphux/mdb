@@ -12,17 +12,22 @@
 
  function database()
  {
-	global $mdb_conf, $tpl;
+	global $mdb_conf, $tpl, $memcached;
 	if (!(isset($_SESSION[$mdb_conf['session_key']]['user']) && ($_SESSION[$mdb_conf['session_key']]['user']['privilege'] > 0))) {
 		message("You do not have access to this feature!","warning");
 		return;
 	}
 
-	$out = mdb_memcache_get("output_database");
+	$key = "output_database";
+	if ($memcached)
+		$key .= "_memcache";
+	$out = mdb_memcache_get($key);
 	if (!$out) {
 		$tpl->clear_all_assign();
+		if ($memcached)
+			$tpl->assign("memcache", TRUE);
 		$out = $tpl->fetch("database.tpl");
-		mdb_memcache_set("output_database", $out);
+		mdb_memcache_set($key, $out);
 	}
 
 	echo $out;

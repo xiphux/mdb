@@ -212,6 +212,14 @@
 			break;
 
 		/*
+		 * Memcache actions
+		 */
+		case "cacheflush":
+			include_once('include/display.cacheflush.php');
+			cacheflush();
+			break;
+
+		/*
 		 * Default action
 		 */
 		default:
