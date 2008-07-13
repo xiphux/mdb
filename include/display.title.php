@@ -33,6 +33,7 @@ function title($tid)
 
 	$tpl->clear_all_assign();
 	$tpl->assign("title", $title);
+	$tpl->assign("letter", substr(strtolower(trim($title['title'])),0,1));
 	if (isset($_SESSION[$mdb_conf['session_key']]['user']))
  		$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
 	$tpl->assign("taglist",taglist());

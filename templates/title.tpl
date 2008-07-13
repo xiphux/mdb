@@ -5,6 +5,16 @@
  *
  *  Copyright (C) 2006 Christopher Han <xiphux@gmail.com>
  *}
+{literal}
+<script type="text/javascript">
+//<!CDATA[
+document.openAccordion = function() {
+	if (document.titlelistAccordion)
+		document.titlelistAccordion.display(document.getElementById("{/literal}{$letter}{literal}blockcontent"));
+}
+//]]>
+</script>
+{/literal}
 <p><span class="bold"><span class="underline">{$title.title}</span></span> [<span class="highlight" title="{$title.size}">{$title.size|size}</span>]</p>
 {if $title.links}
 <table>

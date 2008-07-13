@@ -36,9 +36,12 @@ function addFocusHandlers(elements) {
 function init_effects() {
 	var minicontentblocks = document.getElementsByClassName('miniblockcontent');
 	var minititleblocks = document.getElementsByClassName('miniblocktitle');
-	var subAccordion = new Accordion(
+	document.titlelistAccordion = new Accordion(
 		minititleblocks,minicontentblocks,{display:false}
 	);
+	if (document.openAccordion) {
+		document.openAccordion();
+	}
 }
 window.onload = function() {highlightFormElements();init_effects();}
 //]]>
