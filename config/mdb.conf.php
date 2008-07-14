@@ -116,6 +116,10 @@ $mdb_conf['adodb_prefix'] = "adodb/";
   *  "memcache" = connect to memcached, refer to
   *               config options below beginning
   *               with "memcached"
+  *  "eaccelerator" = use eaccelerator caching
+  *                   must have eaccelerator
+  *                   installed with shared memory
+  *                   enabled
   *  "filecache" = use on-disk cache
   *                refer to config options below
   *                beginning with "filecache"
