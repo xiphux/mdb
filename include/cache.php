@@ -8,7 +8,7 @@
  */
 
  $cache = null;
- if ($mdb_conf['memcached']) {
+ if ($mdb_conf['cachetype'] == "memcache") {
  	include_once('cache.memcache.php');
 	$cache = new MDB_Cache_Memcache($mdb_conf['memcached_address'], $mdb_conf['memcached_port'], $mdb_conf['memcached_persist']);
  } else {
