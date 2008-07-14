@@ -120,9 +120,9 @@ $mdb_conf['adodb_prefix'] = "adodb/";
   *                refer to config options below
   *                beginning with "filecache"
   *  Any other unrecognized value (such as FALSE,
-  *  null, "null", "none", etc) will disable cache
+  *  null, "off", "none", etc) will disable cache
   */
- $mdb_conf['cachetype'] = FALSE;
+ $mdb_conf['cachetype'] = "memcache";
 
  /*
   * filecache_dir
