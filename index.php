@@ -217,7 +217,7 @@
 			break;
 
 		/*
-		 * Memcache actions
+		 * Cache actions
 		 */
 		case "cacheflush":
 			include_once('include/display.cacheflush.php');
