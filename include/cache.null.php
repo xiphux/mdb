@@ -41,4 +41,10 @@ class MDB_Cache_Null
 	{
 		return FALSE;
 	}
+
+	function stats()
+	{
+		return null;
+	}
+
 }
