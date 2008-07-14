@@ -70,6 +70,21 @@ class MDB_Cache_Filecache
 		return TRUE;
 	}
 
+	function stats()
+	{
+		$stats = array();
+		$counter = 0;
+		$dh = opendir($this->cachedir);
+		while (($file = readdir($dh)) !== FALSE) {
+			if (($file != ".") && ($file != "..") && (substr($file,(strlen($this->cacheext)*-1)) == $this->cacheext)) {
+				$counter++;
+			}
+		}
+		closedir($dh);
+		$stats['cached_objects'] = $counter;
+		return $stats;
+	}
+
 }
 
 ?>

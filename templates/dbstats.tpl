@@ -15,9 +15,9 @@
 {if $uptime_days}<br /><strong>Uptime (days): </strong>{$uptime_days}{/if}
 {if $loadavg}<br /><strong>Load average: </strong>{$loadavg}{/if}
 </p>
-{if $memcached}
-<p><strong><span class="underline">Memcached statistics:</span></strong>
-{foreach from=$memcached key=type item=value}
+{if $cachestats}
+<p><strong><span class="underline">{$cachetype} statistics:</span></strong>
+{foreach from=$cachestats key=type item=value}
 <br /><strong>{$type}: </strong>{$value}
 {/foreach}
 </p>
