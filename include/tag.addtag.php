@@ -12,7 +12,7 @@
 
 function addtag($tid,$tag)
 {
-	global $tables,$mdb_conf;
+	global $tables,$mdb_conf, $cache;
 	if (!isset($_SESSION[$mdb_conf['session_key']]['user'])) {
 		message("You do not have access to this feature!","warning");
 		return;
@@ -35,15 +35,15 @@ function addtag($tid,$tag)
 	}
 	DBExecute("INSERT IGNORE INTO " . $tables['title_tag'] . " (title_id,tag_id) VALUES (" . $tid . "," . $id . ")");
 
-	mdb_memcache_delete("tid" . $tid);
-	mdb_memcache_delete("taglist");
-	mdb_memcache_delete("output_tagcloud");
-	mdb_memcache_delete("taginfo_" . $id);
-	mdb_memcache_delete("output_tag_" . $id);
-	mdb_memcache_delete("output_tag_" . $id . "_priv");
-	mdb_memcache_delete("output_title_" . $tid);
-	mdb_memcache_delete("output_title_" . $tid . "_user");
-	mdb_memcache_delete("output_title_" . $tid . "_user_dl");
+	$cache->del("tid" . $tid);
+	$cache->del("taglist");
+	$cache->del("output_tagcloud");
+	$cache->del("taginfo_" . $id);
+	$cache->del("output_tag_" . $id);
+	$cache->del("output_tag_" . $id . "_priv");
+	$cache->del("output_title_" . $tid);
+	$cache->del("output_title_" . $tid . "_user");
+	$cache->del("output_title_" . $tid . "_user_dl");
 
 	return;
 }

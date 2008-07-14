@@ -12,7 +12,7 @@
 
  function setpref($pref, $value)
  {
-	global $mdb_conf,$tables;
+	global $mdb_conf,$tables, $cache;
 	if (!isset($_SESSION[$mdb_conf['session_key']]['user'])) {
 		message("Not valid for anonymous users","warning");
 		return;
@@ -23,7 +23,7 @@
 	} else {
 		DBExecute("INSERT INTO " . $tables['preferences'] . " (uid,pref,value) VALUES (" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . "," . DBqstr($pref) . "," . DBqstr($value) . ")");
 	}
-	mdb_memcache_delete("pref_" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . "_" . $pref);
+	$cache->del("pref_" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . "_" . $pref);
 
  }
 

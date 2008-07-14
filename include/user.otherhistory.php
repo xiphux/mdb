@@ -14,13 +14,13 @@
 
 function otherhistory()
 {
-	global $tables,$mdb_conf;
+	global $tables,$mdb_conf, $cache;
 	if (!(isset($_SESSION[$mdb_conf['session_key']]['user']) && ($_SESSION[$mdb_conf['session_key']]['user']['privilege'] > 0))) {
 		message("You do not have access to this feature!","warning");
 		return;
 	}
 
-	$u = mdb_memcache_get("userhistory");
+	$u = $cache->get("userhistory");
 	if (!$u) {
 		$u = DBGetArray("SELECT * FROM " . $tables['users'] . " ORDER BY username");
 		$size = count($u);
@@ -31,7 +31,7 @@ function otherhistory()
 				$u[$i]['total'] = userhistorysize($u[$i]['id']);
 			}
 		}
-		mdb_memcache_set("userhistory", $u);
+		$cache->set("userhistory", $u);
 	}
 	$size = count($u);
 	for ($i = 0; $i < $size; $i++) {

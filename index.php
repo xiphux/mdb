@@ -33,7 +33,7 @@
  /*
   * Caching
   */
- include_once('include/cache.memcache.php');
+ include_once('include/cache.php');
 
  /*
   * Instantiate Smarty
@@ -259,6 +259,6 @@
 
  ob_end_flush();
 
- mdb_memcache_close();
+ $cache->close();
 
 ?>

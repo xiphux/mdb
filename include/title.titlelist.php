@@ -41,9 +41,9 @@
 
  function titlelist()
  {
- 	global $tables;
+ 	global $tables, $cache;
 
-	$tmp = mdb_memcache_get("titlelist");
+	$tmp = $cache->get("titlelist");
 	if ($tmp)
 		return $tmp;
 	
@@ -77,7 +77,7 @@
 		}
 	}
 
-	mdb_memcache_set("titlelist",$titles);
+	$cache->set("titlelist",$titles);
 
 	return $titles;
  }

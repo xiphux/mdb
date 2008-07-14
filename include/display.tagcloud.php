@@ -12,9 +12,9 @@ include_once('include/tag.taglist.php');
 
 function tagcloud()
 {
-	global $tpl,$mdb_conf;
+	global $tpl,$mdb_conf, $cache;
 
-	$out = mdb_memcache_get("output_tagcloud");
+	$out = $cache->get("output_tagcloud");
 	if (!$out) {
 		$tpl->clear_all_assign();
 		$tpl->assign("taglist",taglist());
@@ -22,7 +22,7 @@ function tagcloud()
 		$tpl->assign("tagcloudmin",$mdb_conf['tagcloudmin']);
 		$tpl->assign("tagcloudrange",$mdb_conf['tagcloudmax']-$mdb_conf['tagcloudmin']);
 		$out = $tpl->fetch("tagcloud.tpl");
-		mdb_memcache_set("output_tagcloud", $out);
+		$cache->set("output_tagcloud", $out);
 	}
 
 	echo $out;

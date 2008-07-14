@@ -13,7 +13,7 @@ include_once('include/tag.taglist.php');
 
 function title($tid)
 {
-	global $mdb_conf,$tpl;
+	global $mdb_conf,$tpl,$cache;
 
 	$key = "output_title_" . $tid;
 	if (isset($_SESSION[$mdb_conf['session_key']]['user'])) {
@@ -21,7 +21,7 @@ function title($tid)
 		if ($mdb_conf['download'])
 			$key .= "_dl";
 	}
-	$out = mdb_memcache_get($key);
+	$out = $cache->get($key);
 	if ($out) {
 		echo $out;
 		return;
@@ -88,7 +88,7 @@ function title($tid)
 
 	$out .= $tpl->fetch("filelistend.tpl");
 
-	mdb_memcache_set($key, $out);
+	$cache->set($key, $out);
 
 	echo $out;
 }

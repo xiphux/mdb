@@ -12,7 +12,7 @@
 
 function changeprivilege($uid, $priv)
 {
-	global $mdb_conf,$tables;
+	global $mdb_conf,$tables, $cache;
 	if (!(isset($_SESSION[$mdb_conf['session_key']]['user']) && ($_SESSION[$mdb_conf['session_key']]['user']['privilege'] > 0))) {
 		message("You do not have access to this feature!","warning");
 		return;
@@ -40,7 +40,7 @@ function changeprivilege($uid, $priv)
 	}
 	$q = "UPDATE " . $tables['users'] . " SET privilege=" . DBqstr($priv) . " WHERE id=" . $uid;
 	DBExecute($q);
-	mdb_memcache_delete("userlist");
+	$cache->del("userlist");
 }
 
 ?>

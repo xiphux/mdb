@@ -12,7 +12,7 @@
 
  function useradd($user,$pass,$admin)
  {
-	global $mdb_conf,$tables;
+	global $mdb_conf,$tables, $cache;
 	if (!(isset($_SESSION[$mdb_conf['session_key']]['user']) && ($_SESSION[$mdb_conf['session_key']]['user']['privilege'] > 0))) {
 		message("You do not have access to this feature!","warning");
 		return;
@@ -37,8 +37,8 @@
 		$q .= "0";
 	$q .= ")";
 	DBExecute($q);
-	mdb_memcache_delete("userlist");
-	mdb_memcache_delete("userhistory");
+	$cache->del("userlist");
+	$cache->del("userhistory");
  }
 
 ?>

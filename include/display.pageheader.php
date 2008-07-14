@@ -11,19 +11,19 @@ include_once('include/user.getpref.php');
 
 function pageheader()
 {
-	global $tpl, $mdb_conf;
+	global $tpl, $mdb_conf, $cache;
 
 	$title = $mdb_conf['title'];
 	$theme = getpref("theme",$mdb_conf['theme']);
 	$key = "output_pageheader_" . md5($title . $theme);
 
-	$out = mdb_memcache_get($key);
+	$out = $cache->get($key);
 	if (!$out) {
 		$tpl->clear_all_assign();
 		$tpl->assign("title", $title);
 		$tpl->assign("theme", $theme);
 		$out = $tpl->fetch("header.tpl");
-		mdb_memcache_set($key, $out);
+		$cache->set($key, $out);
 	}
 
 	echo $out;

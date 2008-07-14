@@ -11,9 +11,9 @@ include_once('include/title.titlelist.php');
 
 function rightbox()
 {
-	global $tpl;
+	global $tpl, $cache;
 
-	$out = mdb_memcache_get("output_rightbox");
+	$out = $cache->get("output_rightbox");
 	if ($out) {
 		echo $out;
 		return;
@@ -22,7 +22,7 @@ function rightbox()
 	$tpl->assign("titlelist",titlelist());
 	$out = $tpl->fetch("rightbox.tpl");
 
-	mdb_memcache_set("output_rightbox", $out);
+	$cache->set("output_rightbox", $out);
 
 	echo $out;
 }

@@ -12,7 +12,7 @@
 
 function userdel($uid)
 {
-	global $mdb_conf,$tables;
+	global $mdb_conf,$tables, $cache;
 	if (!(isset($_SESSION[$mdb_conf['session_key']]['user']) && ($_SESSION[$mdb_conf['session_key']]['user']['privilege'] > 0))) {
 		message("You do not have access to this feature!","warning");
 		return;
@@ -33,10 +33,10 @@ function userdel($uid)
 	DBExecute("DELETE FROM " . $tables['users'] . " WHERE id=" . $uid);
 	DBExecute("DELETE FROM " . $tables['downloads'] . " WHERE uid=" . $uid);
 	DBExecute("DELETE FROM " . $tables['preferences'] . " WHERE uid=" . $uid);
-	mdb_memcache_delete("userlist");
-	mdb_memcache_delete("userhistory");
-	mdb_memcache_delete("userhistory_" . $uid);
-	mdb_memcache_delete("userhistorysize_" . $uid);
+	$cache->del("userlist");
+	$cache->del("userhistory");
+	$cache->del("userhistory_" . $uid);
+	$cache->del("userhistorysize_" . $uid);
 }
 
 ?>

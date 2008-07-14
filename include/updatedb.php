@@ -10,6 +10,7 @@
  include_once('config/mdb.conf.php');
  include_once('database.php');
  include_once('database.updating.php');
+ include_once('cache.php');
 
  if (updating())
  	exit;
@@ -255,7 +256,7 @@
 
  if (!($mdb_conf['dbmutex'])) {
  	$ok = DBExecute("INSERT INTO " . $tables['dbupdate'] . " (progress) VALUES(0)");
-	mdb_memcache_delete("lastupdate");
+	$cache->del("lastupdate");
 	if ($mdb_conf['debug'] && !$ok)
 		echo "non-dbmutex: " . DBErrorMsg() . "\n";
  }
@@ -275,7 +276,7 @@
  }
 
  if ($success) {
- 	mdb_memcache_flush();
+ 	$cache->clear();
  }
 
  if ($mdb_conf['debug']) {

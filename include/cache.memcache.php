@@ -2,68 +2,82 @@
 /*
  *  cache.memcache.php
  *  MDB: A media database
- *  Component: Memcache functions
+ *  Component: Memcache class
  *
  *  Copyright (C) 2008 Christopher Han <xiphux@gmail.com>
  */
 
-$memcached = null;
-$memcached_namespace = getenv('SERVER_NAME') . "_mdb_";
-$cachehits = 0;
-$cachemisses = 0;
-
-if ($mdb_conf['memcached'] && function_exists('memcache_get')) {
-	if ($mdb_conf['memcached_persist'])
-		$memcached = memcache_pconnect($mdb_conf['memcached_address'],$mdb_conf['memcached_port']);
-	else
-		$memcached = memcache_connect($mdb_conf['memcached_address'],$mdb_conf['memcached_port']);
-	memcache_set_compress_threshold($memcached, 20000, 0.2);
-}
-
-function mdb_memcache_get($key)
+class MDB_Cache_Memcache
 {
-	global $memcached, $memcached_namespace, $cachehits, $cachemisses;
-	if (!$memcached)
-		return null;
-	$ret = memcache_get($memcached, $memcached_namespace . $key);
-	if ($ret === FALSE)
-		$cachemisses++;
-	else
-		$cachehits++;
-	return $ret;
-}
+	var $memcache = null;
+	var $memcache_namespace = "";
+	var $cachehits = 0;
+	var $cachemisses = 0;
+	var $compressmin = 20000;
+	var $compressratio = 0.2;
 
-function mdb_memcache_set($key, $val)
-{
-	global $memcached, $memcached_namespace;
-	if (!$memcached)
-		return FALSE;
-	return memcache_set($memcached, $memcached_namespace . $key, $val);
-}
-
-function mdb_memcache_delete($key)
-{
-	global $memcached, $memcached_namespace;
-	if (!$memcached)
-		return FALSE;
-	return memcache_delete($memcached, $memcached_namespace . $key, 0);
-}
-
-function mdb_memcache_close()
-{
-	global $memcached;
-	if ($memcached)
-		memcache_close($memcached);
-}
-
-function mdb_memcache_flush()
-{
-	global $memcached;
-	if ($memcached) {
-		memcache_flush($memcached);
-		return TRUE;
+	function MDB_Cache_Memcache($addr, $port, $persist)
+	{
+		if ($persist)
+			$this->memcache = memcache_pconnect($addr, $port);
+		else
+			$this->memcache = memcache_connect($addr, $port);
+		memcache_set_compress_threshold($this->memcache, $this->compressmin, $this->compressratio);
+		$this->memcache_namespace = getenv('SERVER_NAME') . "_mdb_";
 	}
-	return FALSE;
+
+	function cachetype()
+	{
+		return "Memcache";
+	}
+
+	function get($key)
+	{
+		if (!$this->memcache)
+			return null;
+		$ret = memcache_get($this->memcache, $this->memcache_namespace . $key);
+		if ($ret === FALSE)
+			$this->cachemisses++;
+		else
+			$this->cachehits++;
+		return $ret;
+	}
+
+	function set($key, $val)
+	{
+		if (!$this->memcache)
+			return FALSE;
+		return memcache_set($this->memcache, $this->memcache_namespace . $key, $val);
+	}
+
+	function del($key)
+	{
+		if (!$this->memcache)
+			return FALSE;
+		return memcache_delete($this->memcache, $this->memcache_namespace . $key, 0);
+	}
+
+	function close()
+	{
+		if ($this->memcache)
+			memcache_close($this->memcache);
+	}
+
+	function clear()
+	{
+		if ($this->memcache) {
+			memcache_flush($this->memcache);
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+	function stats()
+	{
+		if ($this->memcache)
+			return memcache_get_stats($this->memcache);
+		return null;
+	}
 }
 
 ?>

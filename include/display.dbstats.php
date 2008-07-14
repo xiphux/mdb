@@ -10,7 +10,7 @@
 
 function dbstats()
 {
-	global $mdb_conf,$tpl,$tables,$mdb_appstring,$memcached;
+	global $mdb_conf,$tpl,$tables,$mdb_appstring,$cache;
 	$tpl->clear_all_assign();
 	$tpl->assign("appstring",$mdb_appstring);
 	$tpl->assign("cdate","2006");
@@ -27,8 +27,8 @@ function dbstats()
 		$tpl->assign("uptime_days",$uptime);
 		$tpl->assign("loadavg",$load);
 	}
-	if ($memcached)
-		$tpl->assign("memcached",memcache_get_stats($memcached));
+	if ($cache->cachetype() === "Memcache")
+		$tpl->assign("memcached", $cache->stats());
 	$tpl->assign("files",DBGetOne("SELECT COUNT(id) FROM " . $tables['files']));
 	$tpl->assign("titles",DBGetOne("SELECT COUNT(id) FROM " . $tables['titles']));
 	$tpl->assign("users",DBGetOne("SELECT COUNT(id) FROM " . $tables['users']));

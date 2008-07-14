@@ -10,7 +10,7 @@
 
 function filedownload($id)
 {
-	global $mdb_conf, $db, $tables;
+	global $mdb_conf, $db, $tables, $cache;
 
  	if (!(isset($_SESSION[$mdb_conf['session_key']]['user'])))
 		return "You do not have permission to use this feature!";
@@ -49,10 +49,10 @@ function filedownload($id)
 		DBExecute("INSERT INTO " . $tables['downloads'] . " (ip,uid,user,fid,file,fsize) VALUES (" . DBqstr($_SERVER['REMOTE_ADDR']) . "," . $_SESSION[$mdb_conf['session_key']]['user']['id'] . "," . DBqstr($_SESSION[$mdb_conf['session_key']]['user']['username']) . "," . $file['id'] . "," . DBqstr($file['file']) . "," . $file['size'] . ")");
 		if ($mdb_conf['debug'])
 			$db->debug = TRUE;
-		mdb_memcache_delete("userhistory_" . $_SESSION[$mdb_conf['session_key']]['user']['id']);
-		mdb_memcache_delete("userhistorysize_" . $_SESSION[$mdb_conf['session_key']]['user']['id']);
-		mdb_memcache_delete("userlist");
-		mdb_memcache_delete("userhistory");
+		$cache->del("userhistory_" . $_SESSION[$mdb_conf['session_key']]['user']['id']);
+		$cache->del("userhistorysize_" . $_SESSION[$mdb_conf['session_key']]['user']['id']);
+		$cache->del("userlist");
+		$cache->del("userhistory");
 	}
 	readfile($mdb_conf['root'] . $file['file']);
 	return FALSE;

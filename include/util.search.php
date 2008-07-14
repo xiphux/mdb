@@ -14,14 +14,14 @@
 
  function search($search,$criteria)
  {
- 	global $tables;
+ 	global $tables, $cache;
 	$results = array();
 	if (!(isset($search) && (strlen($search) > 0))) {
 		message("Invalid search string","warning");
 		return;
 	}
 	if ($criteria === "All" || $criteria === "Titles") {
-		$tmp = mdb_memcache_get("search_titles_" . md5($search));
+		$tmp = $cache->get("search_titles_" . md5($search));
 		if ($tmp)
 			$results['titles'] = $tmp;
 		else {
@@ -31,12 +31,12 @@
 				for ($i = 0; $i < $size; $i++)
 					highlight($ret[$i]['title'],$search);
 				$results['titles'] = $ret;
-				mdb_memcache_set("search_titles_" . md5($search), $ret);
+				$cache->set("search_titles_" . md5($search), $ret);
 			}
 		}
 	}
 	if ($criteria === "All" || $criteria === "Files") {
-		$tmp = mdb_memcache_get("search_files_" . md5($search));
+		$tmp = $cache->get("search_files_" . md5($search));
 		if ($tmp)
 			$results['files'] = $tmp;
 		else {
@@ -46,7 +46,7 @@
 				for ($i = 0; $i < $size; $i++)
 					highlight($ret[$i]['file'],$search);
 				$results['files'] = $ret;
-				mdb_memcache_set("search_files_" . md5($search), $ret);
+				$cache->set("search_files_" . md5($search), $ret);
 			}
 		}
 	}

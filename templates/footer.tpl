@@ -12,7 +12,8 @@
  Last update: {if $update}{$update|date_format:"%D %T"}{else}Never{/if}
  {if $updating}<br /><span class="warning">Database currently updating</span>{/if}
  <br />Queries executed: {$queries}
- {if $memcache}
+ {if $cache}
+ <br />Cache type: {$cachetype}
  <br />Cache hits: {$cachehits} | Cache misses: {$cachemisses}
  {/if}
  <br />Execution time: {$exectime} sec

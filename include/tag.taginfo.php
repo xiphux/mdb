@@ -10,11 +10,11 @@
 
 function taginfo($id)
 {
-	global $tables;
+	global $tables, $cache;
 	if (!isset($id))
 		return null;
 
-	$tmp = mdb_memcache_get("taginfo_" . $id);
+	$tmp = $cache->get("taginfo_" . $id);
 	if ($tmp)
 		return $tmp;
 
@@ -25,7 +25,7 @@ function taginfo($id)
 	if (sizeof($temp) > 0)
 		$tag['titles'] = $temp;
 	$tag['count'] = sizeof($temp);
-	mdb_memcache_set("taginfo_" . $id, $tag);
+	$cache->set("taginfo_" . $id, $tag);
 	return $tag;
 }
 

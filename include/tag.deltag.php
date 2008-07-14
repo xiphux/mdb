@@ -12,7 +12,7 @@
 
 function deltag($tid)
 {
-	global $tables,$mdb_conf;
+	global $tables,$mdb_conf, $cache;
 	if (!(isset($_SESSION[$mdb_conf['session_key']]['user']) && ($_SESSION[$mdb_conf['session_key']]['user']['privilege'] > 0))) {
 		message("You do not have access to this feature!","warning");
 		return;
@@ -25,16 +25,16 @@ function deltag($tid)
 	$titles = DBGetArray("SELECT title_id FROM " . $tables['title_tag'] . " WHERE tag_id=" . $tid);
 	DBExecute("DELETE FROM " . $tables['title_tag'] . " WHERE tag_id=" . $tid);
 	foreach ($titles as $ti) {
-		mdb_memcache_delete("tid" . $ti['title_id']);
-		mdb_memcache_delete("output_title_" . $ti['title_id']);
-		mdb_memcache_delete("output_title_" . $ti['title_id'] . "_user");
-		mdb_memcache_delete("output_title_" . $ti['title_id'] . "_user_dl");
+		$cache->del("tid" . $ti['title_id']);
+		$cache->del("output_title_" . $ti['title_id']);
+		$cache->del("output_title_" . $ti['title_id'] . "_user");
+		$cache->del("output_title_" . $ti['title_id'] . "_user_dl");
 	}
-	mdb_memcache_delete("taglist");
-	mdb_memcache_delete("output_tagcloud");
-	mdb_memcache_delete("taginfo_" . $tid);
-	mdb_memcache_delete("output_tag_" . $tid);
-	mdb_memcache_delete("output_tag_" . $tid . "_priv");
+	$cache->del("taglist");
+	$cache->del("output_tagcloud");
+	$cache->del("taginfo_" . $tid);
+	$cache->del("output_tag_" . $tid);
+	$cache->del("output_tag_" . $tid . "_priv");
 }
 
 ?>

@@ -12,13 +12,13 @@
 
  function titleinfo($tid)
  {
- 	global $tables;
+ 	global $tables, $cache;
 	if (!isset($tid)) {
 		message("No title specified","warning");
 		return;
 	}
 
-	$tmp = mdb_memcache_get("tid" . $tid);
+	$tmp = $cache->get("tid" . $tid);
 	if ($tmp)
 		return $tmp;
 
@@ -38,7 +38,7 @@
 	if ($temp && (sizeof($temp) > 0))
 		$title['links'] = $temp;
 	
-	mdb_memcache_set("tid" . $tid, $title);
+	$cache->set("tid" . $tid, $title);
 
 	return $title;
  }

@@ -10,17 +10,17 @@
 
 function leftbox()
 {
-	global $tpl, $mdb_conf;
+	global $tpl, $mdb_conf, $cache;
 
 	$key = "output_leftbox";
 	if (isset($_SESSION[$mdb_conf['session_key']]['user']))
 		$key .= "_" . md5($_SESSION[$mdb_conf['session_key']]['user']['username'] . $_SESSION[$mdb_conf['session_key']]['user']['privilege']);
-	$out = mdb_memcache_get($key);
+	$out = $cache->get($key);
 	if (!$out) {
 		if (isset($_SESSION[$mdb_conf['session_key']]['user']))
 			$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
 		$out = $tpl->fetch("leftbox.tpl");
-		mdb_memcache_set($key, $out);
+		$cache->set($key, $out);
 	}
 
 	echo $out;

@@ -12,13 +12,13 @@ include_once('include/display.message.php');
 
 function cacheflush()
 {
-	global $mdb_conf, $memcached;
+	global $mdb_conf, $cache;
 	if (!(isset($_SESSION[$mdb_conf['session_key']]['user']) && ($_SESSION[$mdb_conf['session_key']]['user']['privilege'] > 0))) {
 		message("You do not have access to this feature!","warning");
 		return;
 	}
 
-	if (mdb_memcache_flush() === TRUE)
+	if ($cache->clear() === TRUE)
 		message("Cache flushed","highlight");
 	else
 		message("Could not flush cache","warning");

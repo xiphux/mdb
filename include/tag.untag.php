@@ -13,7 +13,7 @@
 
 function untag($tid, $tag)
 {
-	global $tables,$mdb_conf;
+	global $tables,$mdb_conf, $cache;
 	if (!isset($_SESSION[$mdb_conf['session_key']]['user'])) {
 		message("You do not have access to this feature!","warning");
 		return;
@@ -27,13 +27,13 @@ function untag($tid, $tag)
 		return;
 	}
 	DBExecute("DELETE FROM " . $tables['title_tag'] . " WHERE title_id=" . $tid . " AND tag_id=" . $tag);
-	mdb_memcache_delete("tid" . $tid);
-	mdb_memcache_delete("taginfo_" . $tag);
-	mdb_memcache_delete("output_tag_" . $tag);
-	mdb_memcache_delete("output_tag_" . $tag . "_priv");
-	mdb_memcache_delete("output_title_" . $tid);
-	mdb_memcache_delete("output_title_" . $tid . "_user");
-	mdb_memcache_delete("output_title_" . $tid . "_user_dl");
+	$cache->del("tid" . $tid);
+	$cache->del("taginfo_" . $tag);
+	$cache->del("output_tag_" . $tag);
+	$cache->del("output_tag_" . $tag . "_priv");
+	$cache->del("output_title_" . $tid);
+	$cache->del("output_title_" . $tid . "_user");
+	$cache->del("output_title_" . $tid . "_user_dl");
 	prunetags();
 }
 

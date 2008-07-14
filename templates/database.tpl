@@ -17,9 +17,9 @@
 <label class="short" for="dbstats">Query database statistics:</label>
 <input type="submit" name="dbstats" value="dbstats" />
 </form>
-{if $memcache}
+{if $cache}
 <form action="{$SCRIPT_NAME}?u=cacheflush" method="post">
-<label class="short" for="cacheflush">Flush memcache:</label>
+<label class="short" for="cacheflush">Flush cache:</label>
 <input type="submit" name="cacheflush" value="cacheflush" />
 </form>
 {/if}

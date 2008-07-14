@@ -12,7 +12,7 @@
 
 function userhistorysize($uid)
 {
-	global $tables,$mdb_conf;
+	global $tables,$mdb_conf, $cache;
 	if (!isset($_SESSION[$mdb_conf['session_key']]['user'])) {
 		message("You do not have access to this feature!","warning");
 		return;
@@ -22,13 +22,13 @@ function userhistorysize($uid)
 		return;
 	}
 
-	$tmp = mdb_memcache_get("userhistorysize_" . $uid);
+	$tmp = $cache->get("userhistorysize_" . $uid);
 	if ($tmp)
 		return $tmp;
 	
 	$ret = DBGetOne("SELECT SUM(fsize) FROM " . $tables['downloads'] . " WHERE uid=" . $uid);
 
-	mdb_memcache_set("userhistorysize_" . $uid, $ret);
+	$cache->set("userhistorysize_" . $uid, $ret);
 
 	return $ret;
 }
