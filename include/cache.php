@@ -8,7 +8,7 @@
  */
 
  $cache = null;
- if ($mdb_conf['cachetype'] == "memcache") {
+ if ($mdb_conf['cachetype'] == "memcache" && function_exists("memcache_get")) {
  	include_once('cache.memcache.php');
 	$cache = new MDB_Cache_Memcache($mdb_conf['memcached_address'], $mdb_conf['memcached_port'], $mdb_conf['memcached_persist']);
  } else if ($mdb_conf['cachetype'] == "eaccelerator" && function_exists("eaccelerator_get")) {
