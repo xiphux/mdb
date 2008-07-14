@@ -22,7 +22,7 @@ function otherhistory()
 
 	$u = $cache->get("userhistory");
 	if (!$u) {
-		$u = DBGetArray("SELECT * FROM " . $tables['users'] . " ORDER BY username");
+		$u = DBGetArray("SELECT id,username,privilege FROM " . $tables['users'] . " ORDER BY username");
 		$size = count($u);
 		for ($i = 0; $i < $size; $i++) {
 			$ret2 = userhistory($u[$i]['id']);
