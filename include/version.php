@@ -7,7 +7,7 @@
  *  Copyright (C) 2008 Christopher Han <xiphux@gmail.com>
  */
 
- $mdb_version = "0.0.7";
- $mdb_appstring = "MDB $mdb_version";
+ define("MDB_VERSION", "0.0.7");
+ define("MDB_APPSTRING", "MDB " . MDB_VERSION);
 
 ?>

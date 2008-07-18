@@ -23,10 +23,12 @@ $mdb_conf['root'] = "/storage/";
 /*
  * title
  * The string that will be used as the page time
- * The variable '$mdb_appstring' will expand to
- * the name (MDB) and version
+ * The constant MDB_APPSTRING will expand to
+ * the name (MDB) and version.  The constant
+ * MDB_VERSION will expand to the version number
+ * only
  */
-$mdb_conf['title'] = "centraldogma :: $mdb_appstring";
+$mdb_conf['title'] = "centraldogma :: " . MDB_APPSTRING;
 
 /*
  * smarty_prefix

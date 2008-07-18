@@ -10,9 +10,9 @@
 
 function dbstats()
 {
-	global $mdb_conf,$tpl,$tables,$mdb_appstring,$cache;
+	global $mdb_conf,$tpl,$tables,$cache;
 	$tpl->clear_all_assign();
-	$tpl->assign("appstring",$mdb_appstring);
+	$tpl->assign("appstring", MDB_APPSTRING);
 	$tpl->assign("cdate","2006");
 	$tpl->assign("cauthor_email","xiphux@gmail.com");
 	$tpl->assign("cauthor","Christopher Han");

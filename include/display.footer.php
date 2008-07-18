@@ -10,11 +10,11 @@
 
  include_once('database.updating.php');
 
-function footer($starttime)
+function footer()
 {
-	global $tpl,$mdb_appstring,$tables,$mdb_conf,$querycount, $cache;
+	global $tpl,$tables,$mdb_conf,$querycount, $cache;
 	$tpl->clear_all_assign();
-	$tpl->assign("banner",$mdb_appstring);
+	$tpl->assign("banner", MDB_APPSTRING);
 
 	$tmp = $cache->get("titlecount");
 	if (!$tmp) {
@@ -55,7 +55,7 @@ function footer($starttime)
 		$tpl->assign("cachemisses", $cache->cachemisses);
 	}
 	date_default_timezone_set("UTC");
-	$tpl->assign("exectime",round(microtime(true)-$starttime,8));
+	$tpl->assign("exectime",round(microtime(true)-MDB_START_TIME,8));
 	$tpl->display("footer.tpl");
 }
 

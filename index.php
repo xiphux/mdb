@@ -7,7 +7,7 @@
  *  Copyright (C) 2006 Christopher Han <xiphux@gmail.com>
  */
 
- $mdbstarttime = microtime(true);
+ define("MDB_START_TIME", microtime(true));
 
  /*
   * Start session
@@ -255,7 +255,7 @@
  rightbox();
 
  include_once('include/display.footer.php');
- footer($mdbstarttime);
+ footer();
 
  ob_end_flush();
 

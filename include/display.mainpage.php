@@ -12,9 +12,9 @@
 
 function mainpage()
 {
-	global $tpl,$mdb_appstring,$tables,$mdb_conf, $cache;
+	global $tpl,$tables,$mdb_conf, $cache;
 	$tpl->clear_all_assign();
-	$tpl->assign("banner",$mdb_appstring);
+	$tpl->assign("banner",MDB_APPSTRING);
 
 	$tmp = $cache->get("titlecount");
 	if (!$tmp) {
