@@ -56,6 +56,8 @@
  	$errorstr = filedownload((isset($_GET['id']) ? $_GET['id'] : null));
 	if ($errorstr === FALSE)
 		exit;
+	else
+		ob_start();
  }
 
  ob_start();

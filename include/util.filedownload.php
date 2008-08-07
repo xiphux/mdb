@@ -42,7 +42,7 @@ function filedownload($id)
 	header("Pragma: public");
 	header("Content-Length: " . @filesize($mdb_conf['root'] . $file['file']));
 	set_time_limit(0);
-	ob_clean();
+	ob_end_clean();
 	flush();
 	if ($mdb_conf['download_log']) {
 		$db->debug = FALSE;
