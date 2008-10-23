@@ -22,14 +22,14 @@ function userhistory($uid)
 		return;
 	}
 
-	$tmp = $cache->get("userhistory_" . $uid);
+	$tmp = $cache->Get("userhistory_" . $uid);
 	if ($tmp)
 		return $tmp;
 
 	$q = "SELECT " . $tables['downloads'] . ".*, " . $tables['files'] . ".id AS file_exists FROM " . $tables['downloads'] . " LEFT JOIN " . $tables['files'] . " ON (" . $tables['downloads'] . ".fid = " . $tables['files'] . ".id AND " . $tables['downloads'] . ".file = " . $tables['files'] . ".file) WHERE uid=" . $uid . " ORDER BY " . $tables['downloads'] . ".time DESC";
 	$ret = DBGetArray($q);
 
-	$cache->set("userhistory_" . $uid, $ret);
+	$cache->Set("userhistory_" . $uid, $ret);
 
 	return $ret;
 }

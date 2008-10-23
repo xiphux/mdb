@@ -15,12 +15,12 @@ function leftbox()
 	$key = "output_leftbox";
 	if (isset($_SESSION[$mdb_conf['session_key']]['user']))
 		$key .= "_" . md5($_SESSION[$mdb_conf['session_key']]['user']['username'] . $_SESSION[$mdb_conf['session_key']]['user']['privilege']);
-	$out = $cache->get($key);
+	$out = $cache->Get($key);
 	if (!$out) {
 		if (isset($_SESSION[$mdb_conf['session_key']]['user']))
 			$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
 		$out = $tpl->fetch("leftbox.tpl");
-		$cache->set($key, $out);
+		$cache->Set($key, $out);
 	}
 
 	echo $out;

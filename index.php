@@ -33,7 +33,19 @@
  /*
   * Caching
   */
- include_once('include/cache.php');
+ include_once('include/xxcache/xxcache.php');
+ $cache = GetXXCache($mdb_conf['cachetype']);
+ if ($cache->GetCacheType() === XXCACHE_MEMCACHE) {
+	$cache->SetAddress($mdb_conf['memcached_address']);
+	$cache->SetPort($mdb_conf['memcached_port']);
+	$cache->SetPersist($mdb_conf['memcached_persist']);
+	$cache->SetNamespace("mdb_");
+ } else if ($cache->GetCacheType() === XXCACHE_EACCELERATOR) {
+	$cache->SetNamespace("mdb_");
+ }  else if ($cache->GetCacheType() === XXCACHE_FILECACHE) {
+	$cache->SetCacheDir($mdb_conf['filecache_dir']);
+ }
+ $cache->Open();
 
  /*
   * Instantiate Smarty
@@ -259,8 +271,8 @@
  include_once('include/display.footer.php');
  footer();
 
- ob_end_flush();
+ $cache->Close();
 
- $cache->close();
+ ob_end_flush();
 
 ?>

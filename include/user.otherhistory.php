@@ -20,7 +20,7 @@ function otherhistory()
 		return;
 	}
 
-	$u = $cache->get("userhistory");
+	$u = $cache->Get("userhistory");
 	if (!$u) {
 		$u = DBGetArray("SELECT id,username,privilege FROM " . $tables['users'] . " ORDER BY username");
 		$size = count($u);
@@ -31,7 +31,7 @@ function otherhistory()
 				$u[$i]['total'] = userhistorysize($u[$i]['id']);
 			}
 		}
-		$cache->set("userhistory", $u);
+		$cache->Set("userhistory", $u);
 	}
 	$size = count($u);
 	for ($i = 0; $i < $size; $i++) {

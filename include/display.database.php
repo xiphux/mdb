@@ -19,15 +19,15 @@
 	}
 
 	$key = "output_database";
-	if ($cache->cachetype() !== "null")
+	if ($cache->GetCacheType() !== XXCACHE_NULL)
 		$key .= "_cache";
-	$out = $cache->get($key);
+	$out = $cache->Get($key);
 	if (!$out) {
 		$tpl->clear_all_assign();
-		if ($cache->cachetype() !== "null")
+		if ($cache->GetCacheType() !== XXCACHE_NULL)
 			$tpl->assign("cache", TRUE);
 		$out = $tpl->fetch("database.tpl");
-		$cache->set($key, $out);
+		$cache->Set($key, $out);
 	}
 
 	echo $out;

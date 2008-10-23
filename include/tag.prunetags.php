@@ -15,8 +15,8 @@ function prunetags()
 	global $tables, $cache;
 	$q = "DELETE tmp.* FROM " . $tables['tags'] . " AS tmp INNER JOIN (SELECT " . $tables['tags'] . ".id FROM " . $tables['tags'] . " LEFT JOIN " . $tables['title_tag'] . " ON " . $tables['tags'] . ".id = " . $tables['title_tag'] . ".tag_id GROUP BY " . $tables['tags'] . ".tag HAVING (COUNT(" . $tables['title_tag'] . ".title_id) = 0)) AS tmp2 ON tmp2.id = tmp.id";
 	DBExecute($q);
-	$cache->del("taglist");
-	$cache->del("output_tagcloud");
+	$cache->Del("taglist");
+	$cache->Del("output_tagcloud");
 }
 
 ?>

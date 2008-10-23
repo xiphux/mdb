@@ -27,10 +27,9 @@ function dbstats()
 		$tpl->assign("uptime_days",$uptime);
 		$tpl->assign("loadavg",$load);
 	}
-	$cachetype = $cache->cachetype();
-	if ($cachetype !== "null") {
-		$tpl->assign("cachetype", $cachetype);
-		$tpl->assign("cachestats", $cache->stats());
+	if ($cache->GetCacheType() !== XXCACHE_NULL) {
+		$tpl->assign("cachetype", $cache->GetCacheTypeString());
+		$tpl->assign("cachestats", $cache->Stats());
 	}
 	$tpl->assign("files",DBGetOne("SELECT COUNT(id) FROM " . $tables['files']));
 	$tpl->assign("titles",DBGetOne("SELECT COUNT(id) FROM " . $tables['titles']));

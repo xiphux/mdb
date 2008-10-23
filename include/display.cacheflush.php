@@ -18,7 +18,7 @@ function cacheflush()
 		return;
 	}
 
-	if ($cache->clear() === TRUE)
+	if ($cache->Clear() === TRUE)
 		message("Cache flushed","highlight");
 	else
 		message("Could not flush cache","warning");

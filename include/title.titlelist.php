@@ -43,7 +43,7 @@
  {
  	global $tables, $cache;
 
-	$tmp = $cache->get("titlelist");
+	$tmp = $cache->Get("titlelist");
 	if ($tmp)
 		return $tmp;
 	
@@ -77,7 +77,7 @@
 		}
 	}
 
-	$cache->set("titlelist",$titles);
+	$cache->Set("titlelist",$titles);
 
 	return $titles;
  }

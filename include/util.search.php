@@ -21,7 +21,7 @@
 		return;
 	}
 	if ($criteria === "All" || $criteria === "Titles") {
-		$tmp = $cache->get("search_titles_" . md5($search));
+		$tmp = $cache->Get("search_titles_" . md5($search));
 		if ($tmp)
 			$results['titles'] = $tmp;
 		else {
@@ -31,12 +31,12 @@
 				for ($i = 0; $i < $size; $i++)
 					highlight($ret[$i]['title'],$search);
 				$results['titles'] = $ret;
-				$cache->set("search_titles_" . md5($search), $ret);
+				$cache->Set("search_titles_" . md5($search), $ret);
 			}
 		}
 	}
 	if ($criteria === "All" || $criteria === "Files") {
-		$tmp = $cache->get("search_files_" . md5($search));
+		$tmp = $cache->Get("search_files_" . md5($search));
 		if ($tmp)
 			$results['files'] = $tmp;
 		else {
@@ -46,7 +46,7 @@
 				for ($i = 0; $i < $size; $i++)
 					highlight($ret[$i]['file'],$search);
 				$results['files'] = $ret;
-				$cache->set("search_files_" . md5($search), $ret);
+				$cache->Set("search_files_" . md5($search), $ret);
 			}
 		}
 	}

@@ -13,7 +13,7 @@ function rightbox()
 {
 	global $tpl, $cache;
 
-	$out = $cache->get("output_rightbox");
+	$out = $cache->Get("output_rightbox");
 	if ($out) {
 		echo $out;
 		return;
@@ -22,7 +22,7 @@ function rightbox()
 	$tpl->assign("titlelist",titlelist());
 	$out = $tpl->fetch("rightbox.tpl");
 
-	$cache->set("output_rightbox", $out);
+	$cache->Set("output_rightbox", $out);
 
 	echo $out;
 }

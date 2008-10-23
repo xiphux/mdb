@@ -33,10 +33,10 @@ function userdel($uid)
 	DBExecute("DELETE FROM " . $tables['users'] . " WHERE id=" . $uid);
 	DBExecute("DELETE FROM " . $tables['downloads'] . " WHERE uid=" . $uid);
 	DBExecute("DELETE FROM " . $tables['preferences'] . " WHERE uid=" . $uid);
-	$cache->del("userlist");
-	$cache->del("userhistory");
-	$cache->del("userhistory_" . $uid);
-	$cache->del("userhistorysize_" . $uid);
+	$cache->Del("userlist");
+	$cache->Del("userhistory");
+	$cache->Del("userhistory_" . $uid);
+	$cache->Del("userhistorysize_" . $uid);
 }
 
 ?>

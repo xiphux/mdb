@@ -14,7 +14,7 @@ function taginfo($id)
 	if (!isset($id))
 		return null;
 
-	$tmp = $cache->get("taginfo_" . $id);
+	$tmp = $cache->Get("taginfo_" . $id);
 	if ($tmp)
 		return $tmp;
 
@@ -25,7 +25,7 @@ function taginfo($id)
 	if (sizeof($temp) > 0)
 		$tag['titles'] = $temp;
 	$tag['count'] = sizeof($temp);
-	$cache->set("taginfo_" . $id, $tag);
+	$cache->Set("taginfo_" . $id, $tag);
 	return $tag;
 }
 

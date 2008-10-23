@@ -23,7 +23,7 @@
 	} else {
 		DBExecute("INSERT INTO " . $tables['preferences'] . " (uid,pref,value) VALUES (" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . "," . DBqstr($pref) . "," . DBqstr($value) . ")");
 	}
-	$cache->del("pref_" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . "_" . $pref);
+	$cache->Del("pref_" . $_SESSION[$mdb_conf['session_key']]['user']['id'] . "_" . $pref);
 
  }
 

@@ -17,14 +17,14 @@ function tag($id)
 	if (isset($_SESSION[$mdb_conf['session_key']]['user']) && ($_SESSION[$mdb_conf['session_key']]['user']['privilege'] > 0))
 		$key .= "_priv";
 
-	$out = $cache->get($key);
+	$out = $cache->Get($key);
 	if (!$out) {
 		$tpl->clear_all_assign();
 		$tpl->assign("tag",taginfo($id));
 		if (isset($_SESSION[$mdb_conf['session_key']]['user']))
 			$tpl->assign("user",$_SESSION[$mdb_conf['session_key']]['user']);
 		$out = $tpl->fetch("tag.tpl");
-		$cache->set($key, $out);
+		$cache->Set($key, $out);
 	}
 
 	echo $out;

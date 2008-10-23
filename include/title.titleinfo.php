@@ -18,7 +18,7 @@
 		return;
 	}
 
-	$tmp = $cache->get("tid" . $tid);
+	$tmp = $cache->Get("tid" . $tid);
 	if ($tmp)
 		return $tmp;
 
@@ -38,7 +38,7 @@
 	if ($temp && (sizeof($temp) > 0))
 		$title['links'] = $temp;
 	
-	$cache->set("tid" . $tid, $title);
+	$cache->Set("tid" . $tid, $title);
 
 	return $title;
  }

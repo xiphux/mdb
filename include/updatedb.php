@@ -10,7 +10,19 @@
  include_once('config/mdb.conf.php');
  include_once('database.php');
  include_once('database.updating.php');
- include_once('cache.php');
+ include_once('xxcache/xxcache.php');
+ $cache = GetXXCache($mdb_conf['cachetype']);
+ if ($cache->GetCacheType() === XXCACHE_MEMCACHE) {
+	$cache->SetAddress($mdb_conf['memcached_address']);
+	$cache->SetPort($mdb_conf['memcached_port']);
+	$cache->SetPersist($mdb_conf['memcached_persist']);
+	$cache->SetNamespace("mdb_");
+ } else if ($cache->GetCacheType() === XXCACHE_EACCELERATOR) {
+	$cache->SetNamespace("mdb_");
+ }  else if ($cache->GetCacheType() === XXCACHE_FILECACHE) {
+	$cache->SetCacheDir($mdb_conf['filecache_dir']);
+ }
+ $cache->Open();
 
  if (updating())
  	exit;
@@ -256,7 +268,7 @@
 
  if (!($mdb_conf['dbmutex'])) {
  	$ok = DBExecute("INSERT INTO " . $tables['dbupdate'] . " (progress) VALUES(0)");
-	$cache->del("lastupdate");
+	$cache->Del("lastupdate");
 	if ($mdb_conf['debug'] && !$ok)
 		echo "non-dbmutex: " . DBErrorMsg() . "\n";
  }
@@ -276,7 +288,7 @@
  }
 
  if ($success) {
- 	$cache->clear();
+ 	$cache->Clear();
  }
 
  if ($mdb_conf['debug']) {
@@ -287,5 +299,7 @@
 		echo "failed";
 	echo " (" . $querycount . " queries)\n";
  }
+
+ $cache->Close();
 
 ?> 

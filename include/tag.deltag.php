@@ -25,16 +25,16 @@ function deltag($tid)
 	$titles = DBGetArray("SELECT title_id FROM " . $tables['title_tag'] . " WHERE tag_id=" . $tid);
 	DBExecute("DELETE FROM " . $tables['title_tag'] . " WHERE tag_id=" . $tid);
 	foreach ($titles as $ti) {
-		$cache->del("tid" . $ti['title_id']);
-		$cache->del("output_title_" . $ti['title_id']);
-		$cache->del("output_title_" . $ti['title_id'] . "_user");
-		$cache->del("output_title_" . $ti['title_id'] . "_user_dl");
+		$cache->Del("tid" . $ti['title_id']);
+		$cache->Del("output_title_" . $ti['title_id']);
+		$cache->Del("output_title_" . $ti['title_id'] . "_user");
+		$cache->Del("output_title_" . $ti['title_id'] . "_user_dl");
 	}
-	$cache->del("taglist");
-	$cache->del("output_tagcloud");
-	$cache->del("taginfo_" . $tid);
-	$cache->del("output_tag_" . $tid);
-	$cache->del("output_tag_" . $tid . "_priv");
+	$cache->Del("taglist");
+	$cache->Del("output_tagcloud");
+	$cache->Del("taginfo_" . $tid);
+	$cache->Del("output_tag_" . $tid);
+	$cache->Del("output_tag_" . $tid . "_priv");
 }
 
 ?>

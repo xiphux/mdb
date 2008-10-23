@@ -12,10 +12,10 @@ function mainend()
 {
 	global $tpl, $cache;
 
-	$out = $cache->get("output_mainend");
+	$out = $cache->Get("output_mainend");
 	if (!$out) {
 		$out = $tpl->fetch("mainend.tpl");
-		$cache->set("output_mainend", $out);
+		$cache->Set("output_mainend", $out);
 	}
 
 	echo $out;

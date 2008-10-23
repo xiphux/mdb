@@ -35,15 +35,15 @@ function addtag($tid,$tag)
 	}
 	DBExecute("INSERT IGNORE INTO " . $tables['title_tag'] . " (title_id,tag_id) VALUES (" . $tid . "," . $id . ")");
 
-	$cache->del("tid" . $tid);
-	$cache->del("taglist");
-	$cache->del("output_tagcloud");
-	$cache->del("taginfo_" . $id);
-	$cache->del("output_tag_" . $id);
-	$cache->del("output_tag_" . $id . "_priv");
-	$cache->del("output_title_" . $tid);
-	$cache->del("output_title_" . $tid . "_user");
-	$cache->del("output_title_" . $tid . "_user_dl");
+	$cache->Del("tid" . $tid);
+	$cache->Del("taglist");
+	$cache->Del("output_tagcloud");
+	$cache->Del("taginfo_" . $id);
+	$cache->Del("output_tag_" . $id);
+	$cache->Del("output_tag_" . $id . "_priv");
+	$cache->Del("output_title_" . $tid);
+	$cache->Del("output_title_" . $tid . "_user");
+	$cache->Del("output_title_" . $tid . "_user_dl");
 
 	return;
 }

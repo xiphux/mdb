@@ -27,13 +27,13 @@ function untag($tid, $tag)
 		return;
 	}
 	DBExecute("DELETE FROM " . $tables['title_tag'] . " WHERE title_id=" . $tid . " AND tag_id=" . $tag);
-	$cache->del("tid" . $tid);
-	$cache->del("taginfo_" . $tag);
-	$cache->del("output_tag_" . $tag);
-	$cache->del("output_tag_" . $tag . "_priv");
-	$cache->del("output_title_" . $tid);
-	$cache->del("output_title_" . $tid . "_user");
-	$cache->del("output_title_" . $tid . "_user_dl");
+	$cache->Del("tid" . $tid);
+	$cache->Del("taginfo_" . $tag);
+	$cache->Del("output_tag_" . $tag);
+	$cache->Del("output_tag_" . $tag . "_priv");
+	$cache->Del("output_title_" . $tid);
+	$cache->Del("output_title_" . $tid . "_user");
+	$cache->Del("output_title_" . $tid . "_user_dl");
 	prunetags();
 }
 

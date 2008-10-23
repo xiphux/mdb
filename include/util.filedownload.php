@@ -49,10 +49,10 @@ function filedownload($id)
 		DBExecute("INSERT INTO " . $tables['downloads'] . " (ip,uid,user,fid,file,fsize) VALUES (" . DBqstr($_SERVER['REMOTE_ADDR']) . "," . $_SESSION[$mdb_conf['session_key']]['user']['id'] . "," . DBqstr($_SESSION[$mdb_conf['session_key']]['user']['username']) . "," . $file['id'] . "," . DBqstr($file['file']) . "," . $file['size'] . ")");
 		if ($mdb_conf['debug'])
 			$db->debug = TRUE;
-		$cache->del("userhistory_" . $_SESSION[$mdb_conf['session_key']]['user']['id']);
-		$cache->del("userhistorysize_" . $_SESSION[$mdb_conf['session_key']]['user']['id']);
-		$cache->del("userlist");
-		$cache->del("userhistory");
+		$cache->Del("userhistory_" . $_SESSION[$mdb_conf['session_key']]['user']['id']);
+		$cache->Del("userhistorysize_" . $_SESSION[$mdb_conf['session_key']]['user']['id']);
+		$cache->Del("userlist");
+		$cache->Del("userhistory");
 	}
 	readfile($mdb_conf['root'] . $file['file']);
 	return FALSE;

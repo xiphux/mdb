@@ -40,7 +40,7 @@ function changeprivilege($uid, $priv)
 	}
 	$q = "UPDATE " . $tables['users'] . " SET privilege=" . DBqstr($priv) . " WHERE id=" . $uid;
 	DBExecute($q);
-	$cache->del("userlist");
+	$cache->Del("userlist");
 }
 
 ?>

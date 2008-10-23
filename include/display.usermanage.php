@@ -18,11 +18,11 @@ function usermanage()
 		return;
 	}
 	
-	$users = $cache->get("userlist");
+	$users = $cache->Get("userlist");
 	if (!$users) {
 		$users = DBGetArray("SELECT " . $tables['users'] . ".id, " . $tables['users'] . ".username, " . $tables['users'] . ".privilege, SUM(" . $tables['downloads'] . ".fsize) AS size FROM " . $tables['users'] . " LEFT JOIN " . $tables['downloads'] . " ON " . $tables['users'] . ".id=" . $tables['downloads'] . ".uid GROUP BY " . $tables['users'] . ".id ORDER BY username");
 		if ($users)
-			$cache->set("userlist", $users);
+			$cache->Set("userlist", $users);
 	}
 
 	$tpl->clear_all_assign();

@@ -21,7 +21,7 @@ function title($tid)
 		if ($mdb_conf['download'])
 			$key .= "_dl";
 	}
-	$out = $cache->get($key);
+	$out = $cache->Get($key);
 	if ($out) {
 		echo $out;
 		return;
@@ -88,7 +88,7 @@ function title($tid)
 
 	$out .= $tpl->fetch("filelistend.tpl");
 
-	$cache->set($key, $out);
+	$cache->Set($key, $out);
 
 	echo $out;
 }

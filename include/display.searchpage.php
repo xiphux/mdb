@@ -18,7 +18,7 @@ function searchpage($search, $criteria)
 		$key .= "dl_";
 	$key .= md5($search . $criteria);
 
-	$out = $cache->get($key);
+	$out = $cache->Get($key);
 	if (!$out) {
 		$tpl->clear_all_assign();
 		$tpl->assign("search",$search);
@@ -28,7 +28,7 @@ function searchpage($search, $criteria)
 		if ($mdb_conf['download'])
 			$tpl->assign("download",TRUE);
 		$out = $tpl->fetch("search.tpl");
-		$cache->set($key, $out);
+		$cache->Set($key, $out);
 	}
 
 	echo $out;

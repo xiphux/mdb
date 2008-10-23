@@ -12,10 +12,10 @@ function mainstart()
 {
 	global $tpl, $cache;
 
-	$out = $cache->get("output_mainstart");
+	$out = $cache->Get("output_mainstart");
 	if (!$out) {
 		$out = $tpl->fetch("mainstart.tpl");
-		$cache->set("output_mainstart", $out);
+		$cache->Set("output_mainstart", $out);
 	}
 
 	echo $out;

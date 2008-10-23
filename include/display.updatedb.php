@@ -20,12 +20,12 @@
 	}
 	exec($mdb_conf['phpexec'] . " include/updatedb.php 2>/dev/null >&- <&- >/dev/null &");
 
-	$out = $cache->get("output_updatedb_" . $mdb_conf['updatedbstatus_interval']);
+	$out = $cache->Get("output_updatedb_" . $mdb_conf['updatedbstatus_interval']);
 	if (!$out) {
 		$tpl->clear_all_assign();
 		$tpl->assign("interval",$mdb_conf['updatedbstatus_interval']);
 		$out = $tpl->fetch("updatedb.tpl");
-		$cache->set("output_updatedb_" . $mdb_conf['updatedbstatus_interval'], $out);
+		$cache->Set("output_updatedb_" . $mdb_conf['updatedbstatus_interval'], $out);
 	}
 
 	echo $out;

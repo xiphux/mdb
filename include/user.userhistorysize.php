@@ -22,13 +22,13 @@ function userhistorysize($uid)
 		return;
 	}
 
-	$tmp = $cache->get("userhistorysize_" . $uid);
+	$tmp = $cache->Get("userhistorysize_" . $uid);
 	if ($tmp)
 		return $tmp;
 	
 	$ret = DBGetOne("SELECT SUM(fsize) FROM " . $tables['downloads'] . " WHERE uid=" . $uid);
 
-	$cache->set("userhistorysize_" . $uid, $ret);
+	$cache->Set("userhistorysize_" . $uid, $ret);
 
 	return $ret;
 }

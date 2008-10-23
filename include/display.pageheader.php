@@ -17,13 +17,13 @@ function pageheader()
 	$theme = getpref("theme",$mdb_conf['theme']);
 	$key = "output_pageheader_" . md5($title . $theme);
 
-	$out = $cache->get($key);
+	$out = $cache->Get($key);
 	if (!$out) {
 		$tpl->clear_all_assign();
 		$tpl->assign("title", $title);
 		$tpl->assign("theme", $theme);
 		$out = $tpl->fetch("header.tpl");
-		$cache->set($key, $out);
+		$cache->Set($key, $out);
 	}
 
 	echo $out;

@@ -37,8 +37,8 @@
 		$q .= "0";
 	$q .= ")";
 	DBExecute($q);
-	$cache->del("userlist");
-	$cache->del("userhistory");
+	$cache->Del("userlist");
+	$cache->Del("userhistory");
  }
 
 ?>
