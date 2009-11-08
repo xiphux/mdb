@@ -129,7 +129,7 @@
 	);
  	$a = explode(" ",$str);
 	$size = count($a);
-	for ($i = 0; $i < $size; $i++) {
+	for ($i = 0; $i < $size; ++$i) {
 		$t = strtolower($a[$i]);
 		if ($upper[$t] === 1)
 			$t = strtoupper($t);

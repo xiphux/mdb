@@ -37,7 +37,7 @@ function size_readable($size, $unit = null, $retstring = null, $si = true)
        $retstring = '%01.2f %s';
  
     // Loop
-    for ($i = 0; $unit != $i && $size >= 1024 && $i < $ii; $i++)
+    for ($i = 0; $unit != $i && $size >= 1024 && $i < $ii; ++$i)
         $size /= $mod;
  
     return sprintf($retstring, $size, $sizes[$i]);

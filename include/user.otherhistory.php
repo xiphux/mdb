@@ -24,7 +24,7 @@ function otherhistory()
 	if (!$u) {
 		$u = DBGetArray("SELECT id,username,privilege FROM " . $tables['users'] . " ORDER BY username");
 		$size = count($u);
-		for ($i = 0; $i < $size; $i++) {
+		for ($i = 0; $i < $size; ++$i) {
 			$ret2 = userhistory($u[$i]['id']);
 			if ($ret2) {
 				$u[$i]['downloads'] = $ret2;
@@ -34,7 +34,7 @@ function otherhistory()
 		$cache->Set("userhistory", $u);
 	}
 	$size = count($u);
-	for ($i = 0; $i < $size; $i++) {
+	for ($i = 0; $i < $size; ++$i) {
 		if ($u[$i]['id'] == $_SESSION[$mdb_conf['session_key']]['user']['id']) {
 			unset($u[$i]);
 			break;

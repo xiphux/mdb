@@ -28,7 +28,7 @@
 			$ret = DBGetArray("SELECT * FROM " . $tables['titles'] . " WHERE title LIKE '%" . addslashes($search) . "%' ORDER BY title");
 			$size = count($ret);
 			if ($size > 0) {
-				for ($i = 0; $i < $size; $i++)
+				for ($i = 0; $i < $size; ++$i)
 					highlight($ret[$i]['title'],$search);
 				$results['titles'] = $ret;
 				$cache->Set("search_titles_" . md5($search), $ret);
@@ -43,7 +43,7 @@
 			$ret = DBGetArray("SELECT * FROM " . $tables['files'] . " WHERE file LIKE '%/%/%" . addslashes($search) . "%' ORDER BY file");
 			$size = count($ret);
 			if ($size > 0) {
-				for ($i = 0; $i < $size; $i++)
+				for ($i = 0; $i < $size; ++$i)
 					highlight($ret[$i]['file'],$search);
 				$results['files'] = $ret;
 				$cache->Set("search_files_" . md5($search), $ret);

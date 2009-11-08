@@ -34,7 +34,7 @@ $querycount = 0;
 function DBExecute($sql,$inputarr=false)
 {
 	global $db,$querycount,$mdb_conf;
-	$querycount++;
+	++$querycount;
 	$ret = $db->Execute($sql,$inputarr);
 	if ($mdb_conf['adodbcache'])
 		$db->CacheFlush();
@@ -50,7 +50,7 @@ function DBqstr($s,$magic_quotes_enabled=false)
 function DBGetOne($sql,$inputarr=false)
 {
 	global $db,$querycount,$mdb_conf;
-	$querycount++;
+	++$querycount;
 	if ($mdb_conf['adodbcache'])
 		return $db->CacheGetOne($mdb_conf['secs2cache'],$sql,$inputarr);
 	else
@@ -60,7 +60,7 @@ function DBGetOne($sql,$inputarr=false)
 function DBGetRow($sql,$inputarr=false)
 {
 	global $db,$querycount,$mdb_conf;
-	$querycount++;
+	++$querycount;
 	if ($mdb_conf['adodbcache'])
 		return $db->CacheGetRow($mdb_conf['secs2cache'],$sql,$inputarr);
 	else
@@ -70,7 +70,7 @@ function DBGetRow($sql,$inputarr=false)
 function DBGetArray($sql,$inputarr=false)
 {
 	global $db,$querycount,$mdb_conf;
-	$querycount++;
+	++$querycount;
 	if ($mdb_conf['adodbcache'])
 		return $db->CacheGetArray($mdb_conf['secs2cache'],$sql,$inputarr);
 	else
@@ -80,28 +80,28 @@ function DBGetArray($sql,$inputarr=false)
 function DBInsertID()
 {
 	global $db,$querycount;
-	$querycount++;
+	++$querycount;
 	return $db->Insert_ID();
 }
 
 function DBPrepare($sql)
 {
 	global $db,$querycount;
-	$querycount++;
+	++$querycount;
 	return $db->Prepare($sql);
 }
 
 function DBStartTrans()
 {
 	global $db,$querycount;
-	$querycount++;
+	++$querycount;
 	return $db->StartTrans();
 }
 
 function DBCompleteTrans($autoComplete=true)
 {
 	global $db,$querycount;
-	$querycount++;
+	++$querycount;
 	return $db->CompleteTrans($autoComplete);
 }
 
